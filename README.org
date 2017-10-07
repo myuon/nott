@@ -2,4 +2,14 @@
 
 Type Theoryについてのノートです.
 
+** Table of Contents
+
+- [[src/untyped.lyx][untyped]]
+- [[src/simply.lyx][simply-typed]]
+
+
+** 連絡等
+
+間違い, 指摘, アドバイス, 連絡または報告等は,
+issueを立てるか[[https://github.com/myuon][Githubのユーザーページ]]記載のメールアドレスまでお願いします.
 
