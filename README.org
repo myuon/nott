@@ -4,7 +4,7 @@ Type Theoryについてのノートです.
 
 ** ドキュメント情報
 
-- Current Version: *0.1*
+- Current Version: *0.1.1*
 
 ノートのキリが良くなったところでtagを付けてmasterブランチに対してpushします.
 作業中のノートはdevelopブランチに置いてあります.
