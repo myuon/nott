@@ -1,0 +1,5 @@
+---
+title: hoge
+layout: post
+---
+
