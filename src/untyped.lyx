@@ -89,7 +89,7 @@ untyped
 \end_layout
 
 \begin_layout Author
-@myuon_myon
+myuon
 \end_layout
 
 \begin_layout Standard
@@ -102,11 +102,11 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Section
-型なし
-\begin_inset Formula $\lambda$
-\end_inset
+Syntax
+\end_layout
 
-計算
+\begin_layout Subsection
+ラムダ項
 \end_layout
 
 \begin_layout Definition
@@ -395,6 +395,328 @@ y[N/x] & = & y\ (x\neq y)\\
 \end_inset
 
 とかく.
+\end_layout
+
+\begin_layout Subsection
+評価
+\end_layout
+
+\begin_layout Standard
+ここではラムダ項を別のラムダ項に変換することを考える.
+ ラムダ項の変換のことを評価・計算と呼んだりする.
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\tobeta}{\to_{\beta}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\beta$
+\end_inset
+
+変換
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+\begin_inset Formula $\beta$
+\end_inset
+
+変換
+\series default
+を次のように定義する.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M\tobeta N$
+\end_inset
+
+のとき, 
+\begin_inset Formula $\lambda x.M\tobeta\lambda x.N$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M\tobeta N$
+\end_inset
+
+のとき, 
+\begin_inset Formula $ML\tobeta NL$
+\end_inset
+
+, 
+\begin_inset Formula $LM\tobeta LN$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $(\lambda x.M)N\tobeta M[N/x]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+4番目の規則のことを
+\begin_inset Formula $\beta$
+\end_inset
+
+簡約と呼ぶ.
+\end_layout
+
+\begin_layout Subsection
+値と評価戦略
+\end_layout
+
+\begin_layout Standard
+ラムダ計算をプログラミング言語とみなす立場では, プログラムの実行に相当する, 与えられたラムダ項を別のラムダ項に変換する決定的な手続きが必要になる.
+ ところでラムダ項の評価は基本的に前述の
+\begin_inset Formula $\beta$
+\end_inset
+
+簡約を基本とするが, 一般にラムダ項には複数の
+\begin_inset Formula $\beta$
+\end_inset
+
+基が含まれており, それらをどの順番で評価するかによって結果は異なってくる.
+ このようなラムダ項の簡約の手順のことを評価戦略とよぶ.
+\end_layout
+
+\begin_layout Standard
+以前の
+\begin_inset Formula $\beta$
+\end_inset
+
+変換では, 
+\begin_inset Formula $M\tobeta N$
+\end_inset
+
+が
+\begin_inset Formula $M$
+\end_inset
+
+の``いずれかの
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Formula $\beta$
+\end_inset
+
+基を変換することで
+\begin_inset Formula $N$
+\end_inset
+
+が得られる, ということを表していたのに対し, ここで考えるような評価戦略では実際にどの
+\begin_inset Formula $\beta$
+\end_inset
+
+基を変換するかまで常に指定されている, という違いがある.
+\end_layout
+
+\begin_layout Subsubsection
+値
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Val}{\text{Val}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+値
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+値の集合
+\begin_inset Formula $\Val$
+\end_inset
+
+を次のように定義する.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M\in\Lambda\Longrightarrow\lambda x.M\in\Val$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Operational Semantics
+\end_layout
+
+\begin_layout Subsection
+call-by-value
+\end_layout
+
+\begin_layout Standard
+call-by-valueは値呼びと呼ばれる.
+ また, 一番外側のラムダ項を左から順に簡約するのでleftmost-outermost reductionとも呼ばれる.
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\tocbv}{\to_{\text{cbv}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+call-by-value
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $(\lambda x.M)v\tocbv M[v/x]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M\tocbv N$
+\end_inset
+
+のとき, 
+\begin_inset Formula $vM\tocbv vN$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M\tocbv N$
+\end_inset
+
+のとき, 
+\begin_inset Formula $ML\tocbv NL$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+今は関数抽象を値と見ているので, 関数抽象はそれ以上簡約せずそのままにしておくことに注意.
+\end_layout
+
+\begin_layout Standard
+あるいは, これはevaluation contextを用いて定義することもできる.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+call-by-value
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\series bold
+evaluation context
+\series default
+を次とする:
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+C=[]\ |\ (C\:e)\ |\ (v\:C)\ 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula $e$
+\end_inset
+
+はラムダ項, 
+\begin_inset Formula $v$
+\end_inset
+
+は値(ここでは関数抽象)とする.
+ 
+\begin_inset Formula $[]$
+\end_inset
+
+は穴(hole)とよばれ, ここに好きなラムダ項を後で挿入できる.
+ これを用いてcall-by-valueのreductionを次のように定義することができる.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $(\lambda x.M)v\tocbv M[v/x]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M\tocbv M'$
+\end_inset
+
+のとき, 
+\begin_inset Formula $C[M]\tocbv C[M']$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+evaluation contextの3番目の規則が
+\begin_inset Formula $(v\:C)$
+\end_inset
+
+となっていることに注意.
+ これによって, 関数適用の項を簡約するときは必ず前から(前にある項がvalueになっている時)しか簡約できない.
 \end_layout
 
 \end_body

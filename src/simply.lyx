@@ -1,0 +1,3303 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass jsarticle
+\begin_preamble
+\usepackage{syntax}
+\usepackage{tikz}
+\usepackage{../lib/bussproofs}
+\end_preamble
+\options uplatex,a4paper,dvipdfmx
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language japanese
+\language_package default
+\inputencoding utf8-platex
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format pdf3
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\topmargin 25mm
+\bottommargin 25mm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\begin_layout Author
+myuon
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\typed}[4][]{#2\vdash_{#1}#3:#4}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\STLC}{\lambda^{\to}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\STfp}{\lambda^{\times,1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+型と項の関係は, 集合とそこに属する元の関係に似ている.
+ 型を導入することで, 項がどんな集合に属しているかを表現することができる.
+ 型なしラムダ計算の項は自由生成されていたのでどのような項でも許されていたが, これには通常の関数としての意味付けができないような異常な項も含まれている(例えば
+\begin_inset Formula $f(f)$
+\end_inset
+
+など).
+ 型システムを導入することの利点の1つとして, このような異常な項を含まない正常な項だけを考えることで型付きラムダ計算は正規化性などの``よい
+\begin_inset Quotes erd
+\end_inset
+
+性質をもつようにできる.
+\end_layout
+
+\begin_layout Part
+Syntax
+\end_layout
+
+\begin_layout Standard
+型付き
+\begin_inset Formula $\lambda$
+\end_inset
+
+計算の中で最も単純なものが単純型付き
+\begin_inset Formula $\lambda$
+\end_inset
+
+計算(
+\begin_inset Formula $\STLC$
+\end_inset
+
+)である.
+\end_layout
+
+\begin_layout Section
+Types
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Typ}{\text{Typ}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+型
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+単純型付き
+\begin_inset Formula $\lambda$
+\end_inset
+
+計算の型を, 次のように定義する.
+ これを
+\begin_inset Formula $\Typ(\STLC)$
+\end_inset
+
+などとかく.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{grammar}
+\end_layout
+
+\begin_layout Plain Layout
+
+  <type> ::= <typevar> 
+\backslash
+alt <type> `->' <type>
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{grammar}
+\end_layout
+
+\end_inset
+
+ただし
+\begin_inset Formula $\langle\text{typevar}\rangle$
+\end_inset
+
+とは型変数であり, ここでは適当な型変数の集合
+\begin_inset Formula $V_{t}$
+\end_inset
+
+が与えられているとする.
+ 型変数は
+\begin_inset Formula $\alpha,\beta,\gamma,\dots$
+\end_inset
+
+などとかく.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $t_{1}\to t_{2}$
+\end_inset
+
+のことを
+\series bold
+関数型(function type)
+\series default
+などとよぶ.
+ これはまさに関数を表現するためのものであり, 写像
+\begin_inset Formula $A\to B$
+\end_inset
+
+などと書いたりするのとちょうど同じことを表していると思えばよい.
+\end_layout
+
+\begin_layout Standard
+さて, 項が型に属している(
+\begin_inset Formula $x\in A$
+\end_inset
+
+)ことを表明する関係を定義する.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+型判断(typing judgement)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+関係
+\begin_inset Formula $-\vdash-:-\ \subseteq\ (V_{t}\times\Typ)\times\Lambda\times\Typ$
+\end_inset
+
+を以下のように定義する.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "20col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$x : A 
+\backslash
+in 
+\backslash
+Gamma$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(var)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{x}{A}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "25col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma,x:A}{M}{B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(abs)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+lambda x.M}{A 
+\backslash
+to B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{M_1}{A 
+\backslash
+to B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{M_2}{A}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(app)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BinaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{M_1 M_2}{B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+simply-typed typing rules
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Gamma$
+\end_inset
+
+を
+\series bold
+文脈(context)
+\series default
+と呼ぶ.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+関係
+\begin_inset Formula $\typed{\Gamma}MA$
+\end_inset
+
+が成り立っているとき, 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+の下で
+\begin_inset Formula $M$
+\end_inset
+
+の型は
+\begin_inset Formula $A$
+\end_inset
+
+である, などという.
+\end_layout
+
+\begin_layout Itemize
+項
+\begin_inset Formula $M$
+\end_inset
+
+に対してjudgement 
+\begin_inset Formula $\typed{\Gamma}MA$
+\end_inset
+
+が存在する時, 
+\begin_inset Formula $M$
+\end_inset
+
+は
+\series bold
+well-typedである
+\series default
+という.
+\end_layout
+
+\end_deeper
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+coherence
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\typed{\Gamma}xA$
+\end_inset
+
+ならば
+\begin_inset Formula $x:A\in\Gamma$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\typed{\Gamma}{\lambda x.M}A$
+\end_inset
+
+ならば, 
+\begin_inset Formula $A_{1},A_{2}$
+\end_inset
+
+が存在して, 
+\begin_inset Formula $A=A_{1}\to A_{2}$
+\end_inset
+
+かつ
+\begin_inset Formula $\typed{\Gamma,x:A_{1}}M{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\typed{\Gamma}{M_{1}M_{2}}B$
+\end_inset
+
+ならば, 
+\begin_inset Formula $A$
+\end_inset
+
+が存在して, 
+\begin_inset Formula $\typed{\Gamma}{M_{1}}{A\to B}$
+\end_inset
+
+かつ
+\begin_inset Formula $\typed{\Gamma}{M_{2}}A$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+typing judgementの導出に関する場合分けにより明らか.
+\end_layout
+
+\begin_layout Standard
+typing ruleとは逆向きに, ``この型がついているならば, 前提となる項がこのようになっているはず
+\begin_inset Quotes erd
+\end_inset
+
+というような性質を指してしばしばcoherence(一貫性)と呼ぶ.
+ 
+\end_layout
+
+\begin_layout Section
+Simple Extension
+\end_layout
+
+\begin_layout Subsection
+Product Type
+\end_layout
+
+\begin_layout Standard
+product typeはタプルあるいは組のことである.
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\proj}[2]{\text{proj}_{#1}#2}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\pair}[2]{\langle#1,#2\rangle}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+product type extension
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+型と項を次のように拡張する.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\begin{eqnarray*}
+\alpha & ::= & \dots\:|\:\alpha_{1}\times\alpha_{2}\\
+M & ::= & \dots\:|\:\proj iM\:|\:\pair{M_{1}}{M_{2}}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+それに付随して, いくつかのtyping ruleが追加される(図
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:product-typing-rules"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{M_1}{A_1}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{M_2}{A_2}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(pair)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BinaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+pair{M_1}{M_2}}{A_1 
+\backslash
+times A_2}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{M}{A_1 
+\backslash
+times A_2}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(proj)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+proj{i}{M}}{A_i}
+\backslash
+quad(i=1,2)$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:product-typing-rules"
+
+\end_inset
+
+product typing rules
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unit Type
+\end_layout
+
+\begin_layout Standard
+unit typeは1点集合のようなものである.
+ product typeを入れる時には入れることが多い.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+unit type extension
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+型と項を次のように拡張する.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\begin{eqnarray*}
+\alpha & ::= & \dots\:|\:1\\
+M & ::= & \dots\:|\:\star
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+あるいは, unit typeを
+\begin_inset Formula $\texttt{Unit}$
+\end_inset
+
+, 唯一のtermを
+\begin_inset Formula $\texttt{()}$
+\end_inset
+
+などとかくこともある.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+star}{1}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:unit-typing-rules"
+
+\end_inset
+
+unit typing rules
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Semantics
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\eqnth}[1]{\mathcal{E}_{#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Equational Theory
+\end_layout
+
+\begin_layout Standard
+calculusの中で等しいラムダ項同士を全て集めた集合をそのcalculusのequational theoryとよぶ.
+ 具体的には, 
+\begin_inset Formula $\eqnth{\lambda}=\{\typed[\lambda]{\Gamma}{M=N}A;\ \typed[\lambda]{\Gamma}MA,\:\typed[\lambda]{\Gamma}NA\}$
+\end_inset
+
+のような集合である.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Formula $\STLC$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula $\STLC$
+\end_inset
+
+のequational theoryを, 
+\begin_inset Formula $\beta\eta$
+\end_inset
+
+-equivalenceから得られるものとする.
+ 書き下すと図
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:equational theory"
+
+\end_inset
+
+のような規則によってequational theoryが定まる.
+ ただしここでは, 出現する項がwell-typedであることなどは省略してかいた.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "20col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(refl)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{M = M}{A}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "20col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{M = N}{A}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(sym)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{N = M}{A}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{L = M}{A}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{M = N}{A}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(trans)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BinaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{L = N}{A}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace 0.5cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma,x:A}{M = N}{B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(abs)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+lambda x.
+ M = 
+\backslash
+lambda x.
+ N}{A 
+\backslash
+to B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{M = M'}{A 
+\backslash
+to B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{N = N'}{A}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(app)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BinaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{MN = M'N'}{B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace 0.5cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{($
+\backslash
+beta$)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{(
+\backslash
+lambda x.M)N = M[N/x]}{B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$x 
+\backslash
+notin 
+\backslash
+text{FV}(M)$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{($
+\backslash
+eta$)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+lambda x.
+ M x = M}{A 
+\backslash
+to B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:equational theory"
+
+\end_inset
+
+equational theory of 
+\begin_inset Formula $\eqnth{\STLC}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(refl), (sym), (trans)は同値関係の定義である.
+ (abs), (app)は
+\begin_inset Formula $M=N\Longrightarrow L[M/x]=L[N/x]$
+\end_inset
+
+という規則(subst ruleという)が成り立つようにコンストラクターごとに決まる等式である.
+ このような規則は自然に決まるので今後は逐一かかないことにする.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Formula $\STfp$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula $\STfp$
+\end_inset
+
+のequational theoryを, 
+\begin_inset Formula $\mathcal{E}_{\STLC}$
+\end_inset
+
+に加え次のruleからなるものとする.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(prodU)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+pair{
+\backslash
+proj{1}{M}}{
+\backslash
+proj{2}{M}} = M}{A 
+\backslash
+times B}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(prodC)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+proj{i}{
+\backslash
+pair{M_1}{M_2}} = M_i}{A_i}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace 0.5cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(unitU)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{M = 
+\backslash
+star}{1}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:equational theory-finprod"
+
+\end_inset
+
+equational theory of 
+\begin_inset Formula $\eqnth{\STfp}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+前述の通り, subst ruleが成り立つような, projとpairについての等式は省略した.
+\end_layout
+
+\begin_layout Section
+Interpretation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\STfp$
+\end_inset
+
+の型とjudgementを, あるcategoryの射に対応付けるということをする.
+ このような対応がcalculusとcategoryの構造を1対1に対応付けるのであれば, calculusで考えることとcategoryで考えることは同じとい
+える.
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cat}[1]{\mathbb{#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Syn}{\text{Syn}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Obj}{\text{Obj}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Syntactic category
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+syntactic category
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+次のようにして定まるcategory 
+\begin_inset Formula $\cat S$
+\end_inset
+
+を
+\series bold
+
+\begin_inset Formula $\STfp$
+\end_inset
+
+
+\series default
+の
+\series bold
+syntactic category
+\series default
+ 
+\begin_inset Formula $\Syn(\STfp)$
+\end_inset
+
+とよぶ.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Obj(\cat S)=\Typ(\STfp)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\cat S(A,B)=\{\typed{x:A}MB\}/\sim_{\eqnth{\STfp}}$
+\end_inset
+
+ (ただし, 
+\begin_inset Formula $(\typed{x:A}MB)\sim(\typed{x:A}NB)\iff\typed{(x:A}{M=N}B\in\eqnth{\STfp})$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $id_{A}:=[\typed{x:A}xA]$
+\end_inset
+
+ by (var)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $[\typed{y:B}NC]\circ[\typed{x:A}MB]:=[\typed{x:A}{N[M/y]}C]$
+\end_inset
+
+ by (app), (abs)
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+(associativity) 項
+\begin_inset Formula $L,M,N$
+\end_inset
+
+に対し(
+\begin_inset Formula $M$
+\end_inset
+
+のcontextに使う変数
+\begin_inset Formula $y$
+\end_inset
+
+はfreshにとってよい
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+judgement 
+\begin_inset Formula $\typed{x:A}MB$
+\end_inset
+
+により, 
+\begin_inset Formula $M$
+\end_inset
+
+は
+\begin_inset Formula $x$
+\end_inset
+
+以外の自由変数を含まない.
+ よって
+\begin_inset Formula $y$
+\end_inset
+
+は出現したとしても束縛変数であるから, 適当にfreshな名前に取り替えておけばよい.
+ ということを一々断る必要もないだろう.
+\end_layout
+
+\end_inset
+
+),
+\begin_inset Formula 
+\begin{eqnarray*}
+([\typed{z:C}ND]\circ[\typed{y:B}MC])\circ[\typed{x:A}LB] & = & [\typed{y:B}{N[M/z]}D]\circ[\typed{x:A}LB]\\
+ & = & [\typed{x:A}{(N[M/z])[L/y]}D]\\
+ & = & [\typed{x:A}{(N[L/y])[(M[L/y])/z]}D]\\
+ & = & [\typed{x:A}{N[(M[L/y])/z]}D]
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray*}
+[\typed{z:C}ND]\circ([\typed{y:B}MC]\circ[\typed{x:A}LB]) & = & [\typed{z:C}ND]\circ[\typed{x:A}{M[L/y]}C]\\
+ & = & [\typed{x:A}{N[(M[L/y])/z]}D]
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+となるので, associativityが成り立つ.
+\end_layout
+
+\begin_layout Proof
+(left identity) 項
+\begin_inset Formula $M$
+\end_inset
+
+に対し,
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray*}
+[\typed{y:B}yB]\circ[\typed{x:A}MB] & = & [\typed{x:A}{M[y/y]}B]\\
+ & = & [\typed{x:A}MB]
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+となるので, left identityが成り立つ.
+\end_layout
+
+\begin_layout Proof
+right identityも同様.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:S is cartesian closed"
+
+\end_inset
+
+
+\begin_inset Formula $\cat S$
+\end_inset
+
+はcartesian closed.
+\end_layout
+
+\begin_layout Proof
+type constructor 
+\begin_inset Formula $1,\times,\to$
+\end_inset
+
+がそれぞれterminal object, product, exponentialを与えることをみる.
+\end_layout
+
+\begin_layout Proof
+(terminal obj) 
+\begin_inset Formula $1$
+\end_inset
+
+への射の存在と一意性がいえればよいが, 前者は
+\begin_inset Formula $[\typed{x:A}{\star}1]$
+\end_inset
+
+によって, 後者は(unitU)の規則によってわかる.
+\end_layout
+
+\begin_layout Proof
+(product) projectionが
+\begin_inset Formula $[\typed{x:A_{1}\times A_{2}}{\proj i{(x)}}{A_{i}}]\ (i=1,2)$
+\end_inset
+
+によって与えられる.
+ また, 
+\begin_inset Formula $[\typed{x:P}{M_{i}}{A_{i}}]\ (i=1,2)$
+\end_inset
+
+が与えられたとき
+\begin_inset Formula $[\typed{x:P}{\pair{M_{1}}{M_{2}}}{A_{1}\times A_{2}}]$
+\end_inset
+
+がmediating arrowになり, 図式の可換性が(prodC)によってわかる.
+ mediating arrowの一意性は(prodU)によりわかる.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[auto]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (p) at (2.5, 2.5) {$P$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (a1) at (0, 0) {$A_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (a12) at (2.5, 0) {$A_1 
+\backslash
+times A_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (a2) at (5, 0) {$A_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, dashed] (p) to node[yshift=-10pt] {$
+\backslash
+scriptstyle 
+\backslash
+pair{M_1}{M_2}$} (a12);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->] (p) to node[swap] {$
+\backslash
+scriptstyle M_1$} (a1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->] (p) to node {$
+\backslash
+scriptstyle M_2$} (a2);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->] (a12) to node {$
+\backslash
+scriptstyle 
+\backslash
+proj{1}$} (a1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->] (a12) to node[swap] {$
+\backslash
+scriptstyle 
+\backslash
+proj{2}$} (a2);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+productの図式
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+(exponential) homの同型は次のようにして与えられる:
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray*}
+\cat S(A\times B,C) & \cong & \cat S(A,B\to C)\\{}
+[\typed{x:A\times B}MC] & \mapsto & [\typed{y:A}{\lambda b.M[\pair yb/x]}C]\\{}
+[\typed{x:A\times B}{(N[\proj 1{(x)}/y])(\proj 2{(x)})}C] & \mapsfrom & [\typed{y:A}N{B\to C}]
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[auto]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (ab) at (1.5, 2.5) {$A 
+\backslash
+times B$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (ca') at (1.5, 0) {$C^B 
+\backslash
+times B$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (c) at (4, 0) {$C$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (b) at (0, 2.5) {$A$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (ca) at (0, 0) {$C^B$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->] (ab) to node {$
+\backslash
+scriptstyle M$} (c);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->] (ab) to node {$
+\backslash
+scriptstyle 
+\backslash
+bar{M} 
+\backslash
+times 1$} (ca');
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->] (ca') to node {$
+\backslash
+scriptstyle (
+\backslash
+text{app})$} (c);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, dashed] (b) to node {$
+\backslash
+scriptstyle 
+\backslash
+bar{M}$} (ca);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+exponentialの図式
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+上の同型
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+厳密にはこれが同型であることはまだ示していない; 結果的には上の同型がexponentialの同型を与えるが, 以下では図式の射の存在と一意性を示すことでexp
+onentialの存在を示している.
+\end_layout
+
+\end_inset
+
+は, 左から右が
+\begin_inset Formula $M\mapsto\hat{M}$
+\end_inset
+
+になっており, 右から左が
+\begin_inset Formula $\hat{M}\mapsto(\text{app})\circ(\hat{M}\times1)$
+\end_inset
+
+を得る操作になっている.
+\end_layout
+
+\begin_layout Proof
+図式の可換性は,
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & [\typed{x:A\times B}{(\hat{M}[\proj 1{(x)}/y])(\proj 2{(x)})}C]\\
+ & = & [\typed{x:A\times B}{((\lambda b.M[\pair yb/x])[\proj 1{(x)}/y])(\proj 2{(x)})}C]\\
+ & = & [\typed{x:A\times B}{(\lambda b.M[\pair{\proj 1{(x)}}b/x])(\proj 2{(x)})}C]\\
+ & = & [\typed{x:A\times B}{M[\pair{\proj 1{(x)}}{\proj 2{(x)}}/x]}C]\\
+ & = & [\typed{x:A\times B}{M[x/x]}C]\\
+ & = & [\typed{x:A\times B}MC]
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+によってわかる.
+ 一意性は, 
+\begin_inset Formula $[\typed{y:A}N{B\to C}]$
+\end_inset
+
+が
+\begin_inset Formula $(\text{app})\circ((\lambda y.N)\times1)=M$
+\end_inset
+
+を満たすとする.
+ このとき, 
+\begin_inset Formula $\typed{y:A}{N=\lambda b.\:M[\pair yb/x]}{B\to C}\in\eqnth{\STfp}$
+\end_inset
+
+が言えればよいが, このことは
+\begin_inset Formula $\eta$
+\end_inset
+
+変換により
+\begin_inset Formula $\typed{y:A,b:B}{N\:b=M[\pair yb/x]}{C\in\eqnth{\STfp}}$
+\end_inset
+
+と同値である.
+ そしてこれは, 
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & [\typed{y:A,b:B}{M[\pair yb/x]}C]\\
+ & = & [\typed{y:A,b:B}{(N[\proj 1{(x)}/y])(\proj 2{(x)})[\pair yb/x]}C]\qquad(\text{app})\circ((\lambda y.N)\times1)=M\text{を代入}\\
+ & = & [\typed{y:A,b:B}{(N[y/y])b}C]\\
+ & = & [\typed{y:A,b:B}{N\:b}C]
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+によって示される.
+\end_layout
+
+\begin_layout Standard
+この補題により, 
+\begin_inset Formula $\STfp$
+\end_inset
+
+のequational theoryはsyntactic categoryにCCCの構造を生む.
+ さて逆に, 
+\begin_inset Formula $\cat S$
+\end_inset
+
+はCCC以外の構造をもたないのであろうか.
+ これを示すには, 適当なsettingで一般のCCC 
+\begin_inset Formula $\cat C$
+\end_inset
+
+と
+\begin_inset Formula $\cat S$
+\end_inset
+
+が同型などが言えればよい.
+ これを示すことがここでの目的である.
+\end_layout
+
+\begin_layout Subsection
+Interpretation
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\pr}[1]{\text{pr}_{#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+次のような変換
+\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\end_inset
+
+を考える:
+\end_layout
+
+\begin_layout Remark
+context: 
+\begin_inset Formula $\left\llbracket \{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\right\rrbracket =A_{1}\times\cdots\times A_{n};\ \left\llbracket \emptyset\right\rrbracket =1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+judgement: 
+\begin_inset Formula $\left\llbracket \typed{\Gamma}MA\right\rrbracket =[\typed{z:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(z)/x_{i}]}A]\qquad(\Gamma=\{x_{1}:A_{1},\dots x_{n}:A_{n}\})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+特に, 
+\begin_inset Formula $\cat S$
+\end_inset
+
+の射
+\begin_inset Formula $[\typed{x:A}MB]$
+\end_inset
+
+は
+\begin_inset Formula $\typed{\{x:A\}}MB$
+\end_inset
+
+とすれば逆に
+\begin_inset Formula $\STfp$
+\end_inset
+
+のjudgementへ変換できる.
+ この変換は同型なので, 
+\begin_inset Formula $\STfp$
+\end_inset
+
+の(well-typedな)termと
+\begin_inset Formula $\cat S$
+\end_inset
+
+の射は同一視できる.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\cat S$
+\end_inset
+
+は
+\begin_inset Formula $\STfp$
+\end_inset
+
+から自然に作ったcategoryなので当然といえば当然である.
+ この同一視は以下でも暗黙的に使う.
+\end_layout
+
+\begin_layout Standard
+以下, 
+\begin_inset Formula $\cat C$
+\end_inset
+
+を一般のCCCとする.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+interpretation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+interpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\STfp\to\cat C$
+\end_inset
+
+を, 次のように定める:
+\end_layout
+
+\begin_layout Definition
+型に対しては, 
+\begin_inset Formula $\left\llbracket 1\right\rrbracket =1,\ \left\llbracket A\times B\right\rrbracket =\left\llbracket A\right\rrbracket \times\left\llbracket B\right\rrbracket ,\ \left\llbracket A\to B\right\rrbracket =\left\llbracket B\right\rrbracket ^{\left\llbracket A\right\rrbracket }$
+\end_inset
+
+とする.
+\end_layout
+
+\begin_layout Definition
+judgementに対しても
+\begin_inset Formula $\left\llbracket \typed{\Gamma}MA\right\rrbracket :\left\llbracket \Gamma\right\rrbracket \to\left\llbracket A\right\rrbracket $
+\end_inset
+
+となるような射を対応させる.
+ これはjudgementがtyping ruleに沿って帰納的に定義されているのでそれに合わせてinterpretationもtyping ruleに沿って帰
+納的に次のようにして定義する.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\begin{eqnarray*}
+\left\llbracket \frac{x:A\in\Gamma}{\typed{\Gamma}xA}\right\rrbracket  & = & \left\llbracket \Gamma\right\rrbracket \xrightarrow{\text{pr}_{x}}\left\llbracket A\right\rrbracket \\
+\left\llbracket \frac{\typed{\Gamma,x:A}MB}{\typed{\Gamma}{\lambda x.M}{A\to B}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \times\left\llbracket A\right\rrbracket \xrightarrow{M}\left\llbracket B\right\rrbracket }{\left\llbracket \Gamma\right\rrbracket \xrightarrow[\hat{M}]{}\left\llbracket B\right\rrbracket ^{\left\llbracket A\right\rrbracket }}\\
+\left\llbracket \frac{\typed{\Gamma}{M_{1}}{A\to B}\qquad\typed{\Gamma}{M_{2}}A}{\typed{\Gamma}{M_{1}M_{2}}B}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{1}}B^{A}\qquad\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{2}}A}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{\pair{M_{2}}{M_{1}}}A\times B^{A}\xrightarrow{\text{ev}}B}\\
+\left\llbracket \frac{\typed{\Gamma}{M_{i}}{A_{i}}}{\typed{\Gamma}{\pair{M_{1}}{M_{2}}}{A_{1}\times A_{2}}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{i}}A_{i}}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{\pair{M_{1}}{M_{2}}}A_{1}\times A_{2}}\\
+\left\llbracket \frac{\typed{\Gamma}M{A_{1}\times A_{2}}}{\typed{\Gamma}{\proj iM}{A_{i}}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M}A_{1}\times A_{2}}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M}A_{1}\times A_{2}\xrightarrow{\text{pr}_{i}}A_{i}}\\
+\left\llbracket \frac{}{\typed{\Gamma}{\star}1}\right\rrbracket  & = & \frac{}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{!}1}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+上でも述べたとおり, この
+\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\end_inset
+
+は
+\begin_inset Formula $\STfp\to\cat S$
+\end_inset
+
+の変換を経由して
+\begin_inset Formula $\cat S\to\cat C$
+\end_inset
+
+を定めていると思えば良い.
+ また, このinterpretationは
+\begin_inset Formula $\cat C$
+\end_inset
+
+の(つまり一般の)CCCの構造だけで定義できることに注意.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left\llbracket \typed{\Gamma}MA\right\rrbracket $
+\end_inset
+
+を, 記号を濫用して単に
+\begin_inset Formula $\left\llbracket M\right\rrbracket $
+\end_inset
+
+とかくこともある.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+sound
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\typed[\lambda]{}{M=N}A\Longrightarrow\left\llbracket M\right\rrbracket =_{A}\left\llbracket N\right\rrbracket $
+\end_inset
+
+が成り立つとき, interpretation
+\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\end_inset
+
+は
+\series bold
+sound
+\series default
+という.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+complete
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\left\llbracket M\right\rrbracket =_{A}\left\llbracket N\right\rrbracket \Longrightarrow\ \typed[\lambda]{}{M=N}A$
+\end_inset
+
+が成り立つとき, interpretation
+\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\end_inset
+
+は
+\series bold
+complete
+\series default
+という.
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+interpretationのsound, completeは
+\begin_inset Formula $\STfp$
+\end_inset
+
+のequationと
+\begin_inset Formula $\cat C$
+\end_inset
+
+でのequalityの対応, とみて定義をしているが, これは
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\cat S\to\cat C$
+\end_inset
+
+がfully faithful, という言い方もできる.
+\end_layout
+
+\begin_layout Definition
+\begin_inset FormulaMacro
+\newcommand{\curry}[1]{\text{curry(\ensuremath{#1})}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset FormulaMacro
+\newcommand{\uncurry}[1]{\text{uncurry(\ensuremath{#1})}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset FormulaMacro
+\newcommand{\ev}{\text{ev}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset FormulaMacro
+\newcommand{\app}{(\text{app})}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\end_inset
+
+はsound.
+\end_layout
+
+\begin_layout Proof
+より強く, 
+\begin_inset Formula $\typed{\Gamma}{M=N}A\Longrightarrow\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket :\left\llbracket \Gamma\right\rrbracket \to\left\llbracket A\right\rrbracket $
+\end_inset
+
+を示す.
+ judgementに関する帰納法による.
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+(refl,
+\begin_inset space \space{}
+\end_inset
+
+sym,
+\begin_inset space \space{}
+\end_inset
+
+trans) 明らか.
+\end_layout
+
+\begin_layout Description
+(abs) 
+\begin_inset Formula $\typed{\Gamma}{\lambda x.M=\lambda x.N}{A\to B}$
+\end_inset
+
+とする.
+ 帰納法の仮定より
+\begin_inset Formula $\left\llbracket \typed{\Gamma,x:A}MB\right\rrbracket =\left\llbracket \typed{\Gamma,x:A}NB\right\rrbracket $
+\end_inset
+
+であるが, 両辺をcurry化すれば欲しい等式が得られる.
+\end_layout
+
+\begin_layout Description
+(app) 
+\begin_inset Formula $\typed{\Gamma}{M_{1}M_{2}=N_{1}N_{2}}A$
+\end_inset
+
+とする.
+ 帰納法の仮定により, 
+\begin_inset Formula $\left\llbracket M_{i}\right\rrbracket =\left\llbracket N_{i}\right\rrbracket \ (i=1,2)$
+\end_inset
+
+となりOK.
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\beta$
+\end_inset
+
+) 
+\begin_inset Formula $\typed{\Gamma}{(\lambda x.M)N=M[N/x]}B$
+\end_inset
+
+とする.
+ 
+\begin_inset Formula $\Gamma=\{x_{1}:A_{1}\times\cdots x_{n}:A_{n}\}$
+\end_inset
+
+とすると, interpretationの定義によって
+\begin_inset Formula $\left\llbracket \typed{\Gamma}MA\right\rrbracket =\left\llbracket \typed{x:\Gamma}{M[\pr i(x)/x_{i}]}A\right\rrbracket $
+\end_inset
+
+が成り立つことに注意して, 
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & \left\llbracket \typed{\Gamma}{(\lambda x.M)N}B\right\rrbracket \\
+ & = & \app\circ\pair{\left\llbracket {\typed{\Gamma}{\lambda x.M}{A\to B}}\right\rrbracket }{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \app\circ\pair{\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }}{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \app\circ(\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }\times1)\circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \uncurry{\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }}\circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \left\llbracket \typed{\Gamma,x:A}MB\right\rrbracket \circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \left\llbracket \typed{z:\left\llbracket \Gamma\right\rrbracket \times A}{M[\pr i(\pr 1(z))/x_{i},\:\pr 2(z)/x]}B\right\rrbracket \circ\left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{\pair y{N[\pr i(y)/x_{i}]}}{\left\llbracket \Gamma\right\rrbracket \times A}\right\rrbracket \\
+ & = & \left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(\pr 1(z))/x_{i},\:\pr 2(z)/x][\pair y{N[\pr i(y)/x_{i}]}/z]}B\right\rrbracket \\
+ & = & \left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(y)/x_{i},\:N[\pr i(y)/x_{i}]/x]}B\right\rrbracket \\
+ & = & \left\llbracket \typed{\Gamma}{M[x_{i}/x_{i},\:N[x_{i}/x_{i}]/x]}B\right\rrbracket \\
+ & = & \left\llbracket \typed{\Gamma}{M[N/x]}B\right\rrbracket 
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+よってOK.
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+(
+\begin_inset Formula $\eta$
+\end_inset
+
+) 
+\begin_inset Formula $\typed{\Gamma}{\lambda x.\:(M\:x)=M}{A\to B}$
+\end_inset
+
+とする.
+ このとき, 
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & \left\llbracket \typed{\Gamma}{\lambda x.\:(M\:x)}{A\to B}\right\rrbracket \\
+ & = & \curry{\left\llbracket {\typed{\Gamma,x:A}{M\:x}B}\right\rrbracket }\\
+ & = & \curry{\app\circ\pair{\left\llbracket {\typed{\Gamma,x:A}M{A\to B}}\right\rrbracket }{\left\llbracket {\typed{\Gamma,x:A}xA}\right\rrbracket }}\\
+ & = & \curry{\app\circ\pair{\left\llbracket {\typed{\Gamma,x:A}M{A\to B}}\right\rrbracket }{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
+ & = & \curry{\app\circ(\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket \times1)\circ\pair{\pr 1^{\left\llbracket \Gamma\right\rrbracket ,A}}{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
+ & = & \curry{\app\circ(\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket \times1)}\\
+ & = & \curry{\uncurry{\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket }}\\
+ & = & \left\llbracket \typed{\Gamma}M{A\to B}\right\rrbracket 
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+によりOK.
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+(prodU),
+\begin_inset space \space{}
+\end_inset
+
+(prodC),
+\begin_inset space \space{}
+\end_inset
+
+(unitU) これはunit typeが
+\begin_inset Formula $\cat C$
+\end_inset
+
+の1へ, product typeが
+\begin_inset Formula $\cat C$
+\end_inset
+
+のproductに対応していることから明らか.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+よって
+\begin_inset Formula $\typed{\Gamma}{M=N}A\Longrightarrow\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket :\left\llbracket \Gamma\right\rrbracket \to A$
+\end_inset
+
+がいえたので, 
+\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\end_inset
+
+はsound.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\end_inset
+
+はcomplete.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\cat C$
+\end_inset
+
+での等式はCCCの等式であり, すなわち
+\begin_inset Formula $\cat S$
+\end_inset
+
+でも成り立つことは補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:S is cartesian closed"
+
+\end_inset
+
+からわかる.
+\end_layout
+
+\begin_layout Remark
+上で
+\begin_inset Formula $\STfp$
+\end_inset
+
+と(他に構造の入っていない)CCCの対応を見たが, 通常はcalculusを拡張することも含めて考える.
+ すなわち, 
+\begin_inset Formula $\eqnth{\STfp}$
+\end_inset
+
+を含む任意のequational theoryは適当なinterpretationによりCCCに対応付けることができ, すると
+\begin_inset Formula $\STfp$
+\end_inset
+
+(のequational theory)を拡大することとCCCに構造を付与することがぴったり対応する.
+ このような意味を込めてsimply-typed lambda calculusのmodelはCCCである, とか, CCCのinternal
+ languageはsimply-typed lambda calculusであるなどと言ったりする.
+\end_layout
+
+\begin_layout Remark
+よってここでの証明は, calculusとそのモデルの対応という意味では少し弱いことを主張しているが, このpdfはまだ途中なので勘弁して欲しい.
+\end_layout
+
+\end_body
+\end_document
