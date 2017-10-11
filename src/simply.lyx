@@ -1144,7 +1144,11 @@ calculusの中で等しいラムダ項同士を全て集めた集合をそのcal
 \begin_inset Formula $\STLC$
 \end_inset
 
-のequational theoryを, 
+のequational theory 
+\begin_inset Formula $\eqnth{\STLC}$
+\end_inset
+
+を, 
 \begin_inset Formula $\beta\eta$
 \end_inset
 
@@ -2091,9 +2095,12 @@ Interpretation
 \begin_inset Formula $\STfp$
 \end_inset
 
-の型とjudgementを, あるcategoryの射に対応付けるということをする.
- このような対応がcalculusとcategoryの構造を1対1に対応付けるのであれば, calculusで考えることとcategoryで考えることは同じとい
-える.
+のモデルを与えよう.
+ 具体的には, 
+\begin_inset Formula $\STfp$
+\end_inset
+
+の型とjudgementを, あるcategoryの対象と射に対応付けるということをする.
 \end_layout
 
 \begin_layout Standard
@@ -2120,6 +2127,76 @@ Interpretation
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Hom}[3][]{\text{Hom}_{#1}(#2,#3)}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Categorical Model
+\end_layout
+
+\begin_layout Definition
+ラムダ計算
+\begin_inset Formula $\lambda$
+\end_inset
+
+に対し, object
+\begin_inset Formula $1$
+\end_inset
+
+を備えたcategory 
+\begin_inset Formula $\cat C$
+\end_inset
+
+で, 
+\begin_inset Formula $\left\llbracket -\right\rrbracket _{0}:\Typ(\lambda)\to\Obj(\cat C)$
+\end_inset
+
+と
+\begin_inset Formula $\left\llbracket -\right\rrbracket _{1}:\{M;\ M\text{はclosedで, 型\ensuremath{A}をもつ}\}\to\Hom[\cat C]1{\left\llbracket A\right\rrbracket _{0}}$
+\end_inset
+
+となるものが定義できる時, 
+\begin_inset Formula $\cat C$
+\end_inset
+
+をこのラムダ計算の
+\series bold
+(categorical)モデル
+\series default
+, 
+\begin_inset Formula $\left\llbracket -\right\rrbracket _{0},\left\llbracket -\right\rrbracket _{1}$
+\end_inset
+
+を
+\series bold
+interpretation
+\series default
+とよび, これらをまとめてここでは
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\lambda\to\cat C$
+\end_inset
+
+とかく.
+\end_layout
+
+\begin_deeper
+\begin_layout Definition
+
+\series bold
+sound
+\series default
+とは, 任意のinterpretation
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\lambda\to\cat C$
+\end_inset
+
+に対して
+\end_layout
+
+\end_deeper
 \begin_layout Subsection
 Syntactic category
 \end_layout
@@ -3159,11 +3236,11 @@ trans) 明らか.
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & \left\llbracket \typed{\Gamma}{(\lambda x.M)N}B\right\rrbracket \\
- & = & \app\circ\pair{\left\llbracket {\typed{\Gamma}{\lambda x.M}{A\to B}}\right\rrbracket }{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
- & = & \app\circ\pair{\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }}{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
- & = & \app\circ(\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }\times1)\circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
- & = & \uncurry{\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }}\circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
- & = & \left\llbracket \typed{\Gamma,x:A}MB\right\rrbracket \circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \app\circ\pair{\left\llbracket {{\typed{\Gamma}{\lambda x.M}{A\to B}}}\right\rrbracket }{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
+ & = & \app\circ\pair{\curry{\left\llbracket {{\typed{\Gamma,x:A}MB}}\right\rrbracket }}{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
+ & = & \app\circ(\curry{\left\llbracket {{\typed{\Gamma,x:A}MB}}\right\rrbracket }\times1)\circ\pair 1{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
+ & = & \uncurry{\curry{\left\llbracket {{\typed{\Gamma,x:A}MB}}\right\rrbracket }}\circ\pair 1{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
+ & = & \left\llbracket \typed{\Gamma,x:A}MB\right\rrbracket \circ\pair 1{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
  & = & \left\llbracket \typed{z:\left\llbracket \Gamma\right\rrbracket \times A}{M[\pr i(\pr 1(z))/x_{i},\:\pr 2(z)/x]}B\right\rrbracket \circ\left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{\pair y{N[\pr i(y)/x_{i}]}}{\left\llbracket \Gamma\right\rrbracket \times A}\right\rrbracket \\
  & = & \left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(\pr 1(z))/x_{i},\:\pr 2(z)/x][\pair y{N[\pr i(y)/x_{i}]}/z]}B\right\rrbracket \\
  & = & \left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(y)/x_{i},\:N[\pr i(y)/x_{i}]/x]}B\right\rrbracket \\
@@ -3199,12 +3276,12 @@ trans) 明らか.
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & \left\llbracket \typed{\Gamma}{\lambda x.\:(M\:x)}{A\to B}\right\rrbracket \\
- & = & \curry{\left\llbracket {\typed{\Gamma,x:A}{M\:x}B}\right\rrbracket }\\
- & = & \curry{\app\circ\pair{\left\llbracket {\typed{\Gamma,x:A}M{A\to B}}\right\rrbracket }{\left\llbracket {\typed{\Gamma,x:A}xA}\right\rrbracket }}\\
- & = & \curry{\app\circ\pair{\left\llbracket {\typed{\Gamma,x:A}M{A\to B}}\right\rrbracket }{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
- & = & \curry{\app\circ(\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket \times1)\circ\pair{\pr 1^{\left\llbracket \Gamma\right\rrbracket ,A}}{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
- & = & \curry{\app\circ(\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket \times1)}\\
- & = & \curry{\uncurry{\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket }}\\
+ & = & \curry{\left\llbracket {{\typed{\Gamma,x:A}{M\:x}B}}\right\rrbracket }\\
+ & = & \curry{\app\circ\pair{\left\llbracket {{\typed{\Gamma,x:A}M{A\to B}}}\right\rrbracket }{\left\llbracket {{\typed{\Gamma,x:A}xA}}\right\rrbracket }}\\
+ & = & \curry{\app\circ\pair{\left\llbracket {{\typed{\Gamma,x:A}M{A\to B}}}\right\rrbracket }{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
+ & = & \curry{\app\circ(\left\llbracket {{\typed{\Gamma}M{A\to B}}}\right\rrbracket \times1)\circ\pair{\pr 1^{\left\llbracket \Gamma\right\rrbracket ,A}}{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
+ & = & \curry{\app\circ(\left\llbracket {{\typed{\Gamma}M{A\to B}}}\right\rrbracket \times1)}\\
+ & = & \curry{\uncurry{\left\llbracket {{\typed{\Gamma}M{A\to B}}}\right\rrbracket }}\\
  & = & \left\llbracket \typed{\Gamma}M{A\to B}\right\rrbracket 
 \end{eqnarray*}
 

@@ -1,0 +1,955 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass jsarticle
+\begin_preamble
+\usepackage{syntax}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{../lib/bussproofs}
+\usepackage{url}
+
+\tikzset{%
+    symbol/.style={%
+        draw=none,
+        every to/.append style={%
+            edge node={node [sloped, allow upside down, auto=false]{$#1$}}}
+    }
+}
+\end_preamble
+\options uplatex,a4paper,dvipdfmx
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language japanese
+\language_package default
+\inputencoding utf8-platex
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format pdf3
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\topmargin 25mm
+\bottommargin 25mm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Preliminaries
+\end_layout
+
+\begin_layout Author
+myuon
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+他のノートを読むにあたって前提とされていることの一部をここにまとめておく.
+\end_layout
+
+\begin_layout Section
+Categorical Semantics
+\end_layout
+
+\begin_layout Standard
+type theoryとはその名の通り``型
+\begin_inset Quotes erd
+\end_inset
+
+とは何かということを定めたものである.
+ 以下では項の文法としてラムダ計算を取り扱うことにして, あまりtype theoryと型付きラムダ計算を区別せずに話をするが, 必ずしもtype
+ theoryは型付きラムダ計算を指すわけではない.
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cat}[1]{\mathbb{#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Syn}[1]{\text{Syn}(#1)}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Obj}{\text{Obj}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Hom}[3][]{\text{Hom}_{#1}(#2,#3)}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Informal Definitions
+\end_layout
+
+\begin_layout Standard
+type theoryの定義や定式化はものによって様々なのでformalな定義を与えるのは難しい.
+ よってここでは, 出来る限り標準的な(
+\begin_inset Formula $\neq$
+\end_inset
+
+一般的な)type theoryについて言えることを述べることにする.
+ 以下の定義が上手く機能しないようなものを考えるときは適宜定義を修正して考えることになる.
+\end_layout
+
+\begin_layout Definition
+type theory 
+\begin_inset Formula $T$
+\end_inset
+
+とは, type, term, そしてそれらを関係づけるruleからなるものである.
+ それぞれ次のような代表的な定め方がある:
+\end_layout
+
+\begin_layout Itemize
+type formation rule: 型コンストラクタが満たすべきルールを
+\begin_inset Formula $\vdash A:\text{Type}$
+\end_inset
+
+のようにして記述したもの.
+ 例えば, function type constructor 
+\begin_inset Formula $\to$
+\end_inset
+
+が満たすべきルールは, 
+\begin_inset Formula 
+\[
+\vdash A:\text{Type},\ \vdash B:\text{Type}\Longrightarrow\ \vdash A\to B:\text{Type}
+\]
+
+\end_inset
+
+のようになる.
+ ただし, 型は型コンストラクタによって自由生成されたもの(特別な制約がないもの)が多いので, そのような場合には
+\begin_inset Formula $A::=A_{1}\to A_{2}$
+\end_inset
+
+のようにBNFで書いてしまっても十分なことが多い.
+\end_layout
+
+\begin_layout Itemize
+term introduction/elimination rule: 項コンストラクタが満たすべきルールを, 各型コンストラクタに対してそれを導入する(結論に
+用いられる)規則とそれを除去する(前提に用いられる)規則からなる(両方あるとは限らない).
+ これらはいずれも項コンストラクタの導入規則であることに注意.
+ 例として, function type constructor
+\begin_inset Formula $\to$
+\end_inset
+
+のintro/elimルールは, 次のようなabs/appルールである:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+Gamma, x : A 
+\backslash
+vdash M : B$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{abs(funI)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+Gamma 
+\backslash
+vdash 
+\backslash
+lambda x.
+ M : A 
+\backslash
+to B$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+Gamma 
+\backslash
+vdash M : A 
+\backslash
+to B$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+Gamma 
+\backslash
+vdash N : A$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{app(funE)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BinaryInfC{$
+\backslash
+Gamma 
+\backslash
+vdash M N : B$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+conversion rule: 項のequalityをexternalに与えるようなルールで, これが実際にラムダ計算に構造を与える.
+ type systemによっては項のequalityをinternalに定義できる(実際にtype system上でequalであることを証明できる)場合があ
+るが, ここでいうconversion ruleはそのようなものは含まない.
+ あくまでexternalに与えられたルールを指していう.
+ 例として, function type 
+\begin_inset Formula $\to$
+\end_inset
+
+に関するルールとして次の
+\begin_inset Formula $\beta$
+\end_inset
+
+/
+\begin_inset Formula $\eta$
+\end_inset
+
+ルールがある:
+\begin_inset Formula 
+\begin{align*}
+(\beta)\quad & \vdash(\lambda x.\:M)N=M[N/x]\\
+(\eta)\quad & \vdash(\lambda x.\:Mx)=M
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+computation rule: 項の計算・評価を行う際に用いられるルールで, これはruleと言っているが項を別の項へ変換する関数である.
+ 主にラムダ計算をプログラミング言語として見る場合に定義される.
+ 例として, function type 
+\begin_inset Formula $\to$
+\end_inset
+
+に関するcomputation ruleとして次のような
+\begin_inset Formula $\beta$
+\end_inset
+
+-reductionルールがある:
+\begin_inset Formula 
+\[
+(\lambda x.\:M)N\rightsquigarrow M[N/x]\qquad(\beta)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+type theory 
+\begin_inset Formula $T$
+\end_inset
+
+に対して, 次のようにして与えたcategoryを
+\begin_inset Formula $T$
+\end_inset
+
+の
+\series bold
+syntactic category
+\series default
+とよび, 
+\begin_inset Formula $\Syn T$
+\end_inset
+
+とかく.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: 
+\begin_inset Formula $T$
+\end_inset
+
+のcontext 
+\begin_inset Formula $\Gamma=\{x_{1}:A_{1},\dots,x_{n}:A_{n}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+hom(
+\begin_inset Formula $\Gamma$
+\end_inset
+
+,
+\begin_inset Formula $\{\vec{y_{i}}:\vec{B_{i}}\}$
+\end_inset
+
+): 項の集合
+\begin_inset Formula $\{t_{1},\dots t_{n}\}$
+\end_inset
+
+であって, 各
+\begin_inset Formula $i$
+\end_inset
+
+に対してtyping judgement 
+\begin_inset Formula $\Gamma\vdash_{T}t_{i}:B_{i}$
+\end_inset
+
+が存在するもの.
+\end_layout
+
+\begin_layout Definition
+適当なtype theoryのなすcategory TypeTheoriesと適当なcategoryのなすcategory Categoriesが与えられている
+とする.
+ 
+\series bold
+categorical semantics
+\series default
+とは, 次の形の随伴(圏同値)のことである:
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+[
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+text{TypeTheories}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+ar[r,bend left,"
+\backslash
+text{Syn}",""{name=A, below}] &
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+text{Categories}
+\backslash
+ar[l,bend left,"
+\backslash
+text{Lan}",""{name=B,above}]
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+ar[from=A, to=B, symbol=
+\backslash
+dashv] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+ここで, 
+\begin_inset Formula $\text{Syn}$
+\end_inset
+
+はsyntactic category(を与えるfunctor), 
+\begin_inset Formula $\text{Lan}$
+\end_inset
+
+はinternal languageのことである.
+\end_layout
+
+\begin_deeper
+\begin_layout Definition
+type theory 
+\begin_inset Formula $T$
+\end_inset
+
+の(categorical) 
+\series bold
+モデル(model)
+\series default
+とは, category 
+\begin_inset Formula $\cat C$
+\end_inset
+
+とmorphism 
+\begin_inset Formula $\Syn T\to\cat C$
+\end_inset
+
+のことをいう.
+ このmorphismを
+\begin_inset Formula $T$
+\end_inset
+
+の
+\begin_inset Formula $\cat C$
+\end_inset
+
+での
+\series bold
+interpretation
+\series default
+とよぶ.
+ また, 単に
+\begin_inset Formula $\cat C$
+\end_inset
+
+のことをモデルということもある.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+\begin_inset Formula $T$
+\end_inset
+
+と
+\begin_inset Formula $\Syn T$
+\end_inset
+
+を自然に同一視して, 
+\begin_inset Formula $T$
+\end_inset
+
+から
+\begin_inset Formula $\cat C$
+\end_inset
+
+への変換をinterpretationと呼ぶことも多い.
+ この場合は
+\begin_inset Formula $T$
+\end_inset
+
+のcontextをobjectへ, 
+\begin_inset Formula $T$
+\end_inset
+
+のjudgementをmorphismへ対応させるような変換である.
+\end_layout
+
+\begin_layout Subsection
+Typed Lambda Calculus
+\end_layout
+
+\begin_layout Definition
+ラムダ計算
+\begin_inset Formula $\lambda$
+\end_inset
+
+の
+\series bold
+equational theory
+\series default
+とは, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+で証明可能な等式のなす集合のことである: 
+\begin_inset Formula $\mathcal{E}=\{\vdash_{\lambda}M=N;\:\text{\ensuremath{M}と\ensuremath{N}は\ensuremath{\lambda}でwell-formed}\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+ラムダ計算での等しさの証明可能性とは, 例えば項のequalityがconversion ruleによって与えられている場合はconversion
+ ruleが生成する等式全体になる.
+ 通常equational theoryは, 同値関係の定義である(refl), (sym), (trans)と, 
+\begin_inset Formula 
+\[
+\text{(subst)}\quad\vdash M=N\Longrightarrow\ \vdash L[M/x]=L[N/x]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+を含めるようにして定義する.
+\end_layout
+
+\begin_layout Standard
+また, 型付きラムダ計算の場合は, well-formedの条件にwell-typed(型付け可能である)を要請する.
+\end_layout
+
+\begin_layout Subsection
+Properties
+\end_layout
+
+\begin_layout Definition
+ラムダ計算
+\begin_inset Formula $\lambda$
+\end_inset
+
+で証明可能な命題
+\begin_inset Formula $\varphi$
+\end_inset
+
+が
+\series bold
+sound
+\series default
+とは, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+の任意のモデル
+\begin_inset Formula $\cat C$
+\end_inset
+
+(とmorphism 
+\begin_inset Formula $m:\Syn{\lambda}\to\cat C$
+\end_inset
+
+)に対し, 
+\begin_inset Formula $m(\bar{\varphi})$
+\end_inset
+
+が
+\begin_inset Formula $\cat C$
+\end_inset
+
+で真となることである.
+ ただし, 
+\begin_inset Formula $\varphi$
+\end_inset
+
+の
+\begin_inset Formula $\Syn{\lambda}$
+\end_inset
+
+での対応する命題を
+\begin_inset Formula $\bar{\varphi}$
+\end_inset
+
+とかいた.
+ また, この逆が成り立つ時, 
+\begin_inset Formula $\varphi$
+\end_inset
+
+は
+\series bold
+complete
+\series default
+という.
+\end_layout
+
+\begin_layout Standard
+上の
+\begin_inset Formula $\varphi$
+\end_inset
+
+としてequational theory(項のequality)をとったものをよく使うので, もう一度述べなおしておく.
+\end_layout
+
+\begin_layout Definition
+ラムダ計算
+\begin_inset Formula $\lambda$
+\end_inset
+
+のequational theory 
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+が
+\series bold
+sound
+\series default
+とは, 
+\begin_inset Formula $\vdash_{\lambda}M=N\in\mathcal{E}$
+\end_inset
+
+のとき, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+の任意のモデル
+\begin_inset Formula $\cat C$
+\end_inset
+
+とinterpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\lambda\to\cat C$
+\end_inset
+
+に対して
+\begin_inset Formula $\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket $
+\end_inset
+
+が
+\begin_inset Formula $\cat C$
+\end_inset
+
+で成り立つことである.
+ また, この逆を
+\series bold
+complete
+\series default
+という.
+\end_layout
+
+\begin_layout Standard
+上はラムダ計算だけでなくそのequational theoryを指定して初めて意味をなす命題であることに注意.
+\end_layout
+
+\begin_layout Standard
+また, 個々のinterpretationに関してsound/completeという言い方もする.
+\end_layout
+
+\begin_layout Definition
+interpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\lambda\to\cat C$
+\end_inset
+
+が
+\series bold
+sound
+\series default
+とは, 
+\begin_inset Formula $\vdash M=N\in\mathcal{E}$
+\end_inset
+
+のとき, 
+\begin_inset Formula $\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket $
+\end_inset
+
+が
+\begin_inset Formula $\cat C$
+\end_inset
+
+で成り立つことである.
+ また, この逆を
+\series bold
+complete
+\series default
+という.
+\end_layout
+
+\begin_layout Standard
+equational theoryがsoundならば, interpretation(model)はsoundである.
+\end_layout
+
+\begin_layout Subsection
+Term Model
+\end_layout
+
+\begin_layout Definition
+product type constructor 
+\begin_inset Formula $\times$
+\end_inset
+
+とterm constructor 
+\begin_inset Formula $\text{pr}_{i}(-)$
+\end_inset
+
+をもつような型付きラムダ計算
+\begin_inset Formula $\lambda$
+\end_inset
+
+に対して, 次のようにcategory 
+\begin_inset Formula $\cat C_{\lambda}$
+\end_inset
+
+を定める:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: 
+\begin_inset Formula $\lambda$
+\end_inset
+
+の型
+\end_layout
+
+\begin_layout Itemize
+hom(
+\begin_inset Formula $A$
+\end_inset
+
+,
+\begin_inset Formula $B$
+\end_inset
+
+): typing judgement 
+\begin_inset Formula $x:A\vdash M:B$
+\end_inset
+
+を, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+のequational theoryで割った同値類
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left\llbracket -\right\rrbracket _{\lambda}:\Syn{\lambda}\to\cat C_{\lambda}$
+\end_inset
+
+を, 
+\begin_inset Formula $\left\llbracket \{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\right\rrbracket _{\lambda}=A_{1}\times\cdots\times A_{n}$
+\end_inset
+
+, 
+\begin_inset Formula $\left\llbracket \{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\vdash t:B\right\rrbracket _{\lambda}=[z:A_{1}\times\cdots\times A_{n}\vdash t[\text{pr}_{i}(z)/x_{i}]:B]$
+\end_inset
+
+と定める.
+ これが
+\begin_inset Formula $\lambda$
+\end_inset
+
+のモデルになる時, このモデルを
+\series bold
+term model
+\series default
+という.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+実際には, これがcategoryになりモデルを与えることは今考えているラムダ計算の定義に戻って示す必要がある.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket $
+\end_inset
+
+がterm model 
+\begin_inset Formula $\cat C_{\lambda}$
+\end_inset
+
+で成り立つならば, 
+\begin_inset Formula $\vdash_{\lambda}M=N$
+\end_inset
+
+である.
+\end_layout
+
+\begin_layout Standard
+term modelのinterpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket _{\lambda}$
+\end_inset
+
+は必ずcompleteになる.
+ また, term modelは通常最も構造の少ないモデルであるので, 存在すればequational theoryも自然とcompleteになる.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{thebibliography}{9}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+bibitem{nlab-tt} nLab ``type theory", 
+\backslash
+url{https://ncatlab.org/nlab/show/type+theory}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{thebibliography}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
