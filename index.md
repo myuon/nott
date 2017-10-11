@@ -3,15 +3,16 @@
 
 Type Theoryについてのノートです.
 
-## Current Version: 0.1.2
+## Current Version: 0.1.2.1
 
 ノートのキリが良くなったところでtagを付けてmasterブランチに対してpushします. \\
 作業中のノートはdevelopブランチに置いてあります.
 
 ## Table of Contents
 
-- [untyped lambda-calculus](pdf/untyped.pdf)
-- [simply-typed lambda-calculus](pdf/simply.pdf)
+- [preliminaries.pdf](pdf/preliminaries.pdf): Preliminaries
+- [untyped.pdf](pdf/untyped.pdf): Untyped lambda calculus
+- [simply.pdf](pdf/simply.pdf): Simply-typed lambda calculus
 
 ## 連絡等
 
