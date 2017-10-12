@@ -651,6 +651,7 @@ equational theory
 
 \begin_layout Standard
 を含めるようにして定義する.
+ 通常(subst)は, 項のコンストラクタごとに専用のequationを入れる必要がある.
 \end_layout
 
 \begin_layout Standard
@@ -917,6 +918,115 @@ term modelのinterpretation
 
 は必ずcompleteになる.
  また, term modelは通常最も構造の少ないモデルであるので, 存在すればequational theoryも自然とcompleteになる.
+\end_layout
+
+\begin_layout Subsection
+Logical Formalism
+\end_layout
+
+\begin_layout Definition
+ラムダ計算
+\begin_inset Formula $\lambda$
+\end_inset
+
+の
+\series bold
+signature
+\series default
+ 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+とは, 次からなるもの:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+types 
+\begin_inset Formula $T$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+term constructor symbols 
+\begin_inset Formula $C$
+\end_inset
+
+: term constructorを表す記号を集めたもの.
+ また, 各constructorに対しそのdomainとcodomainの属するsortを決定する
+\begin_inset Formula $\text{dom}:C\to T^{*}$
+\end_inset
+
+, 
+\begin_inset Formula $\text{cod}:C\to T$
+\end_inset
+
+が与えられている.
+ また, arityのないconstructor (
+\begin_inset Formula $\text{dom}(c)=\emptyset$
+\end_inset
+
+となる
+\begin_inset Formula $c$
+\end_inset
+
+)はconstantと呼ばれる.
+\end_layout
+
+\begin_layout Itemize
+equational theory 
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+signatureとは, ラムダ計算を構成する記号を集めたもの, と思えばよい.
+ logicでのsignatureはfunction symbolの他にrelation symbolも含むが, ラムダ計算ではrelation
+ symbolが必要になることはあまりないのでここでは定義に含めていない.
+\end_layout
+
+\begin_layout Standard
+この意味で, 上で定義したモデルを捉え直すことができる.
+\end_layout
+
+\begin_layout Definition
+ラムダ計算の(categorical)
+\series bold
+モデル
+\series default
+
+\begin_inset Formula $\cat C$
+\end_inset
+
+とは, productをもち, 次からなるもの:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+type interpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :T\to\cat C_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+term constructor interpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\{c\in C;\:c:\text{dom}(c)\to\text{cod}(c)\}\to\Hom[\cat C]{\left\llbracket \text{dom}(c)\right\rrbracket }{\left\llbracket \text{cod}(c)\right\rrbracket }$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+signatureの定義で, constructorは2つ以上のarityをもつ場合も考慮して定義をしたので, このような定義ではモデルは自然にproductを
+持つ必要がある.
 \end_layout
 
 \begin_layout Standard
