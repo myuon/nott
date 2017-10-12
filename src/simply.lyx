@@ -3018,10 +3018,6 @@ equational theory:
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
 が成り立つことと随伴
 \begin_inset Formula $\Syn\dashv\Lan$
 \end_inset
@@ -3032,10 +3028,6 @@ equational theory:
 \begin_inset Formula $\typed[\lambda]{\Gamma}{M=N}B$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 
 \end_layout
 
