@@ -660,6 +660,148 @@ typing judgementの導出に関する場合分けにより明らか.
 \end_layout
 
 \begin_layout Section
+Properties
+\end_layout
+
+\begin_layout Subsection
+Strong Normalization
+\end_layout
+
+\begin_layout Standard
+次の定理を示すのが目標である.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Strong Normalization
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\STLC$
+\end_inset
+
+はSNである.
+ すなわち, 任意のラムダ項
+\begin_inset Formula $M$
+\end_inset
+
+に対して
+\begin_inset Formula $\beta$
+\end_inset
+
+-nf 
+\begin_inset Formula $N$
+\end_inset
+
+が存在して, 
+\begin_inset Formula $M\to_{\beta}^{*}N$
+\end_inset
+
+となる.
+\end_layout
+
+\begin_layout Standard
+これを示すために, 次のように型に対し特定の条件を満たす項の集合を関係づける.
+ このように型と項を関係づけて示す手法をlogical relationなどとよぶ.
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\RED}{\text{RED}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+次のようにreducibility candidates 
+\begin_inset Formula $\RED$
+\end_inset
+
+を定義する.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+型変数
+\begin_inset Formula $\alpha$
+\end_inset
+
+に対し, 
+\begin_inset Formula $t\in\RED_{\alpha}$
+\end_inset
+
+ iff 
+\begin_inset Formula $t$
+\end_inset
+
+はstrongly normalizing.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t\in\RED_{t\to t'}$
+\end_inset
+
+ iff 
+\begin_inset Formula $\forall u\in RED_{t},(t\:u)\in RED_{t'}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Lemma
+\begin_inset Formula $\typed{\Gamma}xA$
+\end_inset
+
+ならば
+\begin_inset Formula $x\in\RED_{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+
+\end_layout
+
+\begin_layout Proposition
+\begin_inset Formula $\typed{\Gamma}MA$
+\end_inset
+
+なら, 
+\begin_inset Formula $M\in RED_{A}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+typing judgementについての帰納法で示す.
+\end_layout
+
+\begin_layout Proof
+(var) 
+\begin_inset Formula $\typed{\Gamma}xA$
+\end_inset
+
+のとき, 
+\begin_inset Formula $x$
+\end_inset
+
+は
+\begin_inset Formula $\beta$
+\end_inset
+
+基を含まないから
+\end_layout
+
+\begin_layout Section
 Simple Extension
 \end_layout
 
