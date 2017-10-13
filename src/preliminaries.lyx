@@ -440,23 +440,102 @@ hom(
 \end_inset
 
 の項に関する同値関係で割ったもの).
- 
-\begin_inset Formula $\Delta$
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+contextを用いるのはexternalに直積(組)の扱いができることと同じなので, 組をtype theoryがinternalに扱えるならば,
+ すなわち
+\begin_inset Formula $T$
 \end_inset
 
-のサイズが1の時は
-\begin_inset Formula $\Gamma\vdash t_{1}:\Delta_{1}$
+がproduct typeをもつならば, 次のように定めても同じことである
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+同じことであると言っているが, 
+\begin_inset Formula $T$
 \end_inset
 
-の項
-\begin_inset Formula $t_{1}$
+がproduct typeをもつとき, 前者ではexternalな組とinternalな組を別のものとして区別して扱うことができるが後者はそれができないので同じ
+ではない.
+ contextをproduct以外の方法でエンコードしたいのであればこれらは区別する必要があるが, このノートではそのようなことはおそらくしないと思う.
+\end_layout
+
 \end_inset
 
-を自然に
-\begin_inset Formula $\Gamma\to\Delta$
+.
+\end_layout
+
+\begin_layout Definition
+product typeをもつtype theory 
+\begin_inset Formula $T$
 \end_inset
 
-なる射とみなす.
+に対して, 次のようにして与えたcategoryを
+\begin_inset Formula $T$
+\end_inset
+
+の
+\series bold
+syntactic category
+\series default
+とよび, 
+\begin_inset Formula $\Syn T$
+\end_inset
+
+とかく.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: 
+\begin_inset Formula $T$
+\end_inset
+
+のtype
+\end_layout
+
+\begin_layout Itemize
+hom(
+\begin_inset Formula $A$
+\end_inset
+
+,
+\begin_inset Formula $B$
+\end_inset
+
+): type judgement 
+\begin_inset Formula $x:A\vdash t:B$
+\end_inset
+
+(を
+\begin_inset Formula $T$
+\end_inset
+
+の項に関する同値関係で割ったもの).
+\end_layout
+
+\begin_layout Itemize
+conversion: また, このとき
+\begin_inset Formula $T$
+\end_inset
+
+の一般のjudgement 
+\begin_inset Formula $\{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\vdash M:B$
+\end_inset
+
+は
+\begin_inset Formula $z:A_{1}\times\dots\times A_{n}\vdash M[\text{pr}_{i}(z)/x_{i}]:B$
+\end_inset
+
+によって射とみなせる.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+以後はproduct typeをもつtype theoryを扱う際は後者を主に使っていく.
 \end_layout
 
 \begin_layout Definition
@@ -469,7 +548,6 @@ categorical semantics
 とは, 次の形の随伴(圏同値)のことである:
 \end_layout
 
-\end_deeper
 \begin_layout Definition
 \begin_inset ERT
 status open
