@@ -6,7 +6,6 @@
 \origin unavailable
 \textclass jsarticle
 \begin_preamble
-\usepackage{syntax}
 \usepackage{tikz}
 \usepackage{../lib/bussproofs}
 \end_preamble
@@ -200,35 +199,20 @@ status open
 などとかく.
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{grammar}
-\end_layout
-
-\begin_layout Plain Layout
-
-  <type> ::= <typevar> 
-\backslash
-alt <type> `->' <type>
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{grammar}
-\end_layout
+\begin_layout Definition
+\begin_inset Formula 
+\[
+\alpha::=v\:|\:\alpha_{1}\to\alpha_{2}
+\]
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 ただし
-\begin_inset Formula $\langle\text{typevar}\rangle$
+\begin_inset Formula $v$
 \end_inset
 
 とは型変数であり, ここでは適当な型変数の集合
@@ -236,15 +220,10 @@ end{grammar}
 \end_inset
 
 が与えられているとする.
- 型変数は
-\begin_inset Formula $\alpha,\beta,\gamma,\dots$
-\end_inset
-
-などとかく.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $t_{1}\to t_{2}$
+\begin_inset Formula $\alpha_{1}\to\alpha_{2}$
 \end_inset
 
 のことを
@@ -680,17 +659,41 @@ coherence
 typing judgementの導出に関する場合分けにより明らか.
 \end_layout
 
-\begin_layout Standard
-typing ruleとは逆向きに, ``この型がついているならば, 前提となる項がこのようになっているはず
-\begin_inset Quotes erd
-\end_inset
-
-というような性質を指してしばしばcoherence(一貫性)と呼ぶ.
- 
-\end_layout
-
 \begin_layout Section
 Simple Extension
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\bool}{\text{bool}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Ground Type
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\STLC$
+\end_inset
+
+の型以外に, 基本となる組み込みの型を追加する.
+ このような型をbase typeやground typeとよぶ.
+\end_layout
+
+\begin_layout Standard
+例えばboolean expressionを追加する場合は, 型と項を次のように拡張する.
+\begin_inset Formula 
+\begin{eqnarray*}
+\alpha & ::= & \dots\:|\:\bool\\
+M & ::= & \dots\:|\:\text{true}\:|\:\text{false}\:|\:\text{if \ensuremath{M} then \ensuremath{M} else \ensuremath{M}}
+\end{eqnarray*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1108,6 +1111,21 @@ unit typing rules
 
 \end_layout
 
+\begin_layout Subsection
+Abbreviations
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\STLC$
+\end_inset
+
+のunit, product type extensionを
+\begin_inset Formula $\STfp$
+\end_inset
+
+とかく.
+\end_layout
+
 \begin_layout Part
 Semantics
 \end_layout
@@ -1125,12 +1143,16 @@ Equational Theory
 \end_layout
 
 \begin_layout Standard
-calculusの中で等しいラムダ項同士を全て集めた集合をそのcalculusのequational theoryとよぶ.
- 具体的には, 
-\begin_inset Formula $\eqnth{\lambda}=\{\typed[\lambda]{\Gamma}{M=N}A;\ \typed[\lambda]{\Gamma}MA,\:\typed[\lambda]{\Gamma}NA\}$
+ラムダ項同士の等式を定義しておく.
+ 以下, calculus 
+\begin_inset Formula $\STLC$
 \end_inset
 
-のような集合である.
+や
+\begin_inset Formula $\STfp$
+\end_inset
+
+と言ったらこのような等式が使えるもの(judgementはこれらの等式で割った同値類で考えている)とする.
 \end_layout
 
 \begin_layout Subsection
@@ -1141,18 +1163,22 @@ calculusの中で等しいラムダ項同士を全て集めた集合をそのcal
 \end_layout
 
 \begin_layout Definition
-\begin_inset Formula $\STLC$
-\end_inset
-
-のequational theory 
-\begin_inset Formula $\eqnth{\STLC}$
-\end_inset
-
-を, 
 \begin_inset Formula $\beta\eta$
 \end_inset
 
--equivalenceから得られるものとする.
+-equivalenceから得られる
+\begin_inset Formula $\STLC$
+\end_inset
+
+のequational theoryを, 
+\begin_inset Formula $\STLC$
+\end_inset
+
+の標準的なequational theory
+\begin_inset Formula $\eqnth{\STLC}$
+\end_inset
+
+として採用する.
  書き下すと図
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1170,431 +1196,6 @@ placement h
 wide false
 sideways false
 status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "20col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{prooftree}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AxiomC{}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-LeftLabel{(refl)}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-UnaryInfC{$
-\backslash
-typed{
-\backslash
-Gamma}{M = M}{A}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{prooftree}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "20col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{prooftree}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AxiomC{$
-\backslash
-typed{
-\backslash
-Gamma}{M = N}{A}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-LeftLabel{(sym)}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-UnaryInfC{$
-\backslash
-typed{
-\backslash
-Gamma}{N = M}{A}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{prooftree}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "40col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{prooftree}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AxiomC{$
-\backslash
-typed{
-\backslash
-Gamma}{L = M}{A}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AxiomC{$
-\backslash
-typed{
-\backslash
-Gamma}{M = N}{A}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-LeftLabel{(trans)}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-BinaryInfC{$
-\backslash
-typed{
-\backslash
-Gamma}{L = N}{A}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{prooftree}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset VSpace 0.5cm
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{prooftree}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AxiomC{$
-\backslash
-typed{
-\backslash
-Gamma,x:A}{M = N}{B}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-LeftLabel{(abs)}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-UnaryInfC{$
-\backslash
-typed{
-\backslash
-Gamma}{
-\backslash
-lambda x.
- M = 
-\backslash
-lambda x.
- N}{A 
-\backslash
-to B}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{prooftree}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{prooftree}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AxiomC{$
-\backslash
-typed{
-\backslash
-Gamma}{M = M'}{A 
-\backslash
-to B}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AxiomC{$
-\backslash
-typed{
-\backslash
-Gamma}{N = N'}{A}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-LeftLabel{(app)}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-BinaryInfC{$
-\backslash
-typed{
-\backslash
-Gamma}{MN = M'N'}{B}$}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{prooftree}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset VSpace 0.5cm
-\end_inset
-
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Box Frameless
@@ -1784,13 +1385,7 @@ equational theory of
 \end_layout
 
 \begin_layout Standard
-(refl), (sym), (trans)は同値関係の定義である.
- (abs), (app)は
-\begin_inset Formula $M=N\Longrightarrow L[M/x]=L[N/x]$
-\end_inset
-
-という規則(subst ruleという)が成り立つようにコンストラクターごとに決まる等式である.
- このような規則は自然に決まるので今後は逐一かかないことにする.
+preliminariesでも言ったように, (refl), (sym), (trans), (subst)の4ルールはすでに含まれているものとして扱う.
 \end_layout
 
 \begin_layout Subsection
@@ -1804,7 +1399,11 @@ equational theory of
 \begin_inset Formula $\STfp$
 \end_inset
 
-のequational theoryを, 
+の標準的なequational theory
+\begin_inset Formula $\eqnth{\STfp}$
+\end_inset
+
+を, 
 \begin_inset Formula $\mathcal{E}_{\STLC}$
 \end_inset
 
@@ -2083,24 +1682,15 @@ equational theory of
 
 \end_layout
 
-\begin_layout Standard
-前述の通り, subst ruleが成り立つような, projとpairについての等式は省略した.
-\end_layout
-
 \begin_layout Section
-Interpretation
+Categorical Semantics
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula $\STfp$
 \end_inset
 
-のモデルを与えよう.
- 具体的には, 
-\begin_inset Formula $\STfp$
-\end_inset
-
-の型とjudgementを, あるcategoryの対象と射に対応付けるということをする.
+のcategorical semanticsを与えよう.
 \end_layout
 
 \begin_layout Standard
@@ -2136,68 +1726,6 @@ Interpretation
 \end_layout
 
 \begin_layout Subsection
-Categorical Model
-\end_layout
-
-\begin_layout Definition
-ラムダ計算
-\begin_inset Formula $\lambda$
-\end_inset
-
-に対し, object
-\begin_inset Formula $1$
-\end_inset
-
-を備えたcategory 
-\begin_inset Formula $\cat C$
-\end_inset
-
-で, 
-\begin_inset Formula $\left\llbracket -\right\rrbracket _{0}:\Typ(\lambda)\to\Obj(\cat C)$
-\end_inset
-
-と
-\begin_inset Formula $\left\llbracket -\right\rrbracket _{1}:\{M;\ M\text{はclosedで, 型\ensuremath{A}をもつ}\}\to\Hom[\cat C]1{\left\llbracket A\right\rrbracket _{0}}$
-\end_inset
-
-となるものが定義できる時, 
-\begin_inset Formula $\cat C$
-\end_inset
-
-をこのラムダ計算の
-\series bold
-(categorical)モデル
-\series default
-, 
-\begin_inset Formula $\left\llbracket -\right\rrbracket _{0},\left\llbracket -\right\rrbracket _{1}$
-\end_inset
-
-を
-\series bold
-interpretation
-\series default
-とよび, これらをまとめてここでは
-\begin_inset Formula $\left\llbracket -\right\rrbracket :\lambda\to\cat C$
-\end_inset
-
-とかく.
-\end_layout
-
-\begin_deeper
-\begin_layout Definition
-
-\series bold
-sound
-\series default
-とは, 任意のinterpretation
-\begin_inset Formula $\left\llbracket -\right\rrbracket :\lambda\to\cat C$
-\end_inset
-
-に対して
-\end_layout
-
-\end_deeper
-\begin_layout Subsection
 Syntactic category
 \end_layout
 
@@ -2216,7 +1744,7 @@ syntactic category
 
 \begin_layout Definition
 次のようにして定まるcategory 
-\begin_inset Formula $\cat S$
+\begin_inset Formula $\Syn(\STfp)$
 \end_inset
 
 を
@@ -2231,40 +1759,44 @@ syntactic category
 \series bold
 syntactic category
 \series default
- 
-\begin_inset Formula $\Syn(\STfp)$
-\end_inset
-
 とよぶ.
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-\begin_inset Formula $\Obj(\cat S)=\Typ(\STfp)$
+object: 
+\begin_inset Formula $\Typ(\STfp)$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\cat S(A,B)=\{\typed{x:A}MB\}/\sim_{\eqnth{\STfp}}$
+hom(
+\begin_inset Formula $A$
 \end_inset
 
- (ただし, 
-\begin_inset Formula $(\typed{x:A}MB)\sim(\typed{x:A}NB)\iff\typed{(x:A}{M=N}B\in\eqnth{\STfp})$
+,
+\begin_inset Formula $B$
 \end_inset
 
-)
+): judgement 
+\begin_inset Formula $\typed{x:A}MB$
+\end_inset
+
+(のequational theoryに関する同値類)
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $id_{A}:=[\typed{x:A}xA]$
+identity: 
+\begin_inset Formula $[\typed{x:A}xA]$
 \end_inset
 
  by (var)
 \end_layout
 
 \begin_layout Itemize
+composition: 
 \begin_inset Formula $[\typed{y:B}NC]\circ[\typed{x:A}MB]:=[\typed{x:A}{N[M/y]}C]$
 \end_inset
 
@@ -2374,12 +1906,12 @@ right identityも同様.
 \begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
-name "lem:S is cartesian closed"
+name "lem:syn-cat-is-CCC"
 
 \end_inset
 
 
-\begin_inset Formula $\cat S$
+\begin_inset Formula $\Syn(\STfp)$
 \end_inset
 
 はcartesian closed.
@@ -2399,14 +1931,18 @@ type constructor
 \end_inset
 
 への射の存在と一意性がいえればよいが, 前者は
-\begin_inset Formula $[\typed{x:A}{\star}1]$
+\begin_inset Formula $[\typed{\Gamma}{\star}1]$
 \end_inset
 
 によって, 後者は(unitU)の規則によってわかる.
 \end_layout
 
 \begin_layout Proof
-(product) projectionが
+(product) product自体は
+\begin_inset Formula $\{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\times\{y_{1}:B_{1},\dots,y_{n}:B_{n}\}=$
+\end_inset
+
+projectionが
 \begin_inset Formula $[\typed{x:A_{1}\times A_{2}}{\proj i{(x)}}{A_{i}}]\ (i=1,2)$
 \end_inset
 
@@ -2859,31 +2395,8 @@ onentialの存在を示している.
 によって示される.
 \end_layout
 
-\begin_layout Standard
-この補題により, 
-\begin_inset Formula $\STfp$
-\end_inset
-
-のequational theoryはsyntactic categoryにCCCの構造を生む.
- さて逆に, 
-\begin_inset Formula $\cat S$
-\end_inset
-
-はCCC以外の構造をもたないのであろうか.
- これを示すには, 適当なsettingで一般のCCC 
-\begin_inset Formula $\cat C$
-\end_inset
-
-と
-\begin_inset Formula $\cat S$
-\end_inset
-
-が同型などが言えればよい.
- これを示すことがここでの目的である.
-\end_layout
-
 \begin_layout Subsection
-Interpretation
+Categorical Model
 \end_layout
 
 \begin_layout Standard
@@ -2894,122 +2407,74 @@ Interpretation
 
 \end_layout
 
-\begin_layout Remark
-次のような変換
-\begin_inset Formula $\left\llbracket -\right\rrbracket $
-\end_inset
-
-を考える:
-\end_layout
-
-\begin_layout Remark
-context: 
-\begin_inset Formula $\left\llbracket \{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\right\rrbracket =A_{1}\times\cdots\times A_{n};\ \left\llbracket \emptyset\right\rrbracket =1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-judgement: 
-\begin_inset Formula $\left\llbracket \typed{\Gamma}MA\right\rrbracket =[\typed{z:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(z)/x_{i}]}A]\qquad(\Gamma=\{x_{1}:A_{1},\dots x_{n}:A_{n}\})$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-特に, 
-\begin_inset Formula $\cat S$
-\end_inset
-
-の射
-\begin_inset Formula $[\typed{x:A}MB]$
-\end_inset
-
-は
-\begin_inset Formula $\typed{\{x:A\}}MB$
-\end_inset
-
-とすれば逆に
-\begin_inset Formula $\STfp$
-\end_inset
-
-のjudgementへ変換できる.
- この変換は同型なので, 
-\begin_inset Formula $\STfp$
-\end_inset
-
-の(well-typedな)termと
-\begin_inset Formula $\cat S$
-\end_inset
-
-の射は同一視できる.
-\end_layout
-
 \begin_layout Standard
-\begin_inset Formula $\cat S$
-\end_inset
-
-は
+ラムダ計算
 \begin_inset Formula $\STfp$
 \end_inset
 
-から自然に作ったcategoryなので当然といえば当然である.
- この同一視は以下でも暗黙的に使う.
-\end_layout
-
-\begin_layout Standard
-以下, 
+のモデルとは, category 
 \begin_inset Formula $\cat C$
 \end_inset
 
-を一般のCCCとする.
+とinterpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\Syn(\STfp)\to\cat C$
+\end_inset
+
+のことであった.
 \end_layout
 
 \begin_layout Definition
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-interpretation
-\end_layout
+\begin_inset CommandInset label
+LatexCommand label
+name "def:model-of-STfp"
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Definition
-interpretation 
-\begin_inset Formula $\left\llbracket -\right\rrbracket :\STfp\to\cat C$
+\begin_inset Formula $\cat C$
 \end_inset
 
-を, 次のように定める:
-\end_layout
-
-\begin_layout Definition
-型に対しては, 
-\begin_inset Formula $\left\llbracket 1\right\rrbracket =1,\ \left\llbracket A\times B\right\rrbracket =\left\llbracket A\right\rrbracket \times\left\llbracket B\right\rrbracket ,\ \left\llbracket A\to B\right\rrbracket =\left\llbracket B\right\rrbracket ^{\left\llbracket A\right\rrbracket }$
+をCCCとする.
+ 
+\begin_inset Formula $\left\llbracket -\right\rrbracket _{\cat C_{0}}:\Syn(\STfp)_{0}\to\cat C_{0}$
 \end_inset
 
-とする.
+なる型から
+\begin_inset Formula $\cat C$
+\end_inset
+
+への対象へのinterpretationが与えられているとする.
+ このとき, 次のようにして
+\begin_inset Formula $\cat C$
+\end_inset
+
+は
+\begin_inset Formula $\STfp$
+\end_inset
+
+のモデルになる:
 \end_layout
 
-\begin_layout Definition
-judgementに対しても
+\begin_deeper
+\begin_layout Itemize
+judgementのinterpretation
+\begin_inset Formula $\left\llbracket \typed{x:A}MB\right\rrbracket _{\cat C_{1}}$
+\end_inset
+
+を定めればよい.
+ contextのinterpretationを
+\begin_inset Formula $\left\llbracket \{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\right\rrbracket =A_{1}\times\dots\times A_{n}$
+\end_inset
+
+としておく.
+ まず次のようにしてtyping ruleに従って
 \begin_inset Formula $\left\llbracket \typed{\Gamma}MA\right\rrbracket :\left\llbracket \Gamma\right\rrbracket \to\left\llbracket A\right\rrbracket $
 \end_inset
 
-となるような射を対応させる.
- これはjudgementがtyping ruleに沿って帰納的に定義されているのでそれに合わせてinterpretationもtyping ruleに沿って帰
-納的に次のようにして定義する.
-\end_layout
-
-\begin_layout Definition
+なるinterpretationを定める.
 \begin_inset Formula 
 \begin{eqnarray*}
-\left\llbracket \frac{x:A\in\Gamma}{\typed{\Gamma}xA}\right\rrbracket  & = & \left\llbracket \Gamma\right\rrbracket \xrightarrow{\text{pr}_{x}}\left\llbracket A\right\rrbracket \\
+\left\llbracket \frac{x:A\in\Gamma}{\typed{\Gamma}xA}\right\rrbracket  & = & \left\llbracket \Gamma\right\rrbracket \xrightarrow{\pr x}\left\llbracket A\right\rrbracket \\
 \left\llbracket \frac{\typed{\Gamma,x:A}MB}{\typed{\Gamma}{\lambda x.M}{A\to B}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \times\left\llbracket A\right\rrbracket \xrightarrow{M}\left\llbracket B\right\rrbracket }{\left\llbracket \Gamma\right\rrbracket \xrightarrow[\hat{M}]{}\left\llbracket B\right\rrbracket ^{\left\llbracket A\right\rrbracket }}\\
 \left\llbracket \frac{\typed{\Gamma}{M_{1}}{A\to B}\qquad\typed{\Gamma}{M_{2}}A}{\typed{\Gamma}{M_{1}M_{2}}B}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{1}}B^{A}\qquad\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{2}}A}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{\pair{M_{2}}{M_{1}}}A\times B^{A}\xrightarrow{\text{ev}}B}\\
 \left\llbracket \frac{\typed{\Gamma}{M_{i}}{A_{i}}}{\typed{\Gamma}{\pair{M_{1}}{M_{2}}}{A_{1}\times A_{2}}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{i}}A_{i}}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{\pair{M_{1}}{M_{2}}}A_{1}\times A_{2}}\\
@@ -3022,108 +2487,33 @@ judgementに対しても
 
 \end_layout
 
-\begin_layout Standard
-上でも述べたとおり, この
-\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\begin_layout Itemize
+次に, 
+\begin_inset Formula $\left\llbracket \typed{x:A}MB\right\rrbracket _{\cat C_{1}}=\left\llbracket \typed{\{x:A\}}MB\right\rrbracket $
 \end_inset
 
-は
-\begin_inset Formula $\STfp\to\cat S$
-\end_inset
-
-の変換を経由して
-\begin_inset Formula $\cat S\to\cat C$
-\end_inset
-
-を定めていると思えば良い.
- また, このinterpretationは
+によって, interpretationを定める.
+ 上はは
 \begin_inset Formula $\cat C$
 \end_inset
 
-の(つまり一般の)CCCの構造だけで定義できることに注意.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\left\llbracket \typed{\Gamma}MA\right\rrbracket $
-\end_inset
-
-を, 記号を濫用して単に
-\begin_inset Formula $\left\llbracket M\right\rrbracket $
-\end_inset
-
-とかくこともある.
-\end_layout
-
-\begin_layout Definition
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-sound
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula $\typed[\lambda]{}{M=N}A\Longrightarrow\left\llbracket M\right\rrbracket =_{A}\left\llbracket N\right\rrbracket $
-\end_inset
-
-が成り立つとき, interpretation
-\begin_inset Formula $\left\llbracket -\right\rrbracket $
-\end_inset
-
-は
-\series bold
-sound
-\series default
-という.
- 
-\end_layout
-
-\begin_deeper
-\begin_layout Definition
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-complete
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula $\left\llbracket M\right\rrbracket =_{A}\left\llbracket N\right\rrbracket \Longrightarrow\ \typed[\lambda]{}{M=N}A$
-\end_inset
-
-が成り立つとき, interpretation
-\begin_inset Formula $\left\llbracket -\right\rrbracket $
-\end_inset
-
-は
-\series bold
-complete
-\series default
-という.
+のCCCの構造だけを使って定まっていることに注意.
 \end_layout
 
 \end_deeper
-\begin_layout Definition
-interpretationのsound, completeは
-\begin_inset Formula $\STfp$
-\end_inset
-
-のequationと
-\begin_inset Formula $\cat C$
-\end_inset
-
-でのequalityの対応, とみて定義をしているが, これは
-\begin_inset Formula $\left\llbracket -\right\rrbracket :\cat S\to\cat C$
-\end_inset
-
-がfully faithful, という言い方もできる.
+\begin_layout Subsection
+Soundness
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
+ここではequational theory 
+\begin_inset Formula $\eqnth{\STfp}$
+\end_inset
+
+のsoundnessをみよう.
+\end_layout
+
+\begin_layout Standard
 \begin_inset FormulaMacro
 \newcommand{\curry}[1]{\text{curry(\ensuremath{#1})}}
 \end_inset
@@ -3131,7 +2521,7 @@ interpretationのsound, completeは
 
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 \begin_inset FormulaMacro
 \newcommand{\uncurry}[1]{\text{uncurry(\ensuremath{#1})}}
 \end_inset
@@ -3139,7 +2529,7 @@ interpretationのsound, completeは
 
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 \begin_inset FormulaMacro
 \newcommand{\ev}{\text{ev}}
 \end_inset
@@ -3147,7 +2537,7 @@ interpretationのsound, completeは
 
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 \begin_inset FormulaMacro
 \newcommand{\app}{(\text{app})}
 \end_inset
@@ -3156,19 +2546,36 @@ interpretationのsound, completeは
 \end_layout
 
 \begin_layout Theorem
-\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+sound
+\end_layout
+
 \end_inset
 
-はsound.
+
+\begin_inset Formula $\typed[\STfp]{\Gamma}{M=N}A$
+\end_inset
+
+ならば, 任意の
+\begin_inset Formula $\STfp$
+\end_inset
+
+のモデル(上で与えたinterpretation) 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\Syn(\STfp)\to\cat C$
+\end_inset
+
+に対して
+\begin_inset Formula $\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket :\left\llbracket \Gamma\right\rrbracket \to\left\llbracket A\right\rrbracket $
+\end_inset
+
+となる.
 \end_layout
 
 \begin_layout Proof
-より強く, 
-\begin_inset Formula $\typed{\Gamma}{M=N}A\Longrightarrow\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket :\left\llbracket \Gamma\right\rrbracket \to\left\llbracket A\right\rrbracket $
-\end_inset
-
-を示す.
- judgementに関する帰納法による.
+judgementに関する帰納法による.
 \end_layout
 
 \begin_deeper
@@ -3316,64 +2723,636 @@ trans) 明らか.
 \end_layout
 
 \end_deeper
-\begin_layout Proof
-よって
-\begin_inset Formula $\typed{\Gamma}{M=N}A\Longrightarrow\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket :\left\llbracket \Gamma\right\rrbracket \to A$
-\end_inset
-
-がいえたので, 
-\begin_inset Formula $\left\llbracket -\right\rrbracket $
-\end_inset
-
-はsound.
+\begin_layout Subsection
+Completeness
 \end_layout
 
 \begin_layout Theorem
-\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+complete
+\end_layout
+
 \end_inset
 
-はcomplete.
+任意の
+\begin_inset Formula $\STfp$
+\end_inset
+
+のモデル
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\Syn(\STfp)\to\cat C$
+\end_inset
+
+に対して
+\begin_inset Formula $\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket :\left\llbracket \Gamma\right\rrbracket \to\left\llbracket A\right\rrbracket $
+\end_inset
+
+が成り立つならば, 
+\begin_inset Formula $\typed[\STfp]{\Gamma}{M=N}A$
+\end_inset
+
+である.
 \end_layout
 
 \begin_layout Proof
-\begin_inset Formula $\cat C$
+\begin_inset Formula $\Syn(\STfp)$
 \end_inset
 
-での等式はCCCの等式であり, すなわち
-\begin_inset Formula $\cat S$
-\end_inset
-
-でも成り立つことは補題
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:S is cartesian closed"
-
-\end_inset
-
-からわかる.
-\end_layout
-
-\begin_layout Remark
-上で
+が
 \begin_inset Formula $\STfp$
 \end_inset
 
-と(他に構造の入っていない)CCCの対応を見たが, 通常はcalculusを拡張することも含めて考える.
- すなわち, 
+のモデルでもあることから明らか.
+\end_layout
+
+\begin_layout Standard
+completenessは, syntactic category(term model)が``equational theory以外に余分な構造を持たない
+\begin_inset Quotes erd
+\end_inset
+
+モデルであることが効いている.
+\end_layout
+
+\begin_layout Subsection
+Logical Formalism
+\end_layout
+
+\begin_layout Standard
+categorical semanticsの話をするにあたって, モデルなどの概念をもう少し形式的に定義しておこう.
+ 本当に正しく議論をするには以下では不十分であるが, ここでは詳細には立ち入らないことにする.
+\end_layout
+
+\begin_layout Subsubsection
+Category of Theories
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Theory}{{\bf Theory}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\STfp$
+\end_inset
+
+のsignatureとは, ラムダ計算としての構成要素を集めたもののことであった.
+ 具体的に書き下すと以下のようになる.
+\end_layout
+
+\begin_layout Definition
+次のものを
+\begin_inset Formula $\STfp$
+\end_inset
+
+の
+\series bold
+signature
+\series default
+とよぶ.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sort 
+\begin_inset Formula $\{p,m,v_{p},v_{m}\}$
+\end_inset
+
+: 
+\begin_inset Formula $p$
+\end_inset
+
+はtype, 
+\begin_inset Formula $m$
+\end_inset
+
+はterm, 
+\begin_inset Formula $v_{-}$
+\end_inset
+
+はvariableの意味である.
+ それぞれ型, 項, 変数(変数には項変数と型変数とがある)であることを表す.
+\end_layout
+
+\begin_layout Itemize
+constructor symbols: これは以下のようなものからなる.
+ また, variableをtermと別のsortとして考える必要はあまりないが, あとの証明の都合とわかりやすさを考慮の上でこのように定義している.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+type variables: 
+\begin_inset Formula $\alpha,\beta,\gamma,\dots:v_{p}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+term variables: 
+\begin_inset Formula $x,y,z,\dots:v_{m}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+type constructor symbols: 
+\begin_inset Formula $\{\text{TVar}:v_{p}\to p,(\to):p\to p\to p,1:p,(\times):p\to p\to p\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+term constructor symbols: 
+\begin_inset Formula $\{\text{Var}:v_{m}\to m,\text{Abs}:v_{m}\to m\to m,\text{App}:m\to m\to m,\star:m,\pair --:m\to m\to m,\proj i{(-)}:m\to m\}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+typing rules 前述のもの: sort
+\begin_inset Formula $p$
+\end_inset
+
+と
+\begin_inset Formula $m$
+\end_inset
+
+を関係づけるtyping ruleである.
+ 各term constructorが満たすべきルールともいえる.
+\end_layout
+
+\begin_layout Itemize
+equational theory 
 \begin_inset Formula $\eqnth{\STfp}$
 \end_inset
 
-を含む任意のequational theoryは適当なinterpretationによりCCCに対応付けることができ, すると
+: すでに見たように, 
+\begin_inset Formula $\beta\eta$
+\end_inset
+
+-equalityとproduct, 1に関するequationを集めたものである.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+同様にして, 一般のラムダ計算のsignatureも, このようなsort, constructor symbols, typing rules,
+ equational theoryの組として定めることができる.
+\end_layout
+
+\begin_layout Definition
+category 
+\begin_inset Formula $\Theory(\STfp)$
+\end_inset
+
+を, 次のように定める.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: signature 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+であって, sortが
+\begin_inset Formula $\{p,m,v_{p},v_{m}\}$
+\end_inset
+
+, type/term constructor symbolsとtyping rulesとequational theoryは
+\begin_inset Formula $\Sigma(\STfp)$
+\end_inset
+
+を含むようなもの
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+sortはこれらを含む一般の形と弱めることもできるはずだが, 複数のsortを含むようなconstructor symbolの扱いをどうするかという問題がある.
+ 後にsignatureに沿ってモデルを定義する必要がある関係で, ここではこのような定義を採用した.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+hom: signatureの各要素ごとの包含
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+これは, product typeとunit typeをもつcalculusとその間の拡大のなすcategory(poset)だと思ってよい.
+ このとき, 
+\begin_inset Formula $\Sigma(\STfp)$
+\end_inset
+
+はinitial objectである.
+\end_layout
+
+\begin_layout Subsubsection
+Category of Models
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Model}{{\bf Model}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\dom}[1]{\text{dom}(#1)}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\cod}[1]{\text{cod}(#1)}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+category 
+\begin_inset Formula $\Model(\STfp)$
+\end_inset
+
+を, 次のように定める.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: 
 \begin_inset Formula $\STfp$
 \end_inset
 
-(のequational theory)を拡大することとCCCに構造を付与することがぴったり対応する.
- このような意味を込めてsimply-typed lambda calculusのmodelはCCCである, とか, CCCのinternal
- languageはsimply-typed lambda calculusであるなどと言ったりする.
+のモデル
+\begin_inset Formula $\left\llbracket -\right\rrbracket _{\cat C}:\Syn(\STfp)\to\cat C$
+\end_inset
+
+
 \end_layout
 
-\begin_layout Remark
-よってここでの証明は, calculusとそのモデルの対応という意味では少し弱いことを主張しているが, このpdfはまだ途中なので勘弁して欲しい.
+\begin_layout Itemize
+hom(
+\begin_inset Formula $\cat C$
+\end_inset
+
+,
+\begin_inset Formula $\cat D$
+\end_inset
+
+): categoryのconstructorとその構造
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+とりあえずCCCの構造を保つ, と思っておいてよい.
+\end_layout
+
+\end_inset
+
+を保つfunctor 
+\begin_inset Formula $F:\cat C\to\cat D$
+\end_inset
+
+であって, interpretationと可換なもの: 
+\begin_inset Formula $F\circ\left\llbracket -\right\rrbracket _{\cat C}=\left\llbracket -\right\rrbracket _{\cat D}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+このとき, 
+\begin_inset Formula $\Syn(\STfp)$
+\end_inset
+
+も当然このcategoryのobjectであり, さらに任意のモデルへのmorphismが存在するので, 
+\begin_inset Formula $\Syn(\STfp)$
+\end_inset
+
+は
+\begin_inset Formula $\Model(\STfp)$
+\end_inset
+
+のinitial objectである.
+\end_layout
+
+\begin_layout Subsection
+Categorical Semantics
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Lan}{\text{Lan}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+functor 
+\begin_inset Formula $\Syn:\Theory(\STfp)\to\Model(\STfp)$
+\end_inset
+
+が次のようにして定まる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Syn(\Sigma)$
+\end_inset
+
+は, 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+から作ったラムダ計算のsyntactic categoryで, 次のようにして定まる:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: type constructorを組み合わせて得られる文字列
+\end_layout
+
+\begin_layout Itemize
+hom(
+\begin_inset Formula $A$
+\end_inset
+
+,
+\begin_inset Formula $B$
+\end_inset
+
+): term constructorを組み合わせて得られる文字列
+\begin_inset Formula $M$
+\end_inset
+
+で, typing rule 
+\begin_inset Formula $\typed{x:A}MB$
+\end_inset
+
+を満たすようなもの.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Syn(\Sigma\subseteq\Sigma')$
+\end_inset
+
+は, inclusion functor.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+\begin_inset Formula $\Syn(\Sigma)$
+\end_inset
+
+がCCCになることなどは補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:syn-cat-is-CCC"
+
+\end_inset
+
+と同様にして示せる.
+\end_layout
+
+\begin_layout Definition
+また, 
+\begin_inset Formula $\Syn(\Sigma(\STfp))$
+\end_inset
+
+が
+\begin_inset Formula $\Syn(\STfp)$
+\end_inset
+
+に一致することも明らか.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $\Theory(\STfp)$
+\end_inset
+
+と
+\begin_inset Formula $\Model(\STfp)$
+\end_inset
+
+はcategorical semanticsを与える.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\Syn$
+\end_inset
+
+の右随伴が存在することをみる.
+ さて, 任意のモデル
+\begin_inset Formula $\cat C$
+\end_inset
+
+とinterpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\Syn(\STfp)\to\cat C$
+\end_inset
+
+に対して
+\begin_inset Formula $\Lan(\cat C)$
+\end_inset
+
+を,
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sort: 
+\begin_inset Formula $\STfp$
+\end_inset
+
+と同じ
+\end_layout
+
+\begin_layout Itemize
+constructor symbol: 
+\begin_inset Formula $\cat C$
+\end_inset
+
+のobject/morphismのconstructor
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+ここでは
+\begin_inset Formula $\cat C$
+\end_inset
+
+のconstructorと書いたが, 厳密にやるのであればcartesian closed categoryという概念自体を, constructorとそれらの
+ルールにわけて形式化するということをしなければならない.
+ つまり, ``
+\begin_inset Formula $\STfp$
+\end_inset
+
+のModelのcategoryとは, 〜を満たすsignatureからなるcategoryであり, さらにそれらがCCCのaxiomを満たしているようなもの
+\begin_inset Quotes eld
+\end_inset
+
+のような書き方で形式化して定義を行う必要がある.
+ しかしそれはあまりに煩雑なのでここでは曖昧な書き方をすることにした.
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+typing rules: morphismのconstructorに関するルールを記述する.
+\end_layout
+
+\begin_layout Itemize
+equational theory: 
+\begin_inset Formula $\cat C$
+\end_inset
+
+のmorphismとみて等しい等式を全て集めてきて, それを
+\begin_inset Formula $\Lan(\cat C)$
+\end_inset
+
+のコンストラクタを組み合わせて表現したもの.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+と定める.
+ これが
+\begin_inset Formula $\Syn$
+\end_inset
+
+の右随伴であることを示せばよい.
+ つまり,
+\begin_inset Formula 
+\[
+\Model(\Syn(\Sigma),\cat C)\cong\Theory(\Sigma,\Lan(\cat C))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+なるnatural isoがあることを示す.
+ ところで, 
+\begin_inset Formula $\Theory$
+\end_inset
+
+はposetなのでこれは次と同値.
+\begin_inset Formula 
+\[
+\Model(\Syn(\Sigma),\cat C)\iff\Sigma\subseteq\Sigma(\Lan(\cat C))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+(
+\begin_inset Formula $\Longrightarrow$
+\end_inset
+
+) 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\Syn(\STfp)\to\cat C$
+\end_inset
+
+を任意のモデルとし, 
+\begin_inset Formula $F:\Syn(\Sigma)\to\cat C$
+\end_inset
+
+をモデルのmorphismとする.
+ 
+\begin_inset Formula $\Sigma\subseteq\Sigma(\Lan(\cat C))$
+\end_inset
+
+をみればよいが, sortは共通しており, 
+\begin_inset Formula $F:\Syn(\Sigma)\to\cat C$
+\end_inset
+
+がモデルのmorphismなのでconstructorとequational theoryが保たれることもわかる.
+ よってOK.
+\end_layout
+
+\begin_layout Proof
+(
+\begin_inset Formula $\Longleftarrow$
+\end_inset
+
+) 
+\begin_inset Formula $\Sigma\subseteq\Sigma(\Lan(\cat C))$
+\end_inset
+
+のとき, 
+\begin_inset Formula $\cat C$
+\end_inset
+
+がモデルになることをみる.
+ これは
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\Syn(\Sigma)\to\cat C$
+\end_inset
+
+を, type, constructorをそのまま移すようなものとする.
+ このときtyping ruleの包含から
+\begin_inset Formula $\Syn(\Sigma)$
+\end_inset
+
+のconstructorには
+\begin_inset Formula $\cat C$
+\end_inset
+
+でも同じように型がつくこと, そしてequational theoryの包含から
+\begin_inset Formula $\Syn(\Sigma)$
+\end_inset
+
+の等しい射は
+\begin_inset Formula $\cat C$
+\end_inset
+
+でも等しいこと(つまりmapping partに関してwell-definedなこと)がわかる.
+ これにより
+\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\end_inset
+
+はモデルのmorphismとなるので, 
+\begin_inset Formula $\Syn(\STfp)$
+\end_inset
+
+のinitialityによりモデルのinterpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket :\Syn(\STfp)\to\cat C$
+\end_inset
+
+が得られる.
+\end_layout
+
+\begin_layout Corollary
+CCCのinternal languageは
+\begin_inset Formula $\STfp$
+\end_inset
+
+であり, 
+\begin_inset Formula $\STfp$
+\end_inset
+
+のsyntactic categoryはCCCである.
 \end_layout
 
 \end_body

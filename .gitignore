@@ -1,5 +1,12 @@
-*~
 #*#
-src/*
-!src/*.lyx
 _site/
+*~
+
+### https://raw.github.com/github/gitignore/5f15ed83c7a3d5db29845edae5205ca2d795c3d8/Global/LyX.gitignore
+
+# Ignore LyX backup and autosave files
+# http://www.lyx.org/
+*.lyx~
+*.lyx#
+
+

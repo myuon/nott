@@ -428,22 +428,114 @@ hom(
 \end_inset
 
 ,
-\begin_inset Formula $\{\vec{y_{i}}:\vec{B_{i}}\}$
+\begin_inset Formula $\Delta$
 \end_inset
 
-): 項の集合
-\begin_inset Formula $\{t_{1},\dots t_{n}\}$
+): type judgementの組 
+\begin_inset Formula $\Gamma\vdash_{T}t_{i}:\Delta_{i}$
 \end_inset
 
-であって, 各
-\begin_inset Formula $i$
+が存在するもの(を, 
+\begin_inset Formula $T$
 \end_inset
 
-に対してtyping judgement 
-\begin_inset Formula $\Gamma\vdash_{T}t_{i}:B_{i}$
+の項に関する同値関係で割ったもの).
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+contextを用いるのはexternalに直積(組)の扱いができることと同じなので, 組をtype theoryがinternalに扱えるならば,
+ すなわち
+\begin_inset Formula $T$
 \end_inset
 
-が存在するもの.
+がproduct typeをもつならば, 次のように定めても同じことである
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+同じことであると言っているが, 
+\begin_inset Formula $T$
+\end_inset
+
+がproduct typeをもつとき, 前者ではexternalな組とinternalな組を別のものとして区別して扱うことができるが後者はそれができないので同じ
+ではない.
+ contextをproduct以外の方法でエンコードしたいのであればこれらは区別する必要があるが, このノートではそのようなことはおそらくしないと思う.
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+product typeをもつtype theory 
+\begin_inset Formula $T$
+\end_inset
+
+に対して, 次のようにして与えたcategoryを
+\begin_inset Formula $T$
+\end_inset
+
+の
+\series bold
+syntactic category
+\series default
+とよび, 
+\begin_inset Formula $\Syn T$
+\end_inset
+
+とかく.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: 
+\begin_inset Formula $T$
+\end_inset
+
+のtype
+\end_layout
+
+\begin_layout Itemize
+hom(
+\begin_inset Formula $A$
+\end_inset
+
+,
+\begin_inset Formula $B$
+\end_inset
+
+): type judgement 
+\begin_inset Formula $x:A\vdash t:B$
+\end_inset
+
+(を
+\begin_inset Formula $T$
+\end_inset
+
+の項に関する同値関係で割ったもの).
+\end_layout
+
+\begin_layout Itemize
+conversion: また, このとき
+\begin_inset Formula $T$
+\end_inset
+
+の一般のjudgement 
+\begin_inset Formula $\{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\vdash M:B$
+\end_inset
+
+は
+\begin_inset Formula $z:A_{1}\times\dots\times A_{n}\vdash M[\text{pr}_{i}(z)/x_{i}]:B$
+\end_inset
+
+によって射とみなせる.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+以後はproduct typeをもつtype theoryを扱う際は後者を主に使っていく.
 \end_layout
 
 \begin_layout Definition
@@ -456,7 +548,6 @@ categorical semantics
 とは, 次の形の随伴(圏同値)のことである:
 \end_layout
 
-\end_deeper
 \begin_layout Definition
 \begin_inset ERT
 status open
@@ -611,6 +702,19 @@ interpretation
 のjudgementをmorphismへ対応させるような変換である.
 \end_layout
 
+\begin_layout Standard
+また, 今考えているtype theory 
+\begin_inset Formula $T$
+\end_inset
+
+のtypeとtermからなり, 
+\begin_inset Formula $T$
+\end_inset
+
+の構造(射の同値性)と同じ構造をもつモデルをterm modelとよぶ.
+ categorical modelでいえば, 上で構成したsyntactic categoryがそれに当たる.
+\end_layout
+
 \begin_layout Subsection
 Typed Lambda Calculus
 \end_layout
@@ -651,6 +755,7 @@ equational theory
 
 \begin_layout Standard
 を含めるようにして定義する.
+ 通常(subst)は, 項のコンストラクタごとに専用のequationを入れる必要がある.
 \end_layout
 
 \begin_layout Standard
@@ -814,109 +919,232 @@ equational theoryがsoundならば, interpretation(model)はsoundである.
 \end_layout
 
 \begin_layout Subsection
-Term Model
+Logical Formalism
 \end_layout
 
 \begin_layout Definition
-product type constructor 
-\begin_inset Formula $\times$
-\end_inset
-
-とterm constructor 
-\begin_inset Formula $\text{pr}_{i}(-)$
-\end_inset
-
-をもつような型付きラムダ計算
+ラムダ計算
 \begin_inset Formula $\lambda$
 \end_inset
 
-に対して, 次のようにcategory 
-\begin_inset Formula $\cat C_{\lambda}$
+の
+\series bold
+signature
+\series default
+ 
+\begin_inset Formula $\Sigma$
 \end_inset
 
-を定める:
+とは, 次からなるもの:
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-object: 
-\begin_inset Formula $\lambda$
+sorts 
+\begin_inset Formula $S$
 \end_inset
 
-の型
+: 出現する記号がそれぞれ何を表しているかを判別するための記号の集合.
+ 例えば変数, 項, 型を表すsortをそれぞれ
+\begin_inset Formula $v,p,m$
+\end_inset
+
+とすると, このとき
+\begin_inset Formula $S=\{v,p,m\}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize
-hom(
-\begin_inset Formula $A$
+constructor symbols 
+\begin_inset Formula $C$
 \end_inset
 
-,
-\begin_inset Formula $B$
-\end_inset
-
-): typing judgement 
-\begin_inset Formula $x:A\vdash M:B$
-\end_inset
-
-を, 
-\begin_inset Formula $\lambda$
-\end_inset
-
-のequational theoryで割った同値類
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\left\llbracket -\right\rrbracket _{\lambda}:\Syn{\lambda}\to\cat C_{\lambda}$
-\end_inset
-
-を, 
-\begin_inset Formula $\left\llbracket \{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\right\rrbracket _{\lambda}=A_{1}\times\cdots\times A_{n}$
+: type/term constructorを表す記号の集合.
+ また, 各constructorに対しそのdomainとcodomainのsortを決定する
+\begin_inset Formula $\text{dom}:C\to S^{*}$
 \end_inset
 
 , 
-\begin_inset Formula $\left\llbracket \{x_{1}:A_{1},\dots,x_{n}:A_{n}\}\vdash t:B\right\rrbracket _{\lambda}=[z:A_{1}\times\cdots\times A_{n}\vdash t[\text{pr}_{i}(z)/x_{i}]:B]$
+\begin_inset Formula $\text{cod}:C\to T$
 \end_inset
 
-と定める.
- これが
-\begin_inset Formula $\lambda$
+が与えられていて, symbol 
+\begin_inset Formula $c$
 \end_inset
 
-のモデルになる時, このモデルを
-\series bold
-term model
-\series default
-という.
+のdomainとcodmainとを合わせて
+\begin_inset Formula $c:\text{dom}(c)\to\text{cod}(c)$
+\end_inset
+
+のように書いて表示する.
+ arityのないconstructor (
+\begin_inset Formula $\text{dom}(c)=\emptyset$
+\end_inset
+
+となる
+\begin_inset Formula $c$
+\end_inset
+
+)はconstantと呼ばれる.
+ 例えば, 関数抽象, 関数適用を表すconstructor symbolは, 
+\begin_inset Formula $\text{Abs}:v\to m\to m$
+\end_inset
+
+, 
+\begin_inset Formula $\text{App}:m\to m\to m$
+\end_inset
+
+などと表す.
+\end_layout
+
+\begin_layout Itemize
+typing rules: 項と型とを関係づけるためのルールの集合.
+ categorical modelを考える場合は, objectとmorphismを関係づけるためにこれを特別に与える必要がある.
+\end_layout
+
+\begin_layout Itemize
+equational theory 
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+: 項のequalityのなす集合.
 \end_layout
 
 \end_deeper
 \begin_layout Standard
-実際には, これがcategoryになりモデルを与えることは今考えているラムダ計算の定義に戻って示す必要がある.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Formula $\left\llbracket M\right\rrbracket =\left\llbracket N\right\rrbracket $
-\end_inset
-
-がterm model 
-\begin_inset Formula $\cat C_{\lambda}$
-\end_inset
-
-で成り立つならば, 
-\begin_inset Formula $\vdash_{\lambda}M=N$
-\end_inset
-
-である.
+signatureとは, ラムダ計算を構成する記号を集めたもの, と思えばよい.
 \end_layout
 
 \begin_layout Standard
-term modelのinterpretation 
-\begin_inset Formula $\left\llbracket -\right\rrbracket _{\lambda}$
+この意味で, 上で定義したモデルを捉え直すことができる.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula $\Sigma$
 \end_inset
 
-は必ずcompleteになる.
- また, term modelは通常最も構造の少ないモデルであるので, 存在すればequational theoryも自然とcompleteになる.
+をラムダ計算
+\begin_inset Formula $\lambda$
+\end_inset
+
+のsignatureで, 型と項を表すsort 
+\begin_inset Formula $p,m$
+\end_inset
+
+を含むとする.
+ このとき
+\begin_inset Formula $\lambda$
+\end_inset
+
+の
+\series bold
+(categorical)モデル
+\series default
+とは, category 
+\begin_inset Formula $\cat C$
+\end_inset
+
+と次のようなinterpretation 
+\begin_inset Formula $\left\llbracket -\right\rrbracket $
+\end_inset
+
+をいう:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sorts: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left\llbracket p\right\rrbracket =\Obj(\cat C)$
+\end_inset
+
+, 
+\begin_inset Formula $\left\llbracket m\right\rrbracket =\text{Arr}(\cat C)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p,m$
+\end_inset
+
+以外のsortに関しても適当な(集合またはそれに類するものへの)割り当てがある.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+constructors: symbol 
+\begin_inset Formula $c:s_{1}\to s_{2}$
+\end_inset
+
+に対し, 関数
+\begin_inset Formula $\left\llbracket c\right\rrbracket :\left\llbracket s_{1}\right\rrbracket \to\left\llbracket s_{2}\right\rrbracket $
+\end_inset
+
+なる割り当てがある.
+\end_layout
+
+\begin_layout Itemize
+typing rules: 
+\begin_inset Formula $A\vdash M:B$
+\end_inset
+
+を導くruleに対し, 対応するmorphism 
+\begin_inset Formula $\left\llbracket M\right\rrbracket :\left\llbracket A\right\rrbracket \to\left\llbracket B\right\rrbracket $
+\end_inset
+
+がある.
+ 通常
+\begin_inset Formula $A$
+\end_inset
+
+はcontextなので, categoryがproductを持つことを要請した上で射を対応させる.
+\end_layout
+
+\begin_layout Itemize
+equational theory: equality 
+\begin_inset Formula $\Gamma\vdash M=N:A$
+\end_inset
+
+があるとき, 
+\begin_inset Formula $\cat C$
+\end_inset
+
+で
+\begin_inset Formula $\left\llbracket A\vdash M:B\right\rrbracket =\left\llbracket A\vdash N:B\right\rrbracket $
+\end_inset
+
+が成り立つ.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+一般のラムダ計算のsignatureのsortは多種多様である.
+ categorical modelはtype, termを表すsortを基本としてモデルを定義しているので, このようなsortがない場合や,
+ 他のsortを持ちそこに特別なrelationがあるような場合にモデルの定義がどうあるべきかを一般的に述べることは出来ない.
+\end_layout
+
+\begin_layout Standard
+今回のsignatureとモデルの定義は, pure type systems
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{baren-lcwt}
+\end_layout
+
+\end_inset
+
+のものに近い.
 \end_layout
 
 \begin_layout Standard
@@ -937,6 +1165,26 @@ begin{thebibliography}{9}
 bibitem{nlab-tt} nLab ``type theory", 
 \backslash
 url{https://ncatlab.org/nlab/show/type+theory}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+bibitem{baren-lcwt} H.
+ P.
+ Barendregt.
+ 1993.
+ ``Lambda calculi with types".
+ In Handbook of logic in computer science (vol.
+ 2), S.
+ Abramsky, Dov M.
+ Gabbay, and S.
+ E.
+ Maibaum (Eds.).
+ Osborne Handbooks Of Logic In Computer Science, Vol.
+ 2.
+ Oxford University Press, Inc., New York, NY, USA 117-309.
 \end_layout
 
 \begin_layout Plain Layout
