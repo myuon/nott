@@ -762,7 +762,7 @@ Strong Normalization
 次の定理を示すのが目標である.
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Theorem*
 \begin_inset Argument 1
 status open
 
@@ -777,23 +777,11 @@ Strong Normalization
 \end_inset
 
 はSNである.
- すなわち, 任意のラムダ項
-\begin_inset Formula $M$
+ すなわち, 
+\begin_inset Formula $\STLC$
 \end_inset
 
-に対して
-\begin_inset Formula $\beta$
-\end_inset
-
--nf 
-\begin_inset Formula $N$
-\end_inset
-
-が存在して, 
-\begin_inset Formula $M\to_{\beta}^{*}N$
-\end_inset
-
-となる.
+のwell-typedな項はstrongly normalizing(任意の簡約列が停止する).
 \end_layout
 
 \begin_layout Standard
@@ -819,12 +807,7 @@ Strong Normalization
 
 \begin_deeper
 \begin_layout Itemize
-型変数
-\begin_inset Formula $\alpha$
-\end_inset
-
-に対し, 
-\begin_inset Formula $t\in\RED_{\alpha}$
+\begin_inset Formula $t\in\RED_{b}$
 \end_inset
 
  iff 
@@ -835,11 +818,27 @@ Strong Normalization
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $t\in\RED_{t\to t'}$
+\begin_inset Formula $t\in\RED_{A\to B}$
 \end_inset
 
  iff 
-\begin_inset Formula $\forall u\in RED_{t},(t\:u)\in RED_{t'}$
+\begin_inset Formula $\forall u\in\RED_{A},(t\:u)\in\RED_{B}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+次のように
+\begin_inset Formula $\RED$
+\end_inset
+
+をcontextへ拡張する.
+\begin_inset Formula 
+\[
+\RED_{\Gamma}=\{\gamma;\text{dom}\:\Gamma=\text{dom}\:\gamma,\forall x:A\in\Gamma,x[\gamma]\in\RED_{A}\}
+\]
+
 \end_inset
 
 
@@ -847,45 +846,714 @@ Strong Normalization
 
 \end_deeper
 \begin_layout Lemma
-\begin_inset Formula $\typed{\Gamma}xA$
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:red-forward"
+
+\end_inset
+
+
+\begin_inset Formula $M\in\RED_{A}$
+\end_inset
+
+かつ
+\begin_inset Formula $M\to_{\beta}M'$
 \end_inset
 
 ならば
-\begin_inset Formula $x\in\RED_{A}$
+\begin_inset Formula $M'\in\RED_{A}$
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Proposition
-\begin_inset Formula $\typed{\Gamma}MA$
+\begin_layout Proof
+\begin_inset Formula $A$
 \end_inset
 
-なら, 
-\begin_inset Formula $M\in RED_{A}$
-\end_inset
-
-
+についての帰納法.
 \end_layout
 
 \begin_layout Proof
-typing judgementについての帰納法で示す.
+(base) 
+\begin_inset Formula $A=b$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $M$
+\end_inset
+
+はstrongly normalizingなので
+\begin_inset Formula $M'$
+\end_inset
+
+もそう.
+ よってOK.
+\end_layout
+
+\begin_layout Proof
+(fun) 
+\begin_inset Formula $A=A_{1}\to A_{2}$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $M'\in\RED_{A}$
+\end_inset
+
+を示すので, 任意の
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+に対して
+\begin_inset Formula $M'N\in\RED_{A_{2}}$
+\end_inset
+
+であることを示す.
+ 
+\begin_inset Formula $M\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+なので, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+である.
+ 
+\begin_inset Formula $MN\to_{\beta}M'N$
+\end_inset
+
+であることと帰納法の仮定により
+\begin_inset Formula $M'N\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:cr-1"
+
+\end_inset
+
+
+\begin_inset Formula $M\in\RED_{A}$
+\end_inset
+
+ならば, 
+\begin_inset Formula $M$
+\end_inset
+
+はs.n.
+\end_layout
+
+\begin_deeper
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:cr-3"
+
+\end_inset
+
+
+\begin_inset Formula $M$
+\end_inset
+
+がneutral(関数抽象でない項)であり, (
+\begin_inset Formula $\forall M'.\ M\to M'\Longrightarrow M'\in\RED_{A}$
+\end_inset
+
+)ならば
+\begin_inset Formula $M\in\RED_{A}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+この2つの補題は同時に
+\begin_inset Formula $A$
+\end_inset
+
+についての帰納法で示す.
+\end_layout
+
+\begin_layout Proof
+(base) 
+\begin_inset Formula $A=b$
+\end_inset
+
+のとき.
+ 前者は明らか.
+ 後者は, 
+\begin_inset Formula $M\to M'$
+\end_inset
+
+となる任意の
+\begin_inset Formula $M'$
+\end_inset
+
+がs.n.ならば
+\begin_inset Formula $M$
+\end_inset
+
+もs.n.
+\end_layout
+
+\begin_layout Proof
+(fun) 
+\begin_inset Formula $A=A_{1}\to A_{2}$
+\end_inset
+
+のとき.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $M\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+より, 任意の
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+に対して
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+である.
+ ところで
+\begin_inset Formula $c_{b}\in\RED_{b}$
+\end_inset
+
+なので
+\begin_inset Formula $Mc_{b}\in\RED_{A_{2}}$
+\end_inset
+
+.
+ 帰納法の仮定より, 
+\begin_inset Formula $Mc_{b}$
+\end_inset
+
+はs.n.であり, よって
+\begin_inset Formula $M$
+\end_inset
+
+はs.n.である.
+\end_layout
+
+\begin_layout Itemize
+任意の
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+に対し, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+を示す.
+ 帰納法の仮定により, 
+\begin_inset Formula $N$
+\end_inset
+
+はs.n.である.
+ 以下の補題を示せばよい.
+\end_layout
+
+\begin_deeper
+\begin_layout Lemma*
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+かつ
+\begin_inset Formula $N$
+\end_inset
+
+はs.n.ならば, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $N$
+\end_inset
+
+がs.n.であることより, 最長簡約列の長さについての帰納法で示す.
+\end_layout
+
+\begin_layout Proof
+(
+\begin_inset Formula $N$
+\end_inset
+
+がすでにnfのとき) 
+\begin_inset Formula $MN\to L$
+\end_inset
+
+となる
+\begin_inset Formula $L$
+\end_inset
+
+を考えると, 
+\begin_inset Formula $M$
+\end_inset
+
+がneutralなことより
+\begin_inset Formula $L$
+\end_inset
+
+は
+\begin_inset Formula $M'N$
+\end_inset
+
+の形で, 
+\begin_inset Formula $M\to M'$
+\end_inset
+
+である.
+ ここで元の補題の仮定より, 
+\begin_inset Formula $M'\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+なので
+\begin_inset Formula $M'N=L\in\RED_{A_{2}}$
+\end_inset
+
+であることがわかる.
+ よって元の帰納法の仮定より, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+(
+\begin_inset Formula $N$
+\end_inset
+
+の最大列の長さが
+\begin_inset Formula $n+1$
+\end_inset
+
+のとき) 
+\begin_inset Formula $MN\to L$
+\end_inset
+
+となる
+\begin_inset Formula $L$
+\end_inset
+
+を任意にとると, 
+\begin_inset Formula $L=M'N$
+\end_inset
+
+か
+\begin_inset Formula $MN'$
+\end_inset
+
+のいずれか.
+ 前者は上と同様の議論で
+\begin_inset Formula $M'N\in\RED_{A_{2}}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $N\to N'$
+\end_inset
+
+のとき, 
+\begin_inset Formula $N'$
+\end_inset
+
+はs.n.であって, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:red-forward"
+
+\end_inset
+
+により
+\begin_inset Formula $N'\in\RED_{A_{1}}$
+\end_inset
+
+でもある.
+ よってこの補題の帰納法の仮定により, 
+\begin_inset Formula $MN'\in\RED_{A_{2}}$
+\end_inset
+
+.
+ ゆえに元の帰納法の仮定より, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:beta-exp-red"
+
+\end_inset
+
+
+\begin_inset Formula $N\in\RED_{A'}$
+\end_inset
+
+, 
+\begin_inset Formula $M[N/x]\in\RED_{A}$
+\end_inset
+
+ならば, 
+\begin_inset Formula $(\lambda x.M)N\in\RED_{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cr-1"
+
+\end_inset
+
+により, 
+\begin_inset Formula $N$
+\end_inset
+
+と
+\begin_inset Formula $M[N/x]$
+\end_inset
+
+はs.n.である.
+ よって
+\begin_inset Formula $M$
+\end_inset
+
+もs.n.である.
+ このことより, 
+\begin_inset Formula $(\lambda x.M)N$
+\end_inset
+
+もs.n.である.
+ 
+\begin_inset Formula $(\lambda x.M)N$
+\end_inset
+
+の最長簡約列の長さに関する帰納法で示す.
+\end_layout
+
+\begin_layout Proof
+(最大列の長さが
+\begin_inset Formula $0$
+\end_inset
+
+のとき) 
+\begin_inset Formula $(\lambda x.M)N$
+\end_inset
+
+はnfではないのでこれはありえない.
+\end_layout
+
+\begin_layout Proof
+(最大列の長さが
+\begin_inset Formula $n+1$
+\end_inset
+
+のとき) 
+\begin_inset Formula $(\lambda x.M)N\to L$
+\end_inset
+
+となる
+\begin_inset Formula $L$
+\end_inset
+
+は, 
+\begin_inset Formula $(\lambda x.M')N$
+\end_inset
+
+, 
+\begin_inset Formula $(\lambda x.M)N'$
+\end_inset
+
+, 
+\begin_inset Formula $M[N/x]$
+\end_inset
+
+のいずれかである.
+ 前2つが
+\begin_inset Formula $\RED_{A}$
+\end_inset
+
+に属することは帰納法の仮定によりわかる.
+ 最後のケースが
+\begin_inset Formula $\RED_{A}$
+\end_inset
+
+に属することは元の仮定によりわかる.
+ よって補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cr-3"
+
+\end_inset
+
+により, 
+\begin_inset Formula $(\lambda x.M)N\in\RED_{A}$
+\end_inset
+
+である.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Fundamental Theorem
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:fund-of-red"
+
+\end_inset
+
+
+\begin_inset Formula $\typed{\Gamma}MA$
+\end_inset
+
+かつ
+\begin_inset Formula $\gamma\in\RED_{\Gamma}$
+\end_inset
+
+なら, 
+\begin_inset Formula $M[\gamma]\in\RED_{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $M$
+\end_inset
+
+についての帰納法で示す.
 \end_layout
 
 \begin_layout Proof
 (var) 
-\begin_inset Formula $\typed{\Gamma}xA$
+\begin_inset Formula $M=x$
 \end_inset
 
-のとき, 
-\begin_inset Formula $x$
+のとき.
+ 
+\begin_inset Formula $x:A\in\Gamma$
+\end_inset
+
+と
+\begin_inset Formula $\gamma\in\RED_{\Gamma}$
+\end_inset
+
+であることより
+\begin_inset Formula $x[\gamma]\in\RED_{A}$
+\end_inset
+
+がわかる.
+\end_layout
+
+\begin_layout Proof
+(base) 
+\begin_inset Formula $M=c_{b}$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $c_{b}$
 \end_inset
 
 は
 \begin_inset Formula $\beta$
 \end_inset
 
-基を含まないから
+基を含まないからstrongly normalizing.
+ よってOK.
+\end_layout
+
+\begin_layout Proof
+(abs) 
+\begin_inset Formula $M=\lambda x.M'$
+\end_inset
+
+のとき(ただし
+\begin_inset Formula $x$
+\end_inset
+
+は束縛変数なので
+\begin_inset Formula $\gamma$
+\end_inset
+
+にfreshになるように選んでよい).
+ 
+\begin_inset Formula $\typed{\Gamma}{\lambda x.M'}{A_{1}\to A_{2}}$
+\end_inset
+
+すなわち
+\begin_inset Formula $\typed{\Gamma,x:A_{1}}{M'}{A_{2}}$
+\end_inset
+
+である.
+ このとき, 
+\begin_inset Formula $M[\gamma]\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+であること, すなわち任意の
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+に対して
+\begin_inset Formula $M[\gamma]\:N=(\lambda x.M'[\gamma])N\in\RED_{A_{2}}$
+\end_inset
+
+であることを示せばよい.
+ ところで, 
+\begin_inset Formula $x[\gamma,N/x]=N$
+\end_inset
+
+であるから 
+\begin_inset Formula $\gamma[N/x]\in\RED_{\Gamma,x:A_{1}}$
+\end_inset
+
+を満たす.
+ よって
+\begin_inset Formula $\gamma[N/x]\in\RED_{\Gamma,x:A_{1}}$
+\end_inset
+
+となって帰納法の仮定より, 
+\begin_inset Formula $M'[\gamma[N/x]]=M'[\gamma][N/x]\in\RED_{A_{2}}$
+\end_inset
+
+である.
+ ゆえに補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:beta-exp-red"
+
+\end_inset
+
+より
+\begin_inset Formula $(\lambda x.M'[\gamma])N\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+(app) 
+\begin_inset Formula $M=M_{1}M_{2}$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $\typed{\Gamma}{M_{1}}{A\to B}$
+\end_inset
+
+かつ
+\begin_inset Formula $\typed{\Gamma}{M_{2}}A$
+\end_inset
+
+とする.
+ 帰納法の仮定より, 
+\begin_inset Formula $M_{1}[\gamma]\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+かつ
+\begin_inset Formula $M_{2}[\gamma]\in\RED_{A_{1}}$
+\end_inset
+
+である.
+ 
+\begin_inset Formula $\RED$
+\end_inset
+
+の定義により, 
+\begin_inset Formula $M[\gamma]=M_{1}[\gamma]M_{2}[\gamma]\in\RED_{A_{2}}$
+\end_inset
+
+なのでOK.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Strong Normalization
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\typed{\Gamma}MA$
+\end_inset
+
+ならば, 
+\begin_inset Formula $M$
+\end_inset
+
+はs.n.
+\end_layout
+
+\begin_layout Proof
+補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cr-3"
+
+\end_inset
+
+により, 
+\begin_inset Formula $x\in\RED_{A}$
+\end_inset
+
+である.
+ よってidentity substitutionについて 
+\begin_inset Formula $id\in\RED_{\Gamma}$
+\end_inset
+
+となる.
+ これと定理
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:fund-of-red"
+
+\end_inset
+
+により, 
+\begin_inset Formula $M\in\RED_{A}$
+\end_inset
+
+となり, 補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cr-1"
+
+\end_inset
+
+によりs.n.である.
 \end_layout
 
 \begin_layout Section
