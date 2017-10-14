@@ -139,12 +139,40 @@ monadを用いてsemanticsを与えることを考える.
 が副作用をもつことがしばしばあり, そのような言語のsemanticsはここでやるようなmonadで与えられていると考えることができる.
 \end_layout
 
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cat}[1]{\text{\mathbb{#1}}}
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Kleisli category
 \end_layout
 
-\begin_layout Standard
+\begin_layout Definition
+\begin_inset Formula $T$
+\end_inset
 
+を
+\begin_inset Formula $\cat C$
+\end_inset
+
+のモナドとする.
+ 
+\begin_inset Formula $\cat C$
+\end_inset
+
+の
+\series bold
+Kleisli category
+\series default
+とは, 次のようなcategory 
+\begin_inset Formula $\cat C_{T}$
+\end_inset
+
+のこと:
 \end_layout
 
 \begin_layout Standard

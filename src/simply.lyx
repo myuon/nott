@@ -202,7 +202,7 @@ status open
 \begin_layout Definition
 \begin_inset Formula 
 \[
-\alpha::=v\:|\:\alpha_{1}\to\alpha_{2}
+\alpha::=b\:|\:\alpha_{1}\to\alpha_{2}
 \]
 
 \end_inset
@@ -211,12 +211,20 @@ status open
 \end_layout
 
 \begin_layout Standard
-ただし
-\begin_inset Formula $v$
+\begin_inset Formula $b$
 \end_inset
 
-とは型変数であり, ここでは適当な型変数の集合
-\begin_inset Formula $V_{t}$
+はbase typeとよばれ, 言語に組み込みの値を表現するための型である.
+ base typeの集合
+\begin_inset Formula $B$
+\end_inset
+
+と各
+\begin_inset Formula $b\in B$
+\end_inset
+
+に対応するコンストラクター
+\begin_inset Formula $c_{b}$
 \end_inset
 
 が与えられているとする.
@@ -272,7 +280,7 @@ status open
 placement h
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Box Frameless
@@ -282,7 +290,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "20col%"
+width "45col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -359,7 +367,79 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "25col%"
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(base)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{c_b}{b}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -440,7 +520,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "40col%"
+width "45col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -538,6 +618,7 @@ simply-typed typing rules
 
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
 \begin_inset Formula $\Gamma$
 \end_inset
@@ -549,7 +630,6 @@ simply-typed typing rules
 と呼ぶ.
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 関係
 \begin_inset Formula $\typed{\Gamma}MA$
@@ -604,6 +684,7 @@ coherence
 
 \end_layout
 
+\begin_deeper
 \begin_layout Enumerate
 \begin_inset Formula $\typed{\Gamma}xA$
 \end_inset
@@ -615,7 +696,17 @@ coherence
 .
 \end_layout
 
-\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\typed{\Gamma}{c_{b}}A$
+\end_inset
+
+ならば
+\begin_inset Formula $A=b$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Enumerate
 \begin_inset Formula $\typed{\Gamma}{\lambda x.M}A$
 \end_inset
@@ -660,6 +751,812 @@ typing judgementの導出に関する場合分けにより明らか.
 \end_layout
 
 \begin_layout Section
+Properties
+\end_layout
+
+\begin_layout Subsection
+Strong Normalization
+\end_layout
+
+\begin_layout Standard
+次の定理を示すのが目標である.
+\end_layout
+
+\begin_layout Theorem*
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Strong Normalization
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\STLC$
+\end_inset
+
+はSNである.
+ すなわち, 
+\begin_inset Formula $\STLC$
+\end_inset
+
+のwell-typedな項はstrongly normalizing(任意の簡約列が停止する).
+\end_layout
+
+\begin_layout Standard
+これを示すために, 次のように型に対し特定の条件を満たす項の集合を関係づける.
+ このように型と項を関係づけて示す手法をlogical relationなどとよぶ.
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\RED}{\text{RED}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+次のようにreducibility candidates 
+\begin_inset Formula $\RED$
+\end_inset
+
+を定義する.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $t\in\RED_{b}$
+\end_inset
+
+ iff 
+\begin_inset Formula $t$
+\end_inset
+
+はstrongly normalizing.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t\in\RED_{A\to B}$
+\end_inset
+
+ iff 
+\begin_inset Formula $\forall u\in\RED_{A},(t\:u)\in\RED_{B}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+次のように
+\begin_inset Formula $\RED$
+\end_inset
+
+をcontextへ拡張する.
+\begin_inset Formula 
+\[
+\RED_{\Gamma}=\{\gamma;\text{dom}\:\Gamma=\text{dom}\:\gamma,\forall x:A\in\Gamma,x[\gamma]\in\RED_{A}\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:red-forward"
+
+\end_inset
+
+
+\begin_inset Formula $M\in\RED_{A}$
+\end_inset
+
+かつ
+\begin_inset Formula $M\to_{\beta}M'$
+\end_inset
+
+ならば
+\begin_inset Formula $M'\in\RED_{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $A$
+\end_inset
+
+についての帰納法.
+\end_layout
+
+\begin_layout Proof
+(base) 
+\begin_inset Formula $A=b$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $M$
+\end_inset
+
+はstrongly normalizingなので
+\begin_inset Formula $M'$
+\end_inset
+
+もそう.
+ よってOK.
+\end_layout
+
+\begin_layout Proof
+(fun) 
+\begin_inset Formula $A=A_{1}\to A_{2}$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $M'\in\RED_{A}$
+\end_inset
+
+を示すので, 任意の
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+に対して
+\begin_inset Formula $M'N\in\RED_{A_{2}}$
+\end_inset
+
+であることを示す.
+ 
+\begin_inset Formula $M\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+なので, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+である.
+ 
+\begin_inset Formula $MN\to_{\beta}M'N$
+\end_inset
+
+であることと帰納法の仮定により
+\begin_inset Formula $M'N\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:cr-1"
+
+\end_inset
+
+
+\begin_inset Formula $M\in\RED_{A}$
+\end_inset
+
+ならば, 
+\begin_inset Formula $M$
+\end_inset
+
+はs.n.
+\end_layout
+
+\begin_deeper
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:cr-3"
+
+\end_inset
+
+
+\begin_inset Formula $M$
+\end_inset
+
+がneutral(関数抽象でない項)であり, (
+\begin_inset Formula $\forall M'.\ M\to M'\Longrightarrow M'\in\RED_{A}$
+\end_inset
+
+)ならば
+\begin_inset Formula $M\in\RED_{A}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+この2つの補題は同時に
+\begin_inset Formula $A$
+\end_inset
+
+についての帰納法で示す.
+\end_layout
+
+\begin_layout Proof
+(base) 
+\begin_inset Formula $A=b$
+\end_inset
+
+のとき.
+ 前者は明らか.
+ 後者は, 
+\begin_inset Formula $M\to M'$
+\end_inset
+
+となる任意の
+\begin_inset Formula $M'$
+\end_inset
+
+がs.n.ならば
+\begin_inset Formula $M$
+\end_inset
+
+もs.n.
+\end_layout
+
+\begin_layout Proof
+(fun) 
+\begin_inset Formula $A=A_{1}\to A_{2}$
+\end_inset
+
+のとき.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $M\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+より, 任意の
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+に対して
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+である.
+ ところで
+\begin_inset Formula $c_{b}\in\RED_{b}$
+\end_inset
+
+なので
+\begin_inset Formula $Mc_{b}\in\RED_{A_{2}}$
+\end_inset
+
+.
+ 帰納法の仮定より, 
+\begin_inset Formula $Mc_{b}$
+\end_inset
+
+はs.n.であり, よって
+\begin_inset Formula $M$
+\end_inset
+
+はs.n.である.
+\end_layout
+
+\begin_layout Itemize
+任意の
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+に対し, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+を示す.
+ 帰納法の仮定により, 
+\begin_inset Formula $N$
+\end_inset
+
+はs.n.である.
+ 以下の補題を示せばよい.
+\end_layout
+
+\begin_deeper
+\begin_layout Lemma*
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+かつ
+\begin_inset Formula $N$
+\end_inset
+
+はs.n.ならば, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $N$
+\end_inset
+
+がs.n.であることより, 最長簡約列の長さについての帰納法で示す.
+\end_layout
+
+\begin_layout Proof
+(
+\begin_inset Formula $N$
+\end_inset
+
+がすでにnfのとき) 
+\begin_inset Formula $MN\to L$
+\end_inset
+
+となる
+\begin_inset Formula $L$
+\end_inset
+
+を考えると, 
+\begin_inset Formula $M$
+\end_inset
+
+がneutralなことより
+\begin_inset Formula $L$
+\end_inset
+
+は
+\begin_inset Formula $M'N$
+\end_inset
+
+の形で, 
+\begin_inset Formula $M\to M'$
+\end_inset
+
+である.
+ ここで元の補題の仮定より, 
+\begin_inset Formula $M'\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+なので
+\begin_inset Formula $M'N=L\in\RED_{A_{2}}$
+\end_inset
+
+であることがわかる.
+ よって元の帰納法の仮定より, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+(
+\begin_inset Formula $N$
+\end_inset
+
+の最大列の長さが
+\begin_inset Formula $n+1$
+\end_inset
+
+のとき) 
+\begin_inset Formula $MN\to L$
+\end_inset
+
+となる
+\begin_inset Formula $L$
+\end_inset
+
+を任意にとると, 
+\begin_inset Formula $L=M'N$
+\end_inset
+
+か
+\begin_inset Formula $MN'$
+\end_inset
+
+のいずれか.
+ 前者は上と同様の議論で
+\begin_inset Formula $M'N\in\RED_{A_{2}}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $N\to N'$
+\end_inset
+
+のとき, 
+\begin_inset Formula $N'$
+\end_inset
+
+はs.n.であって, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:red-forward"
+
+\end_inset
+
+により
+\begin_inset Formula $N'\in\RED_{A_{1}}$
+\end_inset
+
+でもある.
+ よってこの補題の帰納法の仮定により, 
+\begin_inset Formula $MN'\in\RED_{A_{2}}$
+\end_inset
+
+.
+ ゆえに元の帰納法の仮定より, 
+\begin_inset Formula $MN\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:beta-exp-red"
+
+\end_inset
+
+
+\begin_inset Formula $N\in\RED_{A'}$
+\end_inset
+
+, 
+\begin_inset Formula $M[N/x]\in\RED_{A}$
+\end_inset
+
+ならば, 
+\begin_inset Formula $(\lambda x.M)N\in\RED_{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cr-1"
+
+\end_inset
+
+により, 
+\begin_inset Formula $N$
+\end_inset
+
+と
+\begin_inset Formula $M[N/x]$
+\end_inset
+
+はs.n.である.
+ よって
+\begin_inset Formula $M$
+\end_inset
+
+もs.n.である.
+ このことより, 
+\begin_inset Formula $(\lambda x.M)N$
+\end_inset
+
+もs.n.である.
+ 
+\begin_inset Formula $(\lambda x.M)N$
+\end_inset
+
+の最長簡約列の長さに関する帰納法で示す.
+\end_layout
+
+\begin_layout Proof
+(最大列の長さが
+\begin_inset Formula $0$
+\end_inset
+
+のとき) 
+\begin_inset Formula $(\lambda x.M)N$
+\end_inset
+
+はnfではないのでこれはありえない.
+\end_layout
+
+\begin_layout Proof
+(最大列の長さが
+\begin_inset Formula $n+1$
+\end_inset
+
+のとき) 
+\begin_inset Formula $(\lambda x.M)N\to L$
+\end_inset
+
+となる
+\begin_inset Formula $L$
+\end_inset
+
+は, 
+\begin_inset Formula $(\lambda x.M')N$
+\end_inset
+
+, 
+\begin_inset Formula $(\lambda x.M)N'$
+\end_inset
+
+, 
+\begin_inset Formula $M[N/x]$
+\end_inset
+
+のいずれかである.
+ 前2つが
+\begin_inset Formula $\RED_{A}$
+\end_inset
+
+に属することは帰納法の仮定によりわかる.
+ 最後のケースが
+\begin_inset Formula $\RED_{A}$
+\end_inset
+
+に属することは元の仮定によりわかる.
+ よって補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cr-3"
+
+\end_inset
+
+により, 
+\begin_inset Formula $(\lambda x.M)N\in\RED_{A}$
+\end_inset
+
+である.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Fundamental Theorem
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:fund-of-red"
+
+\end_inset
+
+
+\begin_inset Formula $\typed{\Gamma}MA$
+\end_inset
+
+かつ
+\begin_inset Formula $\gamma\in\RED_{\Gamma}$
+\end_inset
+
+なら, 
+\begin_inset Formula $M[\gamma]\in\RED_{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $M$
+\end_inset
+
+についての帰納法で示す.
+\end_layout
+
+\begin_layout Proof
+(var) 
+\begin_inset Formula $M=x$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $x:A\in\Gamma$
+\end_inset
+
+と
+\begin_inset Formula $\gamma\in\RED_{\Gamma}$
+\end_inset
+
+であることより
+\begin_inset Formula $x[\gamma]\in\RED_{A}$
+\end_inset
+
+がわかる.
+\end_layout
+
+\begin_layout Proof
+(base) 
+\begin_inset Formula $M=c_{b}$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $c_{b}$
+\end_inset
+
+は
+\begin_inset Formula $\beta$
+\end_inset
+
+基を含まないからstrongly normalizing.
+ よってOK.
+\end_layout
+
+\begin_layout Proof
+(abs) 
+\begin_inset Formula $M=\lambda x.M'$
+\end_inset
+
+のとき(ただし
+\begin_inset Formula $x$
+\end_inset
+
+は束縛変数なので
+\begin_inset Formula $\gamma$
+\end_inset
+
+にfreshになるように選んでよい).
+ 
+\begin_inset Formula $\typed{\Gamma}{\lambda x.M'}{A_{1}\to A_{2}}$
+\end_inset
+
+すなわち
+\begin_inset Formula $\typed{\Gamma,x:A_{1}}{M'}{A_{2}}$
+\end_inset
+
+である.
+ このとき, 
+\begin_inset Formula $M[\gamma]\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+であること, すなわち任意の
+\begin_inset Formula $N\in\RED_{A_{1}}$
+\end_inset
+
+に対して
+\begin_inset Formula $M[\gamma]\:N=(\lambda x.M'[\gamma])N\in\RED_{A_{2}}$
+\end_inset
+
+であることを示せばよい.
+ ところで, 
+\begin_inset Formula $x[\gamma,N/x]=N$
+\end_inset
+
+であるから 
+\begin_inset Formula $\gamma[N/x]\in\RED_{\Gamma,x:A_{1}}$
+\end_inset
+
+を満たす.
+ よって
+\begin_inset Formula $\gamma[N/x]\in\RED_{\Gamma,x:A_{1}}$
+\end_inset
+
+となって帰納法の仮定より, 
+\begin_inset Formula $M'[\gamma[N/x]]=M'[\gamma][N/x]\in\RED_{A_{2}}$
+\end_inset
+
+である.
+ ゆえに補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:beta-exp-red"
+
+\end_inset
+
+より
+\begin_inset Formula $(\lambda x.M'[\gamma])N\in\RED_{A_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+(app) 
+\begin_inset Formula $M=M_{1}M_{2}$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $\typed{\Gamma}{M_{1}}{A\to B}$
+\end_inset
+
+かつ
+\begin_inset Formula $\typed{\Gamma}{M_{2}}A$
+\end_inset
+
+とする.
+ 帰納法の仮定より, 
+\begin_inset Formula $M_{1}[\gamma]\in\RED_{A_{1}\to A_{2}}$
+\end_inset
+
+かつ
+\begin_inset Formula $M_{2}[\gamma]\in\RED_{A_{1}}$
+\end_inset
+
+である.
+ 
+\begin_inset Formula $\RED$
+\end_inset
+
+の定義により, 
+\begin_inset Formula $M[\gamma]=M_{1}[\gamma]M_{2}[\gamma]\in\RED_{A_{2}}$
+\end_inset
+
+なのでOK.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Strong Normalization
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\typed{\Gamma}MA$
+\end_inset
+
+ならば, 
+\begin_inset Formula $M$
+\end_inset
+
+はs.n.
+\end_layout
+
+\begin_layout Proof
+補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cr-3"
+
+\end_inset
+
+により, 
+\begin_inset Formula $x\in\RED_{A}$
+\end_inset
+
+である.
+ よってidentity substitutionについて 
+\begin_inset Formula $id\in\RED_{\Gamma}$
+\end_inset
+
+となる.
+ これと定理
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:fund-of-red"
+
+\end_inset
+
+により, 
+\begin_inset Formula $M\in\RED_{A}$
+\end_inset
+
+となり, 補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cr-1"
+
+\end_inset
+
+によりs.n.である.
+\end_layout
+
+\begin_layout Section
 Simple Extension
 \end_layout
 
@@ -672,25 +1569,36 @@ Simple Extension
 \end_layout
 
 \begin_layout Subsection
-Ground Type
+Base Type
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\STLC$
+上ではラムダ計算にbase typeを追加したが, 定義自体最低限しかしていないので, 具体的な型を追加する時にどのようにするかを例として挙げておく.
+\end_layout
+
+\begin_layout Standard
+base typeを
+\begin_inset Formula $b\in B$
 \end_inset
 
-の型以外に, 基本となる組み込みの型を追加する.
- このような型をbase typeやground typeとよぶ.
+で, その時のconstructorを
+\begin_inset Formula $C_{b}$
+\end_inset
+
+でかくことにする.
 \end_layout
 
-\begin_layout Standard
-例えばboolean expressionを追加する場合は, 型と項を次のように拡張する.
-\begin_inset Formula 
-\begin{eqnarray*}
-\alpha & ::= & \dots\:|\:\bool\\
-M & ::= & \dots\:|\:\text{true}\:|\:\text{false}\:|\:\text{if \ensuremath{M} then \ensuremath{M} else \ensuremath{M}}
-\end{eqnarray*}
+\begin_layout Itemize
+boolean: 
+\begin_inset Formula $B=\{\text{bool}\},C_{\text{bool}}=\{\text{true},\text{false}\}$
+\end_inset
 
+
+\end_layout
+
+\begin_layout Itemize
+nat: 
+\begin_inset Formula $B=\{\text{nat}\},C_{\text{nat}}=\{\text{zero},\text{succ}(C_{\text{nat}})\}$
 \end_inset
 
 
@@ -2443,7 +3351,23 @@ name "def:model-of-STfp"
 \begin_inset Formula $\cat C$
 \end_inset
 
-への対象へのinterpretationが与えられているとする.
+への対象へのinterpretationが与えられており, 
+\begin_inset Formula $\cat C$
+\end_inset
+
+は
+\begin_inset Formula $\STfp$
+\end_inset
+
+のbase type constructor 
+\begin_inset Formula $c_{b}$
+\end_inset
+
+に対応する射
+\begin_inset Formula $c_{b}:1\to\left\llbracket b\right\rrbracket $
+\end_inset
+
+があるとする.
  このとき, 次のようにして
 \begin_inset Formula $\cat C$
 \end_inset
@@ -2475,11 +3399,12 @@ judgementのinterpretation
 \begin_inset Formula 
 \begin{eqnarray*}
 \left\llbracket \frac{x:A\in\Gamma}{\typed{\Gamma}xA}\right\rrbracket  & = & \left\llbracket \Gamma\right\rrbracket \xrightarrow{\pr x}\left\llbracket A\right\rrbracket \\
+\left\llbracket \frac{}{\typed{\Gamma}{c_{b}}b}\right\rrbracket  & = & \left\llbracket \Gamma\right\rrbracket \xrightarrow{!}1\xrightarrow{c_{b}}\left\llbracket b\right\rrbracket \\
 \left\llbracket \frac{\typed{\Gamma,x:A}MB}{\typed{\Gamma}{\lambda x.M}{A\to B}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \times\left\llbracket A\right\rrbracket \xrightarrow{M}\left\llbracket B\right\rrbracket }{\left\llbracket \Gamma\right\rrbracket \xrightarrow[\hat{M}]{}\left\llbracket B\right\rrbracket ^{\left\llbracket A\right\rrbracket }}\\
 \left\llbracket \frac{\typed{\Gamma}{M_{1}}{A\to B}\qquad\typed{\Gamma}{M_{2}}A}{\typed{\Gamma}{M_{1}M_{2}}B}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{1}}B^{A}\qquad\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{2}}A}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{\pair{M_{2}}{M_{1}}}A\times B^{A}\xrightarrow{\text{ev}}B}\\
 \left\llbracket \frac{\typed{\Gamma}{M_{i}}{A_{i}}}{\typed{\Gamma}{\pair{M_{1}}{M_{2}}}{A_{1}\times A_{2}}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{i}}A_{i}}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{\pair{M_{1}}{M_{2}}}A_{1}\times A_{2}}\\
 \left\llbracket \frac{\typed{\Gamma}M{A_{1}\times A_{2}}}{\typed{\Gamma}{\proj iM}{A_{i}}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M}A_{1}\times A_{2}}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M}A_{1}\times A_{2}\xrightarrow{\text{pr}_{i}}A_{i}}\\
-\left\llbracket \frac{}{\typed{\Gamma}{\star}1}\right\rrbracket  & = & \frac{}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{!}1}
+\left\llbracket \frac{}{\typed{\Gamma}{\star}1}\right\rrbracket  & = & \left\llbracket \Gamma\right\rrbracket \xrightarrow{!}1
 \end{eqnarray*}
 
 \end_inset
@@ -2493,7 +3418,7 @@ judgementのinterpretation
 \end_inset
 
 によって, interpretationを定める.
- 上はは
+ 上は
 \begin_inset Formula $\cat C$
 \end_inset
 
@@ -2643,11 +3568,11 @@ trans) 明らか.
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & \left\llbracket \typed{\Gamma}{(\lambda x.M)N}B\right\rrbracket \\
- & = & \app\circ\pair{\left\llbracket {{\typed{\Gamma}{\lambda x.M}{A\to B}}}\right\rrbracket }{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
- & = & \app\circ\pair{\curry{\left\llbracket {{\typed{\Gamma,x:A}MB}}\right\rrbracket }}{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
- & = & \app\circ(\curry{\left\llbracket {{\typed{\Gamma,x:A}MB}}\right\rrbracket }\times1)\circ\pair 1{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
- & = & \uncurry{\curry{\left\llbracket {{\typed{\Gamma,x:A}MB}}\right\rrbracket }}\circ\pair 1{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
- & = & \left\llbracket \typed{\Gamma,x:A}MB\right\rrbracket \circ\pair 1{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
+ & = & \app\circ\pair{\left\llbracket {\typed{\Gamma}{\lambda x.M}{A\to B}}\right\rrbracket }{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \app\circ\pair{\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }}{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \app\circ(\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }\times1)\circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \uncurry{\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }}\circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \left\llbracket \typed{\Gamma,x:A}MB\right\rrbracket \circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
  & = & \left\llbracket \typed{z:\left\llbracket \Gamma\right\rrbracket \times A}{M[\pr i(\pr 1(z))/x_{i},\:\pr 2(z)/x]}B\right\rrbracket \circ\left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{\pair y{N[\pr i(y)/x_{i}]}}{\left\llbracket \Gamma\right\rrbracket \times A}\right\rrbracket \\
  & = & \left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(\pr 1(z))/x_{i},\:\pr 2(z)/x][\pair y{N[\pr i(y)/x_{i}]}/z]}B\right\rrbracket \\
  & = & \left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(y)/x_{i},\:N[\pr i(y)/x_{i}]/x]}B\right\rrbracket \\
@@ -2683,12 +3608,12 @@ trans) 明らか.
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & \left\llbracket \typed{\Gamma}{\lambda x.\:(M\:x)}{A\to B}\right\rrbracket \\
- & = & \curry{\left\llbracket {{\typed{\Gamma,x:A}{M\:x}B}}\right\rrbracket }\\
- & = & \curry{\app\circ\pair{\left\llbracket {{\typed{\Gamma,x:A}M{A\to B}}}\right\rrbracket }{\left\llbracket {{\typed{\Gamma,x:A}xA}}\right\rrbracket }}\\
- & = & \curry{\app\circ\pair{\left\llbracket {{\typed{\Gamma,x:A}M{A\to B}}}\right\rrbracket }{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
- & = & \curry{\app\circ(\left\llbracket {{\typed{\Gamma}M{A\to B}}}\right\rrbracket \times1)\circ\pair{\pr 1^{\left\llbracket \Gamma\right\rrbracket ,A}}{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
- & = & \curry{\app\circ(\left\llbracket {{\typed{\Gamma}M{A\to B}}}\right\rrbracket \times1)}\\
- & = & \curry{\uncurry{\left\llbracket {{\typed{\Gamma}M{A\to B}}}\right\rrbracket }}\\
+ & = & \curry{\left\llbracket {\typed{\Gamma,x:A}{M\:x}B}\right\rrbracket }\\
+ & = & \curry{\app\circ\pair{\left\llbracket {\typed{\Gamma,x:A}M{A\to B}}\right\rrbracket }{\left\llbracket {\typed{\Gamma,x:A}xA}\right\rrbracket }}\\
+ & = & \curry{\app\circ\pair{\left\llbracket {\typed{\Gamma,x:A}M{A\to B}}\right\rrbracket }{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
+ & = & \curry{\app\circ(\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket \times1)\circ\pair{\pr 1^{\left\llbracket \Gamma\right\rrbracket ,A}}{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
+ & = & \curry{\app\circ(\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket \times1)}\\
+ & = & \curry{\uncurry{\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket }}\\
  & = & \left\llbracket \typed{\Gamma}M{A\to B}\right\rrbracket 
 \end{eqnarray*}
 
@@ -2819,7 +3744,7 @@ signature
 \begin_deeper
 \begin_layout Itemize
 sort 
-\begin_inset Formula $\{p,m,v_{p},v_{m}\}$
+\begin_inset Formula $\{p,m,v\}$
 \end_inset
 
 : 
@@ -2831,11 +3756,11 @@ sort
 \end_inset
 
 はterm, 
-\begin_inset Formula $v_{-}$
+\begin_inset Formula $v$
 \end_inset
 
 はvariableの意味である.
- それぞれ型, 項, 変数(変数には項変数と型変数とがある)であることを表す.
+ それぞれ型, 項, 変数であることを表す.
 \end_layout
 
 \begin_layout Itemize
@@ -2844,14 +3769,6 @@ constructor symbols: これは以下のようなものからなる.
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-type variables: 
-\begin_inset Formula $\alpha,\beta,\gamma,\dots:v_{p}$
-\end_inset
-
-
-\end_layout
-
 \begin_layout Itemize
 term variables: 
 \begin_inset Formula $x,y,z,\dots:v_{m}$
@@ -2862,7 +3779,7 @@ term variables:
 
 \begin_layout Itemize
 type constructor symbols: 
-\begin_inset Formula $\{\text{TVar}:v_{p}\to p,(\to):p\to p\to p,1:p,(\times):p\to p\to p\}$
+\begin_inset Formula $\{B:p,\text{TVar}:v_{p}\to p,(\to):p\to p\to p,1:p,(\times):p\to p\to p\}$
 \end_inset
 
 
@@ -2870,7 +3787,7 @@ type constructor symbols:
 
 \begin_layout Itemize
 term constructor symbols: 
-\begin_inset Formula $\{\text{Var}:v_{m}\to m,\text{Abs}:v_{m}\to m\to m,\text{App}:m\to m\to m,\star:m,\pair --:m\to m\to m,\proj i{(-)}:m\to m\}$
+\begin_inset Formula $\{c_{b}:m,\text{Var}:v_{m}\to m,\text{Abs}:v_{m}\to m\to m,\text{App}:m\to m\to m,\star:m,\pair --:m\to m\to m,\proj i{(-)}:m\to m\}$
 \end_inset
 
 
@@ -2878,7 +3795,7 @@ term constructor symbols:
 
 \end_deeper
 \begin_layout Itemize
-typing rules 前述のもの: sort
+typing rules 前述のもの: sort 
 \begin_inset Formula $p$
 \end_inset
 
@@ -2923,7 +3840,7 @@ object: signature
 \end_inset
 
 であって, sortが
-\begin_inset Formula $\{p,m,v_{p},v_{m}\}$
+\begin_inset Formula $\{p,m,v\}$
 \end_inset
 
 , type/term constructor symbolsとtyping rulesとequational theoryは
