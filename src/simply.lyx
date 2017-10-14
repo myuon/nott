@@ -202,7 +202,7 @@ status open
 \begin_layout Definition
 \begin_inset Formula 
 \[
-\alpha::=v\:|\:\alpha_{1}\to\alpha_{2}
+\alpha::=b\:|\:\alpha_{1}\to\alpha_{2}
 \]
 
 \end_inset
@@ -211,12 +211,20 @@ status open
 \end_layout
 
 \begin_layout Standard
-ただし
-\begin_inset Formula $v$
+\begin_inset Formula $b$
 \end_inset
 
-とは型変数であり, ここでは適当な型変数の集合
-\begin_inset Formula $V_{t}$
+はbase typeとよばれ, 言語に組み込みの値を表現するための型である.
+ base typeの集合
+\begin_inset Formula $B$
+\end_inset
+
+と各
+\begin_inset Formula $b\in B$
+\end_inset
+
+に対応するコンストラクター
+\begin_inset Formula $c_{b}$
 \end_inset
 
 が与えられているとする.
@@ -272,7 +280,7 @@ status open
 placement h
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Box Frameless
@@ -282,7 +290,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "20col%"
+width "45col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -359,7 +367,79 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "25col%"
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(base)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{c_b}{b}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -440,7 +520,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "40col%"
+width "45col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -538,6 +618,7 @@ simply-typed typing rules
 
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
 \begin_inset Formula $\Gamma$
 \end_inset
@@ -549,7 +630,6 @@ simply-typed typing rules
 と呼ぶ.
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 関係
 \begin_inset Formula $\typed{\Gamma}MA$
@@ -604,6 +684,7 @@ coherence
 
 \end_layout
 
+\begin_deeper
 \begin_layout Enumerate
 \begin_inset Formula $\typed{\Gamma}xA$
 \end_inset
@@ -615,7 +696,17 @@ coherence
 .
 \end_layout
 
-\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\typed{\Gamma}{c_{b}}A$
+\end_inset
+
+ならば
+\begin_inset Formula $A=b$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Enumerate
 \begin_inset Formula $\typed{\Gamma}{\lambda x.M}A$
 \end_inset
@@ -766,10 +857,6 @@ Strong Normalization
 .
 \end_layout
 
-\begin_layout Lemma
-
-\end_layout
-
 \begin_layout Proposition
 \begin_inset Formula $\typed{\Gamma}MA$
 \end_inset
@@ -814,25 +901,36 @@ Simple Extension
 \end_layout
 
 \begin_layout Subsection
-Ground Type
+Base Type
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\STLC$
+上ではラムダ計算にbase typeを追加したが, 定義自体最低限しかしていないので, 具体的な型を追加する時にどのようにするかを例として挙げておく.
+\end_layout
+
+\begin_layout Standard
+base typeを
+\begin_inset Formula $b\in B$
 \end_inset
 
-の型以外に, 基本となる組み込みの型を追加する.
- このような型をbase typeやground typeとよぶ.
+で, その時のconstructorを
+\begin_inset Formula $C_{b}$
+\end_inset
+
+でかくことにする.
 \end_layout
 
-\begin_layout Standard
-例えばboolean expressionを追加する場合は, 型と項を次のように拡張する.
-\begin_inset Formula 
-\begin{eqnarray*}
-\alpha & ::= & \dots\:|\:\bool\\
-M & ::= & \dots\:|\:\text{true}\:|\:\text{false}\:|\:\text{if \ensuremath{M} then \ensuremath{M} else \ensuremath{M}}
-\end{eqnarray*}
+\begin_layout Itemize
+boolean: 
+\begin_inset Formula $B=\{\text{bool}\},C_{\text{bool}}=\{\text{true},\text{false}\}$
+\end_inset
 
+
+\end_layout
+
+\begin_layout Itemize
+nat: 
+\begin_inset Formula $B=\{\text{nat}\},C_{\text{nat}}=\{\text{zero},\text{succ}(C_{\text{nat}})\}$
 \end_inset
 
 
@@ -2585,7 +2683,23 @@ name "def:model-of-STfp"
 \begin_inset Formula $\cat C$
 \end_inset
 
-への対象へのinterpretationが与えられているとする.
+への対象へのinterpretationが与えられており, 
+\begin_inset Formula $\cat C$
+\end_inset
+
+は
+\begin_inset Formula $\STfp$
+\end_inset
+
+のbase type constructor 
+\begin_inset Formula $c_{b}$
+\end_inset
+
+に対応する射
+\begin_inset Formula $c_{b}:1\to\left\llbracket b\right\rrbracket $
+\end_inset
+
+があるとする.
  このとき, 次のようにして
 \begin_inset Formula $\cat C$
 \end_inset
@@ -2617,11 +2731,12 @@ judgementのinterpretation
 \begin_inset Formula 
 \begin{eqnarray*}
 \left\llbracket \frac{x:A\in\Gamma}{\typed{\Gamma}xA}\right\rrbracket  & = & \left\llbracket \Gamma\right\rrbracket \xrightarrow{\pr x}\left\llbracket A\right\rrbracket \\
+\left\llbracket \frac{}{\typed{\Gamma}{c_{b}}b}\right\rrbracket  & = & \left\llbracket \Gamma\right\rrbracket \xrightarrow{!}1\xrightarrow{c_{b}}\left\llbracket b\right\rrbracket \\
 \left\llbracket \frac{\typed{\Gamma,x:A}MB}{\typed{\Gamma}{\lambda x.M}{A\to B}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \times\left\llbracket A\right\rrbracket \xrightarrow{M}\left\llbracket B\right\rrbracket }{\left\llbracket \Gamma\right\rrbracket \xrightarrow[\hat{M}]{}\left\llbracket B\right\rrbracket ^{\left\llbracket A\right\rrbracket }}\\
 \left\llbracket \frac{\typed{\Gamma}{M_{1}}{A\to B}\qquad\typed{\Gamma}{M_{2}}A}{\typed{\Gamma}{M_{1}M_{2}}B}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{1}}B^{A}\qquad\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{2}}A}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{\pair{M_{2}}{M_{1}}}A\times B^{A}\xrightarrow{\text{ev}}B}\\
 \left\llbracket \frac{\typed{\Gamma}{M_{i}}{A_{i}}}{\typed{\Gamma}{\pair{M_{1}}{M_{2}}}{A_{1}\times A_{2}}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M_{i}}A_{i}}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{\pair{M_{1}}{M_{2}}}A_{1}\times A_{2}}\\
 \left\llbracket \frac{\typed{\Gamma}M{A_{1}\times A_{2}}}{\typed{\Gamma}{\proj iM}{A_{i}}}\right\rrbracket  & = & \frac{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M}A_{1}\times A_{2}}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{M}A_{1}\times A_{2}\xrightarrow{\text{pr}_{i}}A_{i}}\\
-\left\llbracket \frac{}{\typed{\Gamma}{\star}1}\right\rrbracket  & = & \frac{}{\left\llbracket \Gamma\right\rrbracket \xrightarrow{!}1}
+\left\llbracket \frac{}{\typed{\Gamma}{\star}1}\right\rrbracket  & = & \left\llbracket \Gamma\right\rrbracket \xrightarrow{!}1
 \end{eqnarray*}
 
 \end_inset
@@ -2635,7 +2750,7 @@ judgementのinterpretation
 \end_inset
 
 によって, interpretationを定める.
- 上はは
+ 上は
 \begin_inset Formula $\cat C$
 \end_inset
 
@@ -2785,11 +2900,11 @@ trans) 明らか.
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & \left\llbracket \typed{\Gamma}{(\lambda x.M)N}B\right\rrbracket \\
- & = & \app\circ\pair{\left\llbracket {{\typed{\Gamma}{\lambda x.M}{A\to B}}}\right\rrbracket }{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
- & = & \app\circ\pair{\curry{\left\llbracket {{\typed{\Gamma,x:A}MB}}\right\rrbracket }}{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
- & = & \app\circ(\curry{\left\llbracket {{\typed{\Gamma,x:A}MB}}\right\rrbracket }\times1)\circ\pair 1{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
- & = & \uncurry{\curry{\left\llbracket {{\typed{\Gamma,x:A}MB}}\right\rrbracket }}\circ\pair 1{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
- & = & \left\llbracket \typed{\Gamma,x:A}MB\right\rrbracket \circ\pair 1{\left\llbracket {{\typed{\Gamma}NA}}\right\rrbracket }\\
+ & = & \app\circ\pair{\left\llbracket {\typed{\Gamma}{\lambda x.M}{A\to B}}\right\rrbracket }{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \app\circ\pair{\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }}{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \app\circ(\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }\times1)\circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \uncurry{\curry{\left\llbracket {\typed{\Gamma,x:A}MB}\right\rrbracket }}\circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
+ & = & \left\llbracket \typed{\Gamma,x:A}MB\right\rrbracket \circ\pair 1{\left\llbracket {\typed{\Gamma}NA}\right\rrbracket }\\
  & = & \left\llbracket \typed{z:\left\llbracket \Gamma\right\rrbracket \times A}{M[\pr i(\pr 1(z))/x_{i},\:\pr 2(z)/x]}B\right\rrbracket \circ\left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{\pair y{N[\pr i(y)/x_{i}]}}{\left\llbracket \Gamma\right\rrbracket \times A}\right\rrbracket \\
  & = & \left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(\pr 1(z))/x_{i},\:\pr 2(z)/x][\pair y{N[\pr i(y)/x_{i}]}/z]}B\right\rrbracket \\
  & = & \left\llbracket \typed{y:\left\llbracket \Gamma\right\rrbracket }{M[\pr i(y)/x_{i},\:N[\pr i(y)/x_{i}]/x]}B\right\rrbracket \\
@@ -2825,12 +2940,12 @@ trans) 明らか.
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & \left\llbracket \typed{\Gamma}{\lambda x.\:(M\:x)}{A\to B}\right\rrbracket \\
- & = & \curry{\left\llbracket {{\typed{\Gamma,x:A}{M\:x}B}}\right\rrbracket }\\
- & = & \curry{\app\circ\pair{\left\llbracket {{\typed{\Gamma,x:A}M{A\to B}}}\right\rrbracket }{\left\llbracket {{\typed{\Gamma,x:A}xA}}\right\rrbracket }}\\
- & = & \curry{\app\circ\pair{\left\llbracket {{\typed{\Gamma,x:A}M{A\to B}}}\right\rrbracket }{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
- & = & \curry{\app\circ(\left\llbracket {{\typed{\Gamma}M{A\to B}}}\right\rrbracket \times1)\circ\pair{\pr 1^{\left\llbracket \Gamma\right\rrbracket ,A}}{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
- & = & \curry{\app\circ(\left\llbracket {{\typed{\Gamma}M{A\to B}}}\right\rrbracket \times1)}\\
- & = & \curry{\uncurry{\left\llbracket {{\typed{\Gamma}M{A\to B}}}\right\rrbracket }}\\
+ & = & \curry{\left\llbracket {\typed{\Gamma,x:A}{M\:x}B}\right\rrbracket }\\
+ & = & \curry{\app\circ\pair{\left\llbracket {\typed{\Gamma,x:A}M{A\to B}}\right\rrbracket }{\left\llbracket {\typed{\Gamma,x:A}xA}\right\rrbracket }}\\
+ & = & \curry{\app\circ\pair{\left\llbracket {\typed{\Gamma,x:A}M{A\to B}}\right\rrbracket }{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
+ & = & \curry{\app\circ(\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket \times1)\circ\pair{\pr 1^{\left\llbracket \Gamma\right\rrbracket ,A}}{\pr 2^{\left\llbracket \Gamma\right\rrbracket ,A}}}\\
+ & = & \curry{\app\circ(\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket \times1)}\\
+ & = & \curry{\uncurry{\left\llbracket {\typed{\Gamma}M{A\to B}}\right\rrbracket }}\\
  & = & \left\llbracket \typed{\Gamma}M{A\to B}\right\rrbracket 
 \end{eqnarray*}
 
@@ -2961,7 +3076,7 @@ signature
 \begin_deeper
 \begin_layout Itemize
 sort 
-\begin_inset Formula $\{p,m,v_{p},v_{m}\}$
+\begin_inset Formula $\{p,m,v\}$
 \end_inset
 
 : 
@@ -2973,11 +3088,11 @@ sort
 \end_inset
 
 はterm, 
-\begin_inset Formula $v_{-}$
+\begin_inset Formula $v$
 \end_inset
 
 はvariableの意味である.
- それぞれ型, 項, 変数(変数には項変数と型変数とがある)であることを表す.
+ それぞれ型, 項, 変数であることを表す.
 \end_layout
 
 \begin_layout Itemize
@@ -2986,14 +3101,6 @@ constructor symbols: これは以下のようなものからなる.
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-type variables: 
-\begin_inset Formula $\alpha,\beta,\gamma,\dots:v_{p}$
-\end_inset
-
-
-\end_layout
-
 \begin_layout Itemize
 term variables: 
 \begin_inset Formula $x,y,z,\dots:v_{m}$
@@ -3004,7 +3111,7 @@ term variables:
 
 \begin_layout Itemize
 type constructor symbols: 
-\begin_inset Formula $\{\text{TVar}:v_{p}\to p,(\to):p\to p\to p,1:p,(\times):p\to p\to p\}$
+\begin_inset Formula $\{B:p,\text{TVar}:v_{p}\to p,(\to):p\to p\to p,1:p,(\times):p\to p\to p\}$
 \end_inset
 
 
@@ -3012,7 +3119,7 @@ type constructor symbols:
 
 \begin_layout Itemize
 term constructor symbols: 
-\begin_inset Formula $\{\text{Var}:v_{m}\to m,\text{Abs}:v_{m}\to m\to m,\text{App}:m\to m\to m,\star:m,\pair --:m\to m\to m,\proj i{(-)}:m\to m\}$
+\begin_inset Formula $\{c_{b}:m,\text{Var}:v_{m}\to m,\text{Abs}:v_{m}\to m\to m,\text{App}:m\to m\to m,\star:m,\pair --:m\to m\to m,\proj i{(-)}:m\to m\}$
 \end_inset
 
 
@@ -3020,7 +3127,7 @@ term constructor symbols:
 
 \end_deeper
 \begin_layout Itemize
-typing rules 前述のもの: sort
+typing rules 前述のもの: sort 
 \begin_inset Formula $p$
 \end_inset
 
@@ -3065,7 +3172,7 @@ object: signature
 \end_inset
 
 であって, sortが
-\begin_inset Formula $\{p,m,v_{p},v_{m}\}$
+\begin_inset Formula $\{p,m,v\}$
 \end_inset
 
 , type/term constructor symbolsとtyping rulesとequational theoryは
