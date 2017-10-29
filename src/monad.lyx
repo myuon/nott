@@ -9,6 +9,7 @@
 \usepackage{syntax}
 \usepackage{tikz}
 \usepackage{../lib/bussproofs}
+\usepackage{mathpartir}
 \end_preamble
 \options uplatex,a4paper,dvipdfmx
 \use_default_options true
@@ -83,7 +84,7 @@ theorems-ams
 \begin_body
 
 \begin_layout Title
-monadic
+monadic 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -104,6 +105,22 @@ myuon
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\STfp}{\lambda^{\times,1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\STLC}{\lambda^{\to}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\STmonad}{\lambda^{T}}
 \end_inset
 
@@ -111,9 +128,8 @@ myuon
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset toc
-LatexCommand tableofcontents
-
+\begin_inset FormulaMacro
+\newcommand{\cat}[1]{\text{\mathbb{#1}}}
 \end_inset
 
 
@@ -125,54 +141,743 @@ LatexCommand tableofcontents
  ここではモナドを用いたsemanticsと, モナドを組み込んだ言語についてみていく.
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
-Monadic semantics
+Monad
+\end_layout
+
+\begin_layout Section
+A Monad
 \end_layout
 
 \begin_layout Standard
-monadを用いてsemanticsを与えることを考える.
- これにより様々な副作用をもつプログラミング言語を考えることができる.
- 実際に現実のプログラミング言語では, 関数
-\begin_inset Formula $A\to B$
+モナドの定義は既知として扱う.
+ ラムダ計算と関わりのある事柄を改めてここで述べておく.
+\end_layout
+
+\begin_layout Standard
+モナドの例をいくつか挙げておこう.
+ 以下の話で出てくるようなモナドは大体次の例に出てくるものと思ってもおそらく問題ない.
+\end_layout
+
+\begin_layout Example
+代表的なモナドたち:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+partiality, option, maybe: 
+\begin_inset Formula $TA=1+A$
 \end_inset
 
-が副作用をもつことがしばしばあり, そのような言語のsemanticsはここでやるようなmonadで与えられていると考えることができる.
+; 失敗する可能性のある計算を表す
+\end_layout
+
+\begin_layout Itemize
+exception: 
+\begin_inset Formula $T_{\text{exn}}A=\text{exn}+A$
+\end_inset
+
+; 例外を発生させる(例外が起きた時専用の値を返す)計算を表す
+\end_layout
+
+\begin_layout Itemize
+list: 
+\begin_inset Formula $TA=\mu X.\:1+A\times X$
+\end_inset
+
+; 非決定的な計算を表す
+\end_layout
+
+\begin_layout Itemize
+state: 
+\begin_inset Formula $T_{S}A=S\to S\times A$
+\end_inset
+
+; 型
+\begin_inset Formula $S$
+\end_inset
+
+の状態をもつ計算を表す
+\end_layout
+
+\begin_layout Itemize
+continuation: 
+\begin_inset Formula $T_{R}A=(A\to R)\to R$
+\end_inset
+
+; 継続をもつ計算を表す
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Monad in calculi
 \end_layout
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\cat}[1]{\text{\mathbb{#1}}}
+\newcommand{\Syn}{\text{Syn}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\letin}[3]{\texttt{let}\ #1=#2\ \texttt{in}\ #3}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+call-by-value
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\lambda^{\to}$
+\end_inset
+
+にproduct, 1, let-inを入れたcall-by-value language 
+\begin_inset Formula $\lambda$
+\end_inset
+
+を考える.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset Formula $1\to(-)$
+\end_inset
+
+は
+\begin_inset Formula $\Syn(\lambda)$
+\end_inset
+
+上のモナドである.
+\end_layout
+
+\begin_layout Proof
+functor 
+\begin_inset Formula $T:\Syn\to\Syn$
+\end_inset
+
+を, 次のように定義する:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: 
+\begin_inset Formula $TA=1\to A$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+arrow: 
+\begin_inset Formula $T(f:A\to B)=\lambda t^{1\to A}.\:\lambda\star.\:f\:(t\:\star):(1\to A)\to(1\to B)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+このとき, monadのoperationは,
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+unit: 
+\begin_inset Formula $\eta_{A}=\lambda a^{A}.\:\lambda\star.\:a:A\to(1\to A)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+join: 
+\begin_inset Formula $\mu_{A}=\lambda t^{1\to(1\to A)}.\:\lambda\star.\:t\star\star:(1\to(1\to A))\to(1\to A)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+によって定まる.
+ さて, monad則をみよう:
+\end_layout
+
+\begin_layout Proof
+(assoc) 
+\begin_inset Formula $\mu\circ\mu_{T}=\mu\circ T\mu$
+\end_inset
+
+について,
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray*}
+\text{(LHS)} & = & \lambda M^{1\to1\to1\to A}.\:\mu(\mu\:M)\\
+ & = & \lambda M.\:\mu\:(\letin mM{\mu\:m})\\
+ & = & \lambda M.\:\mu\:(\letin mM{\lambda\star.\:m\star\star})\\
+ & = & \lambda M.\:\letin mM{\mu\:(\lambda\star.\:m\star\star)}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:(\lambda\star.\:m\star\star)\star\star}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:m\star\star\star}\\
+\text{(RHS)} & = & \lambda M^{1\to1\to1\to A}.\:\mu\:(T\mu\:M)\\
+ & = & \lambda M.\:\mu\:(\letin mM{T\mu\:m})\\
+ & = & \lambda M.\:\mu\:(\letin mM{\lambda\star.\:\mu\:}(m\star))\\
+ & = & \lambda M.\:\letin mM{\mu\:(\lambda\star.\:\mu\:(m\star))}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:(\lambda\star.\:\mu\:(m\star))\star\star}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:\mu\:(m\star)\:\star}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:m\star\star}\star
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+となるのでOK.
+\end_layout
+
+\begin_layout Proof
+(left identity) 
+\begin_inset Formula $\mu\circ\eta_{T}=id$
+\end_inset
+
+について,
+\begin_inset Formula 
+\begin{eqnarray*}
+\text{(LHS)} & = & \lambda M^{1\to A}.\:\mu\:(\eta\:M)\\
+ & = & \lambda M.\:\mu\:(\letin mM{\eta\:m})\\
+ & = & \lambda M.\:\mu\:(\letin mM{\lambda\star.\:m})\\
+ & = & \lambda M.\:\letin mM{\mu\:(\lambda\star.\:m)}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:(\lambda\star.\:m)\star\star}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:m\star}\\
+ & = & \lambda M.\:\letin mMm\\
+ & = & \lambda M.\:M\\
+ & = & \text{(RHS)}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+よってOK.
+ (right identity)も同様.
+\end_layout
+
+\begin_layout Standard
+call-by-valueなので, 
+\begin_inset Formula $MN$
+\end_inset
+
+は
+\begin_inset Formula $M$
+\end_inset
+
+を評価, 
+\begin_inset Formula $N$
+\end_inset
+
+を評価, 最後に代入の順番で行うことに注意.
+\end_layout
+
+\begin_layout Part
+Monadic Metalanguage
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\alt}{\:|\:}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\letbe}[3]{\texttt{let}\ #1\leftarrow#2\ \texttt{be}\ #3}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\unit}[1]{\left[#1\right]}
 \end_inset
 
 
 \end_layout
 
 \begin_layout Section
-Kleisli category
+Metalanguage
+\end_layout
+
+\begin_layout Subsection
+Syntax
 \end_layout
 
 \begin_layout Definition
+\begin_inset Formula $\STLC$
+\end_inset
+
+を, 次のように拡張したものを, ここでは
+\begin_inset Formula $\STmonad$
+\end_inset
+
+とよぶことにする.
+\begin_inset Formula 
+\begin{align*}
+\alpha & \Coloneqq\dots\alt T\alpha\\
+M & \Coloneqq\dots\alt\unit M\alt\letbe x{M_{1}}{M_{2}}
+\end{align*}
+
+\end_inset
+
+また, typing ruleは図
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Typing-rules-of-stmonad"
+
+\end_inset
+
+の通り.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{mathpar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+inferrule*[Right=(unit)]
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\backslash
+typed{
+\backslash
+Gamma}{M}{A}}
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+unit{M}}{TA}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+inferrule*[Right=(let)]
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\backslash
+typed{
+\backslash
+Gamma}{M_1}{TA} 
+\backslash
+
+\backslash
+ 
+\backslash
+typed{
+\backslash
+Gamma,x:A}{M_2}{TB}}
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+letbe{x}{M_1}{M_2}}{TB}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{mathpar}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Typing-rules-of-stmonad"
+
+\end_inset
+
+Typing rules of 
+\begin_inset Formula $\STmonad$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\STmonad$
+\end_inset
+
+での
 \begin_inset Formula $T$
 \end_inset
 
-を
-\begin_inset Formula $\cat C$
+は, computational effectを表す.
+ つまり, 型
+\begin_inset Formula $TA$
 \end_inset
 
-のモナドとする.
+をもつプログラムは, 
+\begin_inset Formula $A$
+\end_inset
+
+のcomputational effectを表している.
  
-\begin_inset Formula $\cat C$
+\begin_inset Formula $\unit -$
+\end_inset
+
+は通常の意味での値をcomputational effectに送り, 
+\begin_inset Formula $\texttt{let\dots be\dots}$
+\end_inset
+
+はeffectつきの関数をeffectつきの値に適用するoperationである(
+\begin_inset Formula $TA\to(A\to TB)\to TB$
+\end_inset
+
+).
+ 実際に, 
+\begin_inset Formula $T$
+\end_inset
+
+を具体的に与えた言語を考える際は
+\begin_inset Formula $T$
+\end_inset
+
+によって特別なoperatorがさらに追加されることがある.
+\end_layout
+
+\begin_layout Subsection
+Equational Theory
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\STmonad$
+\end_inset
+
+のequational theoryは, 
+\begin_inset Formula $\STLC$
+\end_inset
+
+に次を加えたものとする.
+\begin_inset Formula 
+\begin{align*}
+\letbe y{(\letbe x{M_{1}}{M_{2}})}{M_{3}} & =\letbe x{M_{1}}{\letbe y{M_{2}}{M_{3}}} & \text{(assoc)}\\
+\letbe x{\unit M}N & =N[M/x] & \text{(\ensuremath{T.\beta})}\\
+\letbe xM{\unit x} & =M & \text{(\ensuremath{T.\eta})}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Monadic semantics
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\STmonad$
+\end_inset
+
+のcategorical semanticsを考える.
+ 
+\begin_inset Formula $\STmonad$
 \end_inset
 
 の
-\series bold
-Kleisli category
-\series default
-とは, 次のようなcategory 
-\begin_inset Formula $\cat C_{T}$
+\begin_inset Formula $T$
 \end_inset
 
-のこと:
+のsemanticsはモナドで与えられる.
+\end_layout
+
+\begin_layout Subsection
+Syntactic category
+\end_layout
+
+\begin_layout Proposition
+\begin_inset Formula $\STmonad$
+\end_inset
+
+のsyntactic categoryはモナド
+\begin_inset Formula $T$
+\end_inset
+
+をもつ.
+\end_layout
+
+\begin_layout Proof
+ただし, モナド
+\begin_inset Formula $T$
+\end_inset
+
+の構造は次のようにして与える.
+\begin_inset Formula 
+\begin{align*}
+T(A) & =TA\\
+\eta_{A} & =[\typed{x:A}{\unit x}{TA}]\\
+\mu_{A} & =[\typed{x:TTA}{\letbe yxy}{TA}]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+これがモナドを与えることを示そう.
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+(
+\begin_inset Formula $T$
+\end_inset
+
+のmapping) 
+\begin_inset Formula $T$
+\end_inset
+
+が射をどうmapするかも書いておこう.
+ 
+\begin_inset Formula $T(f:A\to B)=[\typed{x:TA}{\letbe yx{\unit{f(y)}}}{TB}]$
+\end_inset
+
+で与える.
+ これがfunctorになることは明らかであろう.
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\eta$
+\end_inset
+
+のnaturality) 
+\begin_inset Formula $[\typed{y:A}tB]$
+\end_inset
+
+に対し, 
+\begin_inset Formula $[\typed{x:A}{\letbe y{\unit x}{\unit t}}{TB}]=[\typed{x:A}{\unit z[(t[x/y])/z]}{TB}]$
+\end_inset
+
+を示せばよい.
+\begin_inset Formula 
+\begin{align*}
+\text{(LHS)} & =[\typed{x:A}{\letbe y{\unit x}{\unit t}}{TB}]\\
+ & =[\typed{x:A}{\unit t[x/y]}{TB}] & \text{(\ensuremath{T.\beta})}\\
+ & =[\typed{x:A}{\unit{t[x/y]}}{TB}]\\
+ & =\text{(RHS)}
+\end{align*}
+
+\end_inset
+
+によってOK.
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\mu$
+\end_inset
+
+のnaturality) 
+\begin_inset Formula $[\typed{z:A}tB]$
+\end_inset
+
+に対し, 
+\begin_inset Formula $[\typed{x:TTA}{\letbe z{(\letbe yxy)}{\unit t}}{TA}]=[\typed{x:TTA}{\letbe y{(\letbe{z_{1}}x{\unit{\letbe z{z_{1}}{\unit t}}})}y}{TA}]$
+\end_inset
+
+を示せばよい.
+\begin_inset Formula 
+\begin{align*}
+\text{(LHS)} & =[\typed{x:TTA}{\letbe yx{\letbe zy{\unit t}}}{TA}] & \text{(assoc)}\\
+\text{(RHS)} & =[\typed{x:TTA}{\letbe{z_{1}}x{\letbe y{\unit{\letbe z{z_{1}}{\unit t}}}y}}{TA}] & \text{(assoc)}\\
+ & =[\typed{x:TTA}{\letbe{z_{1}}x{\letbe z{z_{1}}{\unit t}}}{TA}] & \text{(\ensuremath{T.\beta})}
+\end{align*}
+
+\end_inset
+
+によりOK.
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\mu$
+\end_inset
+
+のassociativity) 
+\begin_inset Formula $\mu\circ\mu_{T}=\mu\circ T\mu$
+\end_inset
+
+を示せばよい.
+\begin_inset Formula 
+\begin{align*}
+\text{(LHS)} & =[\typed{x:TTTA}{\letbe yx{\letbe zyz}}{TA}]\\
+\text{(RHS)} & =[\typed{x:TTTA}{\letbe z{(\letbe{x'}x{\unit{\letbe y{x'}y}})}z}{TA}]\\
+ & =[\typed{x:TTTA}{\letbe{x'}x{\letbe z{\unit{\letbe y{x'}y}}z}}{TA}] & \text{(assoc)}\\
+ & =[\typed{x:TTTA}{\letbe{x'}x{\letbe y{x'}y}}{TA}] & \text{(\ensuremath{T.\beta})}
+\end{align*}
+
+\end_inset
+
+によりOK.
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\mu-\eta$
+\end_inset
+
+のleft
+\begin_inset space ~
+\end_inset
+
+identity) 
+\begin_inset Formula $\mu\circ\eta T=id$
+\end_inset
+
+を示せばよい.
+\begin_inset Formula 
+\begin{align*}
+\text{(LHS)} & =[\typed{x:TA}{\letbe y{\unit x}y}{TA}]\\
+ & =[\typed{x:TA}x{TA}] & \text{(\ensuremath{T.\beta})}\\
+ & =\text{(RHS)}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\mu-\eta$
+\end_inset
+
+のright
+\begin_inset space ~
+\end_inset
+
+identity) 
+\begin_inset Formula $\mu\circ T\eta=id$
+\end_inset
+
+を示せばよい.
+\begin_inset Formula 
+\begin{align*}
+\text{(LHS)} & =[\typed{x:TA}{\letbe y{(\letbe{x'}x{\unit{\unit{x'}}})}y}{TA}]\\
+ & =[\typed{x:TA}{\letbe y{\unit x}y}{TA}] & \text{(\ensuremath{T.\eta})}\\
+ & =[\typed{x:TA}x{TA}] & \text{(\ensuremath{T.\beta})}\\
+ & =\text{(RHS)}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+以上により, 
+\begin_inset Formula $T$
+\end_inset
+
+はモナドを与える.
 \end_layout
 
 \begin_layout Standard
@@ -198,6 +903,18 @@ bibitem{moggi} E.
  Comput.
  93, 1 (July 1991), 55-92.
  
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+bibitem{FuhCar} Carsten F
+\backslash
+"uhrmann.
+ 2000.
+ ``The structure of call-by-value".
+ Doctor of Philosophy, University of Edinburgh.
 \end_layout
 
 \begin_layout Plain Layout
