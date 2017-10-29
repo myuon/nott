@@ -83,7 +83,7 @@ theorems-ams
 \begin_body
 
 \begin_layout Title
-monadic
+monadic 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -104,10 +104,32 @@ myuon
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\STfp}{\lambda^{\times,1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\STmonad}{\lambda^{T}}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cat}[1]{\text{\mathbb{#1}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+モナドは, 値を返す以外に特別な副作用をもつような関数を解釈するために導入された.
+ 副作用としては状態を扱うもの, エラーを生成するもの, 非決定的なもの, などがある.
+ ここではモナドを用いたsemanticsと, モナドを組み込んだ言語についてみていく.
 \end_layout
 
 \begin_layout Standard
@@ -119,10 +141,248 @@ LatexCommand tableofcontents
 
 \end_layout
 
-\begin_layout Abstract
-モナドは, 値を返す以外に特別な副作用をもつような関数を解釈するために導入された.
- 副作用としては状態を扱うもの, エラーを生成するもの, 非決定的なもの, などがある.
- ここではモナドを用いたsemanticsと, モナドを組み込んだ言語についてみていく.
+\begin_layout Part
+Monad
+\end_layout
+
+\begin_layout Section
+A Monad
+\end_layout
+
+\begin_layout Standard
+モナドの定義や基本的なことは既知として扱う.
+ ラムダ計算と関わりのある事柄を改めてここで述べておく.
+\end_layout
+
+\begin_layout Standard
+モナドの例をいくつか挙げておこう.
+ 以下の話で出てくるようなモナドは大体次の例に出てくるものと思ってもおそらく問題ない.
+\end_layout
+
+\begin_layout Example
+代表的なモナドたち:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+partiality, option, maybe: 
+\begin_inset Formula $TA=1+A$
+\end_inset
+
+; 失敗する可能性のある計算を表す
+\end_layout
+
+\begin_layout Itemize
+exception: 
+\begin_inset Formula $T_{\text{exn}}A=\text{exn}+A$
+\end_inset
+
+; 例外を発生させる(例外が起きた時専用の値を返す)計算を表す
+\end_layout
+
+\begin_layout Itemize
+list: 
+\begin_inset Formula $TA=\mu X.\:1+A\times X$
+\end_inset
+
+; 非決定的な計算を表す
+\end_layout
+
+\begin_layout Itemize
+state: 
+\begin_inset Formula $T_{S}A=S\to S\times A$
+\end_inset
+
+; 型
+\begin_inset Formula $S$
+\end_inset
+
+の状態をもつ計算を表す
+\end_layout
+
+\begin_layout Itemize
+continuation: 
+\begin_inset Formula $T_{R}A=(A\to R)\to R$
+\end_inset
+
+; 継続をもつ計算を表す
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Monad in calculi
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Syn}{\text{Syn}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\letin}[3]{\texttt{let}\ #1=#2\ \texttt{in}\ #3}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+call-by-value
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\lambda^{\to}$
+\end_inset
+
+にproduct, 1, let-inを入れたcall-by-value language 
+\begin_inset Formula $\lambda$
+\end_inset
+
+を考える.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset Formula $1\to(-)$
+\end_inset
+
+は
+\begin_inset Formula $\Syn(\lambda)$
+\end_inset
+
+上のモナドである.
+\end_layout
+
+\begin_layout Proof
+functor 
+\begin_inset Formula $T:\Syn\to\Syn$
+\end_inset
+
+を, 次のように定義する:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: 
+\begin_inset Formula $TA=1\to A$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+arrow: 
+\begin_inset Formula $T(f:A\to B)=\lambda t^{1\to A}.\:\lambda\star.\:f\:(t\:\star):(1\to A)\to(1\to B)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+このとき, monadのoperationは,
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+unit: 
+\begin_inset Formula $\eta_{A}=\lambda a^{A}.\:\lambda\star.\:a:A\to(1\to A)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+join: 
+\begin_inset Formula $\mu_{A}=\lambda t^{1\to(1\to A)}.\:\lambda\star.\:t\star\star:(1\to(1\to A))\to(1\to A)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+によって定まる.
+ さて, monad則をみよう:
+\end_layout
+
+\begin_layout Proof
+(assoc) 
+\begin_inset Formula $\mu\circ\mu_{T}=\mu\circ T\mu$
+\end_inset
+
+について,
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray*}
+\text{(LHS)} & = & \lambda M^{1\to1\to1\to A}.\:\mu(\mu\:M)\\
+ & = & \lambda M.\:\mu\:(\letin mM{\mu\:m})\\
+ & = & \lambda M.\:\mu\:(\letin mM{\lambda\star.\:m\star\star})\\
+ & = & \lambda M.\:\letin mM{\mu\:(\lambda\star.\:m\star\star)}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:(\lambda\star.\:m\star\star)\star\star}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:m\star\star\star}\\
+\text{(RHS)} & = & \lambda M^{1\to1\to1\to A}.\:\mu\:(T\mu\:M)\\
+ & = & \lambda M.\:\mu\:(\letin mM{T\mu\:m})\\
+ & = & \lambda M.\:\mu\:(\letin mM{\lambda\star.\:\mu\:}(m\star))\\
+ & = & \lambda M.\:\letin mM{\mu\:(\lambda\star.\:\mu\:(m\star))}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:(\lambda\star.\:\mu\:(m\star))\star\star}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:\mu\:(m\star)\:\star}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:m\star\star}\star
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+となるのでOK.
+\end_layout
+
+\begin_layout Proof
+(left identity) 
+\begin_inset Formula $\mu\circ\eta_{T}=id$
+\end_inset
+
+について,
+\begin_inset Formula 
+\begin{eqnarray*}
+\text{(LHS)} & = & \lambda M^{1\to A}.\:\mu\:(\eta\:M)\\
+ & = & \lambda M.\:\mu\:(\letin mM{\eta\:m})\\
+ & = & \lambda M.\:\mu\:(\letin mM{\lambda\star.\:m})\\
+ & = & \lambda M.\:\letin mM{\mu\:(\lambda\star.\:m)}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:(\lambda\star.\:m)\star\star}\\
+ & = & \lambda M.\:\letin mM{\lambda\star.\:m\star}\\
+ & = & \lambda M.\:\letin mMm\\
+ & = & \lambda M.\:M\\
+ & = & \text{(RHS)}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+よってOK.
+ (right identity)も同様.
+\end_layout
+
+\begin_layout Standard
+call-by-valueなので, 
+\begin_inset Formula $MN$
+\end_inset
+
+は
+\begin_inset Formula $M$
+\end_inset
+
+を評価, 
+\begin_inset Formula $N$
+\end_inset
+
+を評価, 最後に代入の順番で行うことに注意.
 \end_layout
 
 \begin_layout Part
@@ -137,14 +397,6 @@ monadを用いてsemanticsを与えることを考える.
 \end_inset
 
 が副作用をもつことがしばしばあり, そのような言語のsemanticsはここでやるようなmonadで与えられていると考えることができる.
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\cat}[1]{\text{\mathbb{#1}}}
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -173,6 +425,616 @@ Kleisli category
 \end_inset
 
 のこと:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: 
+\begin_inset Formula $\cat C$
+\end_inset
+
+のobject
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\hom_{\cat C_{T}}(A,B)$
+\end_inset
+
+: 
+\begin_inset Formula $\hom_{\cat C}(A,TB)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+identity: 
+\begin_inset Formula $\eta_{A}:A\to TA$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+composition:
+\begin_inset Formula 
+\begin{eqnarray*}
+\cat C_{T}(B,C)\times\cat C_{T}(A,B) & \to & \cat C_{T}(A,C)\\
+\left\langle g,f\right\rangle  & \mapsto & \mu_{C}\circ Tg\circ f
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Kleisli category as a model
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T$
+\end_inset
+
+がモナドの時, Kleisli categoryがモデルになるならば, 関数
+\begin_inset Formula $A\to B$
+\end_inset
+
+はmorphsim 
+\begin_inset Formula $A\to TB$
+\end_inset
+
+によって意味付けされる.
+ すなわち, Kleisli category 
+\begin_inset Formula $\cat C_{T}$
+\end_inset
+
+をモデルに持つラムダ計算とは, 
+\begin_inset Formula $T$
+\end_inset
+
+が表現する計算をもつような言語である.
+\end_layout
+
+\begin_layout Subsection
+State 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\put}{\texttt{put}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\get}{\texttt{get}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+上に述べたことを具体的にラムダ計算を構成することでみていこう.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula $S$
+\end_inset
+
+をデータ型とする
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula $S$
+\end_inset
+
+は値が含まれるようなものであればなんでもよいが, プログラム中で取り扱いをするのでプログラムとして表現可能なものでなければならないのでデータ型という書き方をした.
+ 
+\begin_inset Formula $\texttt{nat}$
+\end_inset
+
+や
+\begin_inset Formula $\texttt{bool}$
+\end_inset
+
+などが例である.
+\end_layout
+
+\end_inset
+
+.
+ ラムダ計算
+\begin_inset Formula $\lambda_{s}$
+\end_inset
+
+を, 
+\begin_inset Formula $\STfp$
+\end_inset
+
+に次のような拡張をしたものとする.
+\begin_inset Formula 
+\[
+M::=\dots\:|\:\put(M)\:|\:\get
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+typing ruleは次の通り.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed[
+\backslash
+lambda_S]{
+\backslash
+Gamma}{x}{S}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(put)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{
+\backslash
+put(x)}{1}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(get)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+typed[
+\backslash
+lambda_S]{
+\backslash
+Gamma}{
+\backslash
+get}{S}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\lambda_{S}$
+\end_inset
+
+のtyping rule
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+operational semanticsは, 項とその時の状態の値
+\begin_inset Formula $\left\langle M,s\right\rangle $
+\end_inset
+
+に対して成り立つ関係として定める.
+ (
+\begin_inset Formula $\beta$
+\end_inset
+
+)などのルールは
+\begin_inset Formula $\STfp$
+\end_inset
+
+のものと同じとして, 
+\begin_inset Formula $\get$
+\end_inset
+
+や
+\begin_inset Formula $\put$
+\end_inset
+
+に関するルールを図
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:LS-typing-rules"
+
+\end_inset
+
+のようにして定める.
+\end_layout
+
+\begin_layout Definition
+\begin_inset FormulaMacro
+\newcommand{\pair}[2]{\left\langle #1,#2\right\rangle }
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(put)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+pair{
+\backslash
+put(s')}{s} 
+\backslash
+to 
+\backslash
+pair{
+\backslash
+star}{s'}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+LeftLabel{(get)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+UnaryInfC{$
+\backslash
+pair{
+\backslash
+get}{s} 
+\backslash
+to 
+\backslash
+pair{s}{s}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:LS-typing-rules"
+
+\end_inset
+
+
+\begin_inset Formula $\lambda_{S}$
+\end_inset
+
+のoperational semantics
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\lambda_{S}$
+\end_inset
+
+は
+\begin_inset Formula $S$
+\end_inset
+
+に関する状態を扱えるようなラムダ計算である.
+ 後でも説明するが, stateモナド
+\begin_inset Formula $T_{S}A=S\to(S\times A)$
+\end_inset
+
+のbasic operation 
+\begin_inset Formula $1\to T_{S}S$
+\end_inset
+
+と
+\begin_inset Formula $S\to T_{S}1$
+\end_inset
+
+をそのままsyntaxに入れた形である.
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $\STfp$
+\end_inset
+
+にbase typeとして
+\begin_inset Formula $\texttt{nat}$
+\end_inset
+
+を入れる.
+ すると,
+\begin_inset Formula 
+\[
+\vdash_{\lambda_{\texttt{nat}}}\lambda n.\:\letin s{\get}{\put\:(s+n)}:\texttt{nat}\to1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+は
+\begin_inset Formula $\lambda_{\texttt{nat}}$
+\end_inset
+
+の項であり, これは受け取った自然数を内部状態に加算するようなプログラムである.
 \end_layout
 
 \begin_layout Standard
