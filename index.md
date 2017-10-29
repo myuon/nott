@@ -3,7 +3,7 @@
 
 Type Theoryについてのノートです.
 
-## Current Version: 0.1.3.1
+## Current Version: 0.1.4
 
 ノートのキリが良くなったところでtagを付けてmasterブランチに対してpushします. \\
 作業中のノートはdevelopブランチに置いてあります.
@@ -13,6 +13,7 @@ Type Theoryについてのノートです.
 - [preliminaries.pdf](pdf/preliminaries.pdf): Preliminaries
 - [untyped.pdf](pdf/untyped.pdf): Untyped lambda calculus
 - [simply.pdf](pdf/simply.pdf): Simply-typed lambda calculus
+- [monad.pdf](pdf/monad.pdf): Monadic lambda calculus
 
 ## 連絡等
 
