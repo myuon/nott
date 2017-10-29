@@ -8,6 +8,7 @@
 \begin_preamble
 \usepackage{syntax}
 \usepackage{tikz}
+\usetikzlibrary{cd}
 \usepackage{../lib/bussproofs}
 \usepackage{mathpartir}
 \end_preamble
@@ -159,8 +160,585 @@ A Monad
 \end_layout
 
 \begin_layout Standard
-モナドの定義は既知として扱う.
- ラムダ計算と関わりのある事柄を改めてここで述べておく.
+\begin_inset FormulaMacro
+\newcommand{\todot}{\xrightarrow{\cdot}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+monad
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\cat C$
+\end_inset
+
+上のモナドとは, 
+\begin_inset Formula $T:\cat C\to\cat C$
+\end_inset
+
+なるfunctorで, 次の構造をもつもののことである:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+自然変換 
+\begin_inset Formula $\eta:1\todot T$
+\end_inset
+
+, 
+\begin_inset Formula $\mu:T^{2}\todot T$
+\end_inset
+
+ (それぞれunit, multiplicationなどと呼ばれる)
+\end_layout
+
+\begin_layout Itemize
+これらが図
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:monad-laws"
+
+\end_inset
+
+の図式を満たす.
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{mathpar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}[sep=huge]
+\end_layout
+
+\begin_layout Plain Layout
+
+  T^3 
+\backslash
+arrow[r, "
+\backslash
+mu_T"] 
+\backslash
+arrow[d, "T_
+\backslash
+mu"] & T^2 
+\backslash
+arrow[d, "
+\backslash
+mu"] 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  T^2 
+\backslash
+arrow[r, "
+\backslash
+mu"] & T
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}[sep=huge]
+\end_layout
+
+\begin_layout Plain Layout
+
+  T 
+\backslash
+arrow[r, "
+\backslash
+eta_T"] 
+\backslash
+arrow[rd, equal]
+\end_layout
+
+\begin_layout Plain Layout
+
+  & T^2 
+\backslash
+arrow[d, "
+\backslash
+mu"] & T 
+\backslash
+arrow[l, "T_
+\backslash
+eta"'] 
+\backslash
+arrow[ld, equal] 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  & T &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{mathpar}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:monad-laws"
+
+\end_inset
+
+monad laws
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+モナドとは, モノイダル圏
+\begin_inset Formula $([\cat C,\cat C],\circ,1)$
+\end_inset
+
+のモノイド対象ともいえる.
+ このとき
+\begin_inset Formula $\eta$
+\end_inset
+
+はモノイド構造の単位元を, 
+\begin_inset Formula $\mu$
+\end_inset
+
+はモノイド積を表している.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula $T$
+\end_inset
+
+が
+\begin_inset Formula $\cat C$
+\end_inset
+
+上のモナド, 
+\begin_inset Formula $\cat C$
+\end_inset
+
+はproductをもつとする.
+ モナド
+\begin_inset Formula $T$
+\end_inset
+
+が
+\series bold
+strong
+\series default
+とは, 自然変換strength 
+\begin_inset Formula $\tau_{A,B}:A\times TB\to T(A\times B)$
+\end_inset
+
+ (
+\begin_inset Formula $\tau$
+\end_inset
+
+は
+\begin_inset Formula $A,B$
+\end_inset
+
+についてnatural)で図
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:strength-laws"
+
+\end_inset
+
+の図式を満たすもののこと.
+ ここで, associativity 
+\begin_inset Formula $(A\times B)\times C\todot A\times(B\times C)$
+\end_inset
+
+を
+\begin_inset Formula $\gamma$
+\end_inset
+
+とかいた.
+ 
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{mathpar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzset{
+\end_layout
+
+\begin_layout Plain Layout
+
+  lbls/.style={anchor=south, rotate=-90, inner sep=.5mm}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+  1 
+\backslash
+times TA 
+\backslash
+arrow[r, "
+\backslash
+tau"] 
+\backslash
+arrow[rd, sloped, "
+\backslash
+sim"] & T (1 
+\backslash
+times A) 
+\backslash
+arrow[d, "
+\backslash
+sim" lbls] 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  & TA
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}[column sep=small]
+\end_layout
+
+\begin_layout Plain Layout
+
+  (A 
+\backslash
+times B) 
+\backslash
+times TC 
+\backslash
+arrow[r, "
+\backslash
+tau"] 
+\backslash
+arrow[d, "
+\backslash
+gamma"'] & T((A 
+\backslash
+times B) 
+\backslash
+times C) 
+\backslash
+arrow[rd, "T 
+\backslash
+gamma"] 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  A 
+\backslash
+times (B 
+\backslash
+times TC) 
+\backslash
+arrow[r, "1
+\backslash
+times 
+\backslash
+tau"] & A 
+\backslash
+times T(B 
+\backslash
+times C) 
+\backslash
+arrow[r, "
+\backslash
+tau"] & T (A 
+\backslash
+times (B 
+\backslash
+times C))
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+  A 
+\backslash
+times B 
+\backslash
+arrow[d, "1 
+\backslash
+times 
+\backslash
+eta"'] 
+\backslash
+arrow[rd, "
+\backslash
+eta"] 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  A 
+\backslash
+times TB 
+\backslash
+arrow[r, "
+\backslash
+tau"] & T (A 
+\backslash
+times B) 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  A 
+\backslash
+times T^2B 
+\backslash
+arrow[r, "
+\backslash
+tau"] 
+\backslash
+arrow[u, "1 
+\backslash
+times 
+\backslash
+mu"] & T(A 
+\backslash
+times TB) 
+\backslash
+arrow[r, "T
+\backslash
+tau"] & T^2(A 
+\backslash
+times B) 
+\backslash
+arrow[ul, "
+\backslash
+mu"]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{mathpar}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:strength-laws"
+
+\end_inset
+
+strength laws
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -878,6 +1456,184 @@ identity)
 \end_inset
 
 はモナドを与える.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset Formula $\STmonad$
+\end_inset
+
+のモナド
+\begin_inset Formula $T$
+\end_inset
+
+はstrongである.
+\end_layout
+
+\begin_layout Proof
+strength 
+\begin_inset Formula $\tau:A\times TB\to T(A\times B)$
+\end_inset
+
+は, 
+\begin_inset Formula $[\typed{x:A,y:TB}{\letbe{y'}y{\unit{\left\langle x,y'\right\rangle }}}{T(A\times B)}]$
+\end_inset
+
+によって与える.
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+(
+\begin_inset Formula $\tau$
+\end_inset
+
+のnaturality) 
+\begin_inset Formula $B$
+\end_inset
+
+について.
+ 
+\begin_inset Formula $[\typed{z:B}t{B'}]$
+\end_inset
+
+に対し,
+\begin_inset Formula 
+\[
+T(1\times t)\circ\tau_{A,B}=\tau_{A,B'}\circ(1\times Tt)
+\]
+
+\end_inset
+
+を示す.
+ これは,
+\begin_inset Formula 
+\begin{align*}
+\text{(LHS)} & =[\typed{x:A,y:TB}{\letbe{\left\langle w,z\right\rangle }{(\letbe{y'}y{\unit{\left\langle x,y'\right\rangle }})}{\unit{\left\langle w,t\right\rangle }}}{T(A\times B')}]\\
+ & =[\typed{x:A,y:TB}{\letbe{y'}y{\letbe{\left\langle w,z\right\rangle }{\unit{\left\langle x,y'\right\rangle }}{\unit{\left\langle w,t\right\rangle }}}}{T(A\times B')}] & \text{(assoc)}\\
+ & =[\typed{x:A,y:TB}{\letbe{y'}y{\unit{\left\langle x,t[y'/z]\right\rangle }}}{T(A\times B')}] & \text{(\ensuremath{T.\beta})}\\
+ & =[\typed{x:A,y:TB}{\letbe zy{\unit{\left\langle x,t\right\rangle }}}{T(A\times B')}]\\
+\text{(RHS)} & =[\typed{x:A,y:B}{\letbe{y'}{(\letbe zy{\unit t})}{\unit{\left\langle x,y'\right\rangle }}}{T(A\times B')}]\\
+ & =[\typed{x:A,y:B}{\letbe zy{\letbe{y'}{\unit t}{\unit{\left\langle x,y'\right\rangle }}}}{T(A\times B')}] & \text{(assoc)}\\
+ & =[\typed{x:A,y:B}{\letbe zy{\unit{\left\langle x,t\right\rangle }}}{T(A\times B')}] & \text{(\ensuremath{T.\beta})}
+\end{align*}
+
+\end_inset
+
+によりOK.
+ 
+\begin_inset Formula $A$
+\end_inset
+
+については明らか.
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\tau$
+\end_inset
+
+とleft
+\begin_inset space ~
+\end_inset
+
+identityのcompatibility) 
+\begin_inset Formula 
+\begin{align*}
+ & [\typed{x:TA}{\letbe{\left\langle \star,x'\right\rangle }{\tau\left\langle \star,x\right\rangle }{\unit{x'}}}{TA}]\\
+ & =[\typed{x:TA}{\letbe{\left\langle \star,x'\right\rangle }{(\letbe{y'}x{\unit{\left\langle \star,y'\right\rangle }})}{\unit{x'}}}{TA}]\\
+ & =[\typed{x:TA}{\letbe{y'}x{\letbe{\left\langle \star,x'\right\rangle }{\unit{\left\langle \star,y'\right\rangle }}{\unit{x'}}}}{TA}]\\
+ & =[\typed{x:TA}{\letbe{y'}x{\unit{y'}}}{TA}]\\
+ & =[\typed{x:TA}x{TA}]
+\end{align*}
+
+\end_inset
+
+により, OK.
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\tau$
+\end_inset
+
+とassociativity) 
+\begin_inset Formula 
+\begin{align*}
+\text{(上)} & =[\typed{x:A,y:B,t_{c}:TC}{T\gamma(\tau\left\langle \left\langle x,y\right\rangle ,t_{c}\right\rangle )}{T(A\times(B\times C))}]\\
+ & =[\typed{x:A,y:B,t_{c}:TC}{T\gamma(\letbe z{t_{c}}{\unit{\left\langle \left\langle x,y\right\rangle ,z\right\rangle }})}{T(A\times(B\times C))}]\\
+ & =[\typed{x:A,y:B,t_{c}:TC}{\letbe{\left\langle \left\langle x',y'\right\rangle ,z'\right\rangle }{(\letbe z{t_{c}}{\unit{\unit{\left\langle \left\langle x,y\right\rangle ,z\right\rangle }}})}{\unit{\left\langle x',\left\langle y',z'\right\rangle \right\rangle }}}{\dots}]\\
+ & =[\typed{x:A,y:B,t_{c}:TC}{\letbe z{t_{c}}{\letbe{\left\langle \left\langle x',y'\right\rangle ,z'\right\rangle }{\unit{\unit{\left\langle \left\langle x,y\right\rangle ,z\right\rangle }}}{\unit{\left\langle x',\left\langle y',z'\right\rangle \right\rangle }}}}{\dots}]\\
+ & =[\typed{x:A,y:B,t_{c}:TC}{\letbe z{t_{c}}{\unit{\left\langle x,\left\langle y,z\right\rangle \right\rangle }}}{T(A\times(B\times C))}]\\
+\text{(下)} & =[\typed{x:A,y:B,t_{c}:TC}{\tau((1\times\tau)(\gamma\left\langle \left\langle x,y\right\rangle ,t_{c}\right\rangle ))}{T(A\times(B\times C))}]\\
+ & =[\typed{x:A,y:B,t_{c}:TC}{\tau((1\times\tau)\left\langle x,\left\langle y,t_{c}\right\rangle \right\rangle }{T(A\times(B\times C))}]\\
+ & =[\typed{x:A,y:B,t_{c}:TC}{\tau\left\langle x,\letbe{z'}{t_{c}}{\unit{\left\langle y,z'\right\rangle }}\right\rangle }{T(A\times(B\times C))}]\\
+ & =[\typed{x:A,y:B,t_{c}:TC}{\letbe p{(\letbe{z'}{t_{c}}{\unit{\left\langle y,z'\right\rangle }})}{\unit{\left\langle x,p\right\rangle }}}{T(A\times(B\times C))}]\\
+ & =[\typed{x:A,y:B,t_{c}:TC}{\letbe{z'}{t_{c}}{\letbe p{\unit{\left\langle y,z'\right\rangle }}{\unit{\left\langle x,p\right\rangle }}}}{T(A\times(B\times C))}]\\
+ & =[\typed{x:A,y:B,t_{c}:TC}{\letbe{z'}{t_{c}}{\unit{\left\langle x,\left\langle y,z'\right\rangle \right\rangle }}}{T(A\times(B\times C))}]
+\end{align*}
+
+\end_inset
+
+よりOK.
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\tau$
+\end_inset
+
+と
+\begin_inset Formula $\eta$
+\end_inset
+
+) 
+\begin_inset Formula 
+\begin{align*}
+[\typed{x:A,y:B}{\tau\left\langle x,\unit y\right\rangle }{T(A\times B)}] & =[\typed{x:A,y:B}{\letbe{y'}{\unit y}{\unit{\left\langle x,y'\right\rangle }}}{T(A\times B)}]\\
+ & =[\typed{x:A,y:B}{\unit{\left\langle x,y\right\rangle }}{T(A\times B)}]\\
+ & =[\typed{x:A,y:B}{\eta\left\langle x,y\right\rangle }{T(A\times B)}]
+\end{align*}
+
+\end_inset
+
+よりOK.
+\end_layout
+
+\begin_layout Description
+(
+\begin_inset Formula $\tau$
+\end_inset
+
+と
+\begin_inset Formula $\mu$
+\end_inset
+
+) 
+\begin_inset Formula 
+\begin{align*}
+\text{(上)} & =[\typed{a:A,b'':T^{2}B}{\tau\left\langle a,\mu b''\right\rangle }{T(A\times B)}]\\
+ & =[\typed{a:A,b'':T^{2}B}{\letbe b{\mu b''}{\unit{\left\langle a,b\right\rangle }}}{T(A\times B)}]\\
+ & =[\typed{a:A,b'':T^{2}B}{\letbe b{\letbe y{b''}y}{\unit{\left\langle a,b\right\rangle }}}{T(A\times B)}]\\
+ & =[\typed{a:A,b'':T^{2}B}{\letbe{b'}{b''}{\letbe b{b'}{\unit{\left\langle a,b\right\rangle }}}}{T(A\times B)}]\\
+\text{(下)} & =[\typed{a:A,b'':T^{2}B}{\mu(T\tau(\tau\left\langle a,b''\right\rangle ))}{T(A\times B)}]\\
+ & =[\typed{a:A,b'':T^{2}B}{\mu(T\tau(\letbe{b'}{b''}{\unit{\left\langle a,b'\right\rangle }}))}{T(A\times B)}]\\
+ & =[\typed{a:A,b'':T^{2}B}{\mu(\letbe{b'}{b''}{\letbe b{b'}{\unit{\unit{\left\langle a,b\right\rangle }}}})}{T(A\times B)}]\\
+ & =[\typed{a:A,b'':T^{2}B}{\letbe{b'}{b''}{\letbe b{b'}{\letbe y{\unit{\unit{\left\langle a,b\right\rangle }}}y}}}{T(A\times B)}]\\
+ & =[\typed{a:A,b'':T^{2}B}{\letbe{b'}{b''}{\letbe b{b'}{\unit{\left\langle a,b\right\rangle }}}}{T(A\times B)}]
+\end{align*}
+
+\end_inset
+
+によりOK.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+以上より, 
+\begin_inset Formula $\tau$
+\end_inset
+
+はstrengthである.
 \end_layout
 
 \begin_layout Standard
