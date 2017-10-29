@@ -13,6 +13,7 @@ Type Theoryについてのノートです.
 - [preliminaries.pdf](pdf/preliminaries.pdf): Preliminaries
 - [untyped.pdf](pdf/untyped.pdf): Untyped lambda calculus
 - [simply.pdf](pdf/simply.pdf): Simply-typed lambda calculus
+- [monad.pdf](pdf/monad.pdf): Monadic lambda calculus
 
 ## 連絡等
 
