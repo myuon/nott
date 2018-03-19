@@ -1,0 +1,1669 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass jsarticle
+\begin_preamble
+\usepackage{syntax}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{../lib/bussproofs}
+\usepackage{url}
+
+\tikzset{%
+    symbol/.style={%
+        draw=none,
+        every to/.append style={%
+            edge node={node [sloped, allow upside down, auto=false]{$#1$}}}
+    }
+}
+\end_preamble
+\options uplatex,dvipdfmx,a4paper
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language japanese
+\language_package default
+\inputencoding utf8-platex
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format pdf3
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\topmargin 25mm
+\bottommargin 25mm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Category Theory in Computer Science
+\end_layout
+
+\begin_layout Author
+myuon
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+Computer Scienceで必要になるであろう圏論の知識をまとめる.
+\end_layout
+
+\begin_layout Section
+Categories
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cat}[1]{\mathbb{#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Syn}[1]{\text{Syn}(#1)}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Obj}{\text{Obj}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\id}{\text{id}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Hom}[3][]{\text{Hom}_{#1}(#2,#3)}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Category
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+category
+\end_layout
+
+\end_inset
+
+ 
+\series bold
+category
+\series default
+ 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+は次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Obj$
+\end_inset
+
+ : object(対象)からなるcollection
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+ここではcollectionと呼んでいるが, 後ほどでも出てくるようにObj, Arrが大きすぎて集合にならないようなcategoryが必要になることがある.
+ このようなcategoryを取り扱うために, しばしば(Grothendieck) universeと呼ばれる, ある種の操作について閉じた集合を固定しその中
+で理論を展開するという方法を取ることもある.
+ 以下の議論は全て適当なuniverseの中で行っていると思うことにし, categoryの
+\begin_inset Quotes eld
+\end_inset
+
+大きさ
+\begin_inset Quotes erd
+\end_inset
+
+の議論には立ち入らない.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Arr : arrow(射)からなるcollection
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\text{dom}:\text{Arr}\to\Obj$
+\end_inset
+
+, 
+\begin_inset Formula $\text{cod}:\text{Arr}\to\Obj$
+\end_inset
+
+なるfunction; 
+\begin_inset Formula $f\in\text{Arr}$
+\end_inset
+
+であって, 
+\begin_inset Formula $\text{dom}(f)=A$
+\end_inset
+
+, 
+\begin_inset Formula $\text{cod}(f)=B$
+\end_inset
+
+となるもののことを
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+とかく.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\id:\Obj\to\text{Arr}$
+\end_inset
+
+; 
+\begin_inset Formula $1$
+\end_inset
+
+とかくこともある.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(\circ):\text{Arr}\times\text{Arr}\rightharpoonup\Obj$
+\end_inset
+
+; 
+\begin_inset Formula $f\circ g$
+\end_inset
+
+は, 
+\begin_inset Formula $\text{cod}(g)=\text{dom}(f)$
+\end_inset
+
+なるとき定義される
+\end_layout
+
+\begin_layout Standard
+であって, 次の等式を満たす:
+\end_layout
+
+\begin_layout Itemize
+(associativity) 
+\begin_inset Formula $h\circ(g\circ f)=(h\circ g)\circ f$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+(identity) 
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+に対し, 
+\begin_inset Formula $f\circ\id_{A}=f=\id_{B}\circ f$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+category 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+のarrowであってdomが
+\begin_inset Formula $A$
+\end_inset
+
+, codが
+\begin_inset Formula $B$
+\end_inset
+
+であるようなものの集まりを
+\begin_inset Formula $\Hom[\mathbb{C}]AB$
+\end_inset
+
+とかく.
+ 一般に
+\begin_inset Formula $\Hom[\mathbb{C}]AB$
+\end_inset
+
+は集合になるとは限らない.
+ これが集合になるようなcategoryを
+\series bold
+locally small
+\series default
+とよぶ.
+ また, ObjとArrがいずれも集合になるcategoryを
+\series bold
+small
+\series default
+とよぶ.
+ 以下では基本的にはlocally smallなcategoryしか扱わないのであまりこの違いを気にする必要はない.
+\end_layout
+
+\begin_layout Standard
+上の定義ではobject, arrowからcategoryを定めたが, Homを各objectごとに定め, 
+\begin_inset Formula $\text{Arr}(\mathbb{C})=\{\Hom[\mathbb{C}]AB\mid A,B\in\Obj(\mathbb{C})\}$
+\end_inset
+
+としてcategoryを定義することも出来る.
+\end_layout
+
+\begin_layout Standard
+categoryの例を挙げる.
+\end_layout
+
+\begin_layout Example
+集合とその上の構造物, および構造を保つ写像からなるcategoryの例:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula ${\bf Set}$
+\end_inset
+
+: 集合と写像のなすcategory
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\bf Poset}$
+\end_inset
+
+: posetとその間のmonotone mapのなすcategory
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\bf Grp},{\bf Ring},R\text{-}{\bf Mod},{\bf Ab}$
+\end_inset
+
+: それぞれ群, 環, 
+\begin_inset Formula $R$
+\end_inset
+
+-加群, アーベル群とその間の準同型のなすcategory
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\bf Top}$
+\end_inset
+
+: 位相空間と連続写像のなすcategory
+\end_layout
+
+\begin_layout Example
+その他の例:
+\end_layout
+
+\begin_layout Itemize
+poset 
+\begin_inset Formula $P$
+\end_inset
+
+: 
+\begin_inset Formula $P$
+\end_inset
+
+の各元をobject, 
+\begin_inset Formula $\Hom AB=\{\star\}\ (A\leq B\text{のとき})$
+\end_inset
+
+, 
+\begin_inset Formula $\Hom AB=\{\}\ (\text{それ以外})$
+\end_inset
+
+によってcategoryとみなすことができる.
+ identityの存在がreflexitivityにより, associativityはpreorderのtransitivityにより保証される.
+\end_layout
+
+\begin_layout Itemize
+opposite category: 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+の
+\series bold
+opposite category
+\series default
+ 
+\begin_inset Formula $\mathbb{C}^{\text{op}}$
+\end_inset
+
+を, 各arrowの向きを反転させたものとする.
+ すなわち, 
+\begin_inset Formula $\text{dom}_{\mathbb{C}^{\text{op}}}(f)=\text{cod}_{\mathbb{C}}(f)$
+\end_inset
+
+, 
+\begin_inset Formula $\text{cod}_{\mathbb{C}^{\text{op}}}(f)=\text{dom}_{\mathbb{C}}(f)$
+\end_inset
+
+, 
+\begin_inset Formula $g\circ_{\mathbb{C}^{\text{op}}}f=f\circ_{\mathbb{C}}g$
+\end_inset
+
+などとするともとの
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+がcategoryならば
+\begin_inset Formula $\mathbb{C}^{\text{op}}$
+\end_inset
+
+は再びcategoryの規則を満たす.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Functor
+\end_layout
+
+\begin_layout Standard
+categoryの構造を保つようなmappingをfunctorとよぶ.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+functor
+\end_layout
+
+\end_inset
+
+ category 
+\begin_inset Formula $\mathbb{C},\mathbb{D}$
+\end_inset
+
+に対し, 
+\series bold
+functor
+\series default
+ 
+\begin_inset Formula $F:\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+は次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $F_{\text{obj}}:\Obj(\mathbb{C})\to\Obj(\mathbb{D})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{\text{arr}}:\Hom[\mathbb{C}]AB\to\Hom[\mathbb{D}]{F_{\text{obj}}A}{F_{\text{obj}}B}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次の条件を満たす:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(preserving identity) 
+\begin_inset Formula $F(\id_{A})=\id_{FA}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+(covariance) 
+\begin_inset Formula $F(g\circ f)=F(g)\circ F(f)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+この定義は, categoryの構造(すなわちobject, arrow, domain, codomain, identity, composition)を保
+つmappingと言い換えることが出来る.
+\end_layout
+
+\begin_layout Subsection
+Natural Transformation
+\end_layout
+
+\begin_layout Standard
+functorの構造を保つmappingをnatural transformationとよぶ.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+natural transformation
+\end_layout
+
+\end_inset
+
+ functor 
+\begin_inset Formula $F,G:\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+に対し, 
+\series bold
+natural transformation 
+\series default
+
+\begin_inset Formula $\alpha:F\Rightarrow G$
+\end_inset
+
+は次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\alpha_{A}\in\Hom[\mathbb{D}]{FA}{GA}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次の条件を満たす:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(naturality) 
+\begin_inset Formula $f\in\Hom[\mathbb{C}]AB$
+\end_inset
+
+に対し, 
+\begin_inset Formula $Gf\circ\alpha_{A}=\alpha_{B}\circ Ff$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+naturalityの条件は次の可換図式によっても表現することが出来る.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+A 
+\backslash
+dar{f} & FA 
+\backslash
+rar{
+\backslash
+alpha_A} 
+\backslash
+dar{Ff} & GA 
+\backslash
+dar{Gf} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+B         & FB 
+\backslash
+rar{
+\backslash
+alpha_B}          & GB
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Duality
+\end_layout
+
+\begin_layout Standard
+categoryの図式のarrowの向きを全て逆にしたものを, 元の図式のdual(双対)とよぶ.
+ categoryにおいて定義されるものは, 定義に出現する図式を反転することでdualをとることができる.
+ すでにopposite categoryがdualな概念として登場したが, 他にもdualやdualを用いた概念が存在する.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+contravariant functor
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+に対し, 
+\begin_inset Formula $F_{\text{arr}}$
+\end_inset
+
+のarrowの向きを反転させることで新たなfunctor 
+\begin_inset Formula $F^{\text{op}}:\text{\mathbb{C}}^{\text{op}}\to\mathbb{D}$
+\end_inset
+
+が得られる.
+ これを
+\series bold
+contravariant functor
+\series default
+とよぶ(
+\begin_inset Formula $F$
+\end_inset
+
+はcovariant functorとよぶ).
+ 
+\begin_inset Formula $F^{\text{op}}$
+\end_inset
+
+の定義を書き下すと(covariance)規則の代わりに次の(contravariance)規則が得られる:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(contravariance) 
+\begin_inset Formula $F(g\circ f)=F(f)\circ F(g)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Special Objects & Morphisms
+\end_layout
+
+\begin_layout Subsection
+Terminal Object
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+terminal object
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+の
+\series bold
+terminal object
+\series default
+ 
+\begin_inset Formula $1\in\Obj(\mathbb{C})$
+\end_inset
+
+とは, 任意のobject 
+\begin_inset Formula $X$
+\end_inset
+
+に対し, 
+\begin_inset Formula $X\to1$
+\end_inset
+
+なるarrowがただ一つ存在するようなもののことである.
+\end_layout
+
+\begin_layout Subsection
+Product
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+product
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+のobject 
+\begin_inset Formula $A,B$
+\end_inset
+
+に対し, 
+\begin_inset Formula $A$
+\end_inset
+
+と
+\begin_inset Formula $B$
+\end_inset
+
+の
+\series bold
+product
+\series default
+は次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object 
+\begin_inset Formula $A\times B$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+arrow 
+\begin_inset Formula $p_{A}:A\times B\to A$
+\end_inset
+
+, 
+\begin_inset Formula $p_{B}:A\times B\to B$
+\end_inset
+
+; これらをprojectionとよぶ
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次の条件を満たす.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(universality) 任意のobject 
+\begin_inset Formula $Q$
+\end_inset
+
+とarrow 
+\begin_inset Formula $f:Q\to A$
+\end_inset
+
+, 
+\begin_inset Formula $g:Q\to B$
+\end_inset
+
+が与えられた時, 
+\begin_inset Formula $h:Q\to A\times B$
+\end_inset
+
+であって, 
+\begin_inset Formula $p_{A}\circ h=f$
+\end_inset
+
+かつ
+\begin_inset Formula $p_{B}\circ h=g$
+\end_inset
+
+なるようなものがただ一つ存在する.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+productのuniversalityは以下の図式で表せる.
+ ただしuniversalityにより保証される, 唯一存在するarrowをここでは破線でかいた.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+  & 
+\backslash
+dlar[swap]{f} Q 
+\backslash
+dar[dashed]{h} 
+\backslash
+drar{g} & 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+A & 
+\backslash
+lar{p_A} A
+\backslash
+times B 
+\backslash
+rar[swap]{p_B} & B
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Dual Objects
+\end_layout
+
+\begin_layout Definition
+次のように定義する.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+terminal objectのdualを
+\series bold
+initial object
+\series default
+とよび, 
+\begin_inset Formula $0$
+\end_inset
+
+でかく
+\end_layout
+
+\begin_layout Itemize
+productのdualを
+\series bold
+coproduct
+\series default
+とよび, 
+\begin_inset Formula $+$
+\end_inset
+
+でかく.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Examples
+\end_layout
+
+\begin_layout Standard
+Special Objectの例をいくつかのcategoryで見ておく.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+category
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+terminal object
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+product
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+initial object
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+coproduct
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\bf Set}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+singleton 
+\begin_inset Formula $\{\star\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+直積
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+emptyset 
+\begin_inset Formula $\emptyset$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+disjoint union
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+poset 
+\begin_inset Formula $P$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+最大元
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+sup
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+最小元
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+inf
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\bf Ab}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{\star\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+直積
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{\star\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+直和(=直積)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+上にあげた例はそれぞれのcategoryにおいて特徴的な性質を端的に表す例である.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula ${\bf Set}$
+\end_inset
+
+はspecial objectsの最も直観的な例を与えている.
+ 特にproduct, coproductがそれぞれ集合演算としての積と和に対応していることが分かるだろう.
+\end_layout
+
+\begin_layout Itemize
+posetをcategoryとみなすと, special objectsは具体的な元を表す.
+ 特に
+\begin_inset Formula $1$
+\end_inset
+
+と表記されるterminal objectが最大元として現れていることに注意しよう.
+ bounded lattice 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+の構造はこの特別な場合である.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\bf Ab}$
+\end_inset
+
+では, terminal objectとinitial objectが, そしてproductとcoproductがそれぞれ一致している.
+ このようなterminalかつinitial objectを
+\series bold
+zero object
+\series default
+, productかつcoproductを
+\series bold
+biproduct
+\series default
+とよぶ.
+ これは
+\begin_inset Formula ${\bf Ab}$
+\end_inset
+
+がAbelian categoryとよばれる, 代数的位相幾何学等で重要な役割を果たすcategoryであり, zero objectとbiproductをもつ
+ことがAbelian categoryの定義に含まれているからである.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Exponential Object
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+exponential object
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+をproductをもつcategoryとする.
+ 
+\begin_inset Formula $A,C\in\Obj(\mathbb{C})$
+\end_inset
+
+に対し, 
+\series bold
+exponential object
+\series default
+ 
+\begin_inset Formula $C^{A}$
+\end_inset
+
+とは, 次のようなものである.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+arrow 
+\begin_inset Formula $\text{ev}:A\times C^{A}\to C$
+\end_inset
+
+; これはevaluation mapとよばれる
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次を満たすようなもの.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(universality) 任意の
+\begin_inset Formula $f:A\times B\to C$
+\end_inset
+
+に対し, 
+\begin_inset Formula $g:B\to C^{A}$
+\end_inset
+
+であって, 
+\begin_inset Formula $\text{ev}\circ(1\times g)=f$
+\end_inset
+
+なるようなものがただ一つ存在する.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+B 
+\backslash
+dar[dashed]{g} & A 
+\backslash
+times B   
+\backslash
+dar[swap]{1
+\backslash
+times g} 
+\backslash
+drar{f} & 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+C^A       & A 
+\backslash
+times C^A 
+\backslash
+rar[swap]{
+\backslash
+text{ev}}          & C
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Exponentialは
+\begin_inset Quotes eld
+\end_inset
+
+関数空間
+\begin_inset Quotes erd
+\end_inset
+
+を表現するような概念である.
+ 特にcomputer scienceでは重要な役割を果たす.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+cartesian-closed category
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+が
+\series bold
+cartesian-closed category
+\series default
+であるとは, 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+がterminal object, product, exponential objectをもつことをいう.
+\end_layout
+
+\begin_layout Subsection
+Monic, Epic
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+monic
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $f:B\to C$
+\end_inset
+
+が
+\series bold
+monic
+\series default
+であるとは, 任意の
+\begin_inset Formula $g,h:A\to B$
+\end_inset
+
+に対し, 
+\begin_inset Formula $f\circ g=f\circ h$
+\end_inset
+
+ならば
+\begin_inset Formula $g=h$
+\end_inset
+
+となることである.
+ これを
+\begin_inset Formula $f:B\rightarrowtail C$
+\end_inset
+
+とかいたりする.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+A 
+\backslash
+rar[shift left]{g} 
+\backslash
+rar[shift right, swap]{h} & B 
+\backslash
+rar[tail]{f} & C
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+epic
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+が
+\series bold
+epic
+\series default
+であるとは, 任意の
+\begin_inset Formula $g,h:B\to C$
+\end_inset
+
+に対し, 
+\begin_inset Formula $g\circ f=h\circ f$
+\end_inset
+
+ならば
+\begin_inset Formula $g=h$
+\end_inset
+
+となることである.
+ これを
+\begin_inset Formula $f:A\twoheadrightarrow B$
+\end_inset
+
+とかいたりする.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+A 
+\backslash
+rar[two heads]{f} & B 
+\backslash
+rar[shift left]{g} 
+\backslash
+rar[shift right, swap]{h} & C
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+monic, epicは
+\begin_inset Formula ${\bf Set}$
+\end_inset
+
+ではそれぞれ単射, 全射に一致する.
+\end_layout
+
+\begin_layout Subsection
+Isomorphism
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+isomorphism
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+が
+\series bold
+isomorphism
+\series default
+であるとは, ある
+\begin_inset Formula $g:B\to A$
+\end_inset
+
+が存在して, 
+\begin_inset Formula $f\circ g=1_{B}$
+\end_inset
+
+かつ
+\begin_inset Formula $g\circ f=1_{A}$
+\end_inset
+
+となることである.
+ このとき
+\begin_inset Formula $A$
+\end_inset
+
+は
+\begin_inset Formula $B$
+\end_inset
+
+に
+\series bold
+isomorphic
+\series default
+といい, 
+\begin_inset Formula $A\simeq B$
+\end_inset
+
+でかく.
+\end_layout
+
+\begin_layout Remark
+isoならばepiかつmonoは正しいが, 逆は必ずしも真ではない(逆が成り立つようなcategoryをbalancedという).
+ 反例として, 
+\begin_inset Formula ${\bf Top}$
+\end_inset
+
+で2点集合
+\begin_inset Formula $\{a,b\}$
+\end_inset
+
+に離散位相を入れた空間
+\begin_inset Formula $X_{d}$
+\end_inset
+
+, 密着位相を入れた空間
+\begin_inset Formula $X_{i}$
+\end_inset
+
+を用意すると, 恒等写像
+\begin_inset Formula $i:X_{d}\to X_{i}$
+\end_inset
+
+はepiかつmonoだが(逆が連続でないので) isoではない.
+\end_layout
+
+\begin_deeper
+\begin_layout Remark
+isomorphismはしばしば
+\begin_inset Quotes eld
+\end_inset
+
+弱い意味での
+\begin_inset Quotes erd
+\end_inset
+
+同値性として扱われる.
+ category theoryでは色々な種類の同値性があり, その中でも
+\begin_inset Formula $\simeq$
+\end_inset
+
+でかかれるisomorphic equivalenceは
+\begin_inset Quotes eld
+\end_inset
+
+weak
+\begin_inset Quotes erd
+\end_inset
+
+ equivalenceと呼ぶことがある.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{thebibliography}{9}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+bibitem{nlab} nLab, 
+\backslash
+url{https://ncatlab.org/nlab/show/HomePage}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+bibitem{algdcom} alg-d.com, 
+\backslash
+url{http://alg-d.com/math/kan_extension/}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{thebibliography}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
