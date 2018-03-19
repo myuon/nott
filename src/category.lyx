@@ -634,13 +634,115 @@ end{tikzcd}
 \end_layout
 
 \begin_layout Subsection
+Functor Category
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+functor category
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{C},\mathbb{D}$
+\end_inset
+
+をcategoryとする.
+ functor category 
+\begin_inset Formula $[\mathbb{C},\mathbb{D}]$
+\end_inset
+
+とは, 次のようにして定まるcategoryである.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Obj=\{F:\mathbb{C}\to\mathbb{D}\mid F\text{はfunctor}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Hom[\mathbb{C}]FG=\{\alpha:F\Rightarrow G\mid\alpha\text{はnatural transformation}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\id_{F}:F\Rightarrow F$
+\end_inset
+
+は
+\begin_inset Formula $(\id_{F})_{A}=\id_{FA}$
+\end_inset
+
+で定まるnat
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\alpha:F\Rightarrow G$
+\end_inset
+
+, 
+\begin_inset Formula $\beta:G\Rightarrow H$
+\end_inset
+
+に対し, 
+\begin_inset Formula $\beta\circ\alpha:F\Rightarrow H$
+\end_inset
+
+を, 
+\begin_inset Formula $(\beta\circ\alpha)_{A}=\beta_{A}\circ\alpha_{A}$
+\end_inset
+
+で定まるnat
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+ただし, functorとnatの同値性を次のように定めておく.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F=G$
+\end_inset
+
+ iff 
+\begin_inset Formula $\forall A.\ FA=GA$
+\end_inset
+
+ かつ 
+\begin_inset Formula $\forall f:A\to B.\ Ff=Gf$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\alpha=\beta$
+\end_inset
+
+ iff 
+\begin_inset Formula $\forall A.\ \alpha_{A}=\beta_{A}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Duality
 \end_layout
 
 \begin_layout Standard
 categoryの図式のarrowの向きを全て逆にしたものを, 元の図式のdual(双対)とよぶ.
  categoryにおいて定義されるものは, 定義に出現する図式を反転することでdualをとることができる.
- すでにopposite categoryがdualな概念として登場したが, 他にもdualやdualを用いた概念が存在する.
+ すでにopposite categoryがdualな概念として登場したが, 他にもdualやdualに関連する概念が存在する.
 \end_layout
 
 \begin_layout Definition
@@ -1238,6 +1340,14 @@ exponential object
 
 \begin_deeper
 \begin_layout Itemize
+object: 
+\begin_inset Formula $C^{A}\in\Obj(\mathbb{C})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 arrow 
 \begin_inset Formula $\text{ev}:A\times C^{A}\to C$
 \end_inset
@@ -1621,6 +1731,250 @@ weak
 \end_inset
 
  equivalenceと呼ぶことがある.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Limits
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+diagonal functor
+\end_layout
+
+\end_inset
+
+ 
+\series bold
+diagonal functor
+\series default
+ (constant functor) 
+\begin_inset Formula $\Delta:\mathbb{C}\to\mathbb{C}^{\mathbb{J}}$
+\end_inset
+
+とは, 次のようにして定義されるもののことである.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Delta(C)(j)=C$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Delta(f:C\to D)(j)=f$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+arrowは全てidentityにmapされる.
+\end_layout
+
+\begin_deeper
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+limit
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{J}$
+\end_inset
+
+をsmallなcategory (index categoryなどとよぶ), 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+をcategoryとする.
+ 
+\begin_inset Formula $F:\mathbb{J}\to\mathbb{C}$
+\end_inset
+
+の
+\series bold
+limit
+\series default
+とは, 次のようなものである.
+\end_layout
+
+\begin_layout Itemize
+object 
+\begin_inset Formula $L\in\Obj(\mathbb{C})$
+\end_inset
+
+; これを
+\begin_inset Formula $\underleftarrow{\lim}F$
+\end_inset
+
+とかく
+\end_layout
+
+\begin_layout Itemize
+natural transformation 
+\begin_inset Formula $\tau:\Delta(L)\Rightarrow F$
+\end_inset
+
+ (limiting coneとよぶ)
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次のような条件を満たす.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(universality) 任意のobject 
+\begin_inset Formula $C\in\Obj(\mathbb{C})$
+\end_inset
+
+とnatural transformation 
+\begin_inset Formula $\theta:\Delta(C)\Rightarrow F$
+\end_inset
+
+に対し, 
+\begin_inset Formula $h:C\to L$
+\end_inset
+
+であって, 
+\begin_inset Formula $\tau\circ\Delta(h)=\theta$
+\end_inset
+
+となるようなものがただ一つ存在する.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+mathbb{C} & C 
+\backslash
+arrow[dashed]{rr}{h} & & L 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+mathbb{C}^
+\backslash
+mathbb{J} & 
+\backslash
+Delta(C) 
+\backslash
+drar[Rightarrow, swap]{
+\backslash
+theta} 
+\backslash
+arrow{rr}{
+\backslash
+Delta(h)} & & 
+\backslash
+Delta(L) 
+\backslash
+dlar[Rightarrow]{
+\backslash
+tau} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& & F &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+terminal object
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:0\to\mathbb{C}$
+\end_inset
+
+をempty categoryからのuniqueなfunctorとする.
+ このとき
+\begin_inset Formula $\underleftarrow{\lim}F=1\in\Obj(\mathbb{C})$
+\end_inset
+
+である.
+\end_layout
+
+\begin_deeper
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+product
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula ${\bf 2}=\{\star_{1},\star_{2}\}$
+\end_inset
+
+を2点からなるdiscrete categoryとする.
+ 
+\begin_inset Formula $F:{\bf 2}\to\mathbb{C}$
+\end_inset
+
+とすると, 
+\begin_inset Formula $\underleftarrow{\lim}F=F(\star_{1})\times F(\star_{2})\in\Obj(\mathbb{C})$
+\end_inset
+
+である.
 \end_layout
 
 \end_deeper
