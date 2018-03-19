@@ -11,6 +11,7 @@
 \usepackage{tikz-cd}
 \usepackage{../lib/bussproofs}
 \usepackage{url}
+\usepackage{mathpartir}
 
 \tikzset{%
     symbol/.style={%
@@ -634,13 +635,119 @@ end{tikzcd}
 \end_layout
 
 \begin_layout Subsection
+Functor Category
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+functor category
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{C},\mathbb{D}$
+\end_inset
+
+をcategoryとする.
+ 
+\series bold
+functor category
+\series default
+ 
+\begin_inset Formula $[\mathbb{C},\mathbb{D}]$
+\end_inset
+
+とは, 次のようにして定まるcategoryである.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Obj=\{F:\mathbb{C}\to\mathbb{D}\mid F\text{はfunctor}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Hom[\mathbb{C}]FG=\{\alpha:F\Rightarrow G\mid\alpha\text{はnatural transformation}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\id_{F}:F\Rightarrow F$
+\end_inset
+
+は
+\begin_inset Formula $(\id_{F})_{A}=\id_{FA}$
+\end_inset
+
+で定まるnat
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\alpha:F\Rightarrow G$
+\end_inset
+
+, 
+\begin_inset Formula $\beta:G\Rightarrow H$
+\end_inset
+
+に対し, 
+\begin_inset Formula $\beta\circ\alpha:F\Rightarrow H$
+\end_inset
+
+を, 
+\begin_inset Formula $(\beta\circ\alpha)_{A}=\beta_{A}\circ\alpha_{A}$
+\end_inset
+
+で定まるnat
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+ただし, functorとnatの同値性を次のように定めておく.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F=G$
+\end_inset
+
+ iff 
+\begin_inset Formula $\forall A.\ FA=GA$
+\end_inset
+
+ かつ 
+\begin_inset Formula $\forall f:A\to B.\ Ff=Gf$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\alpha=\beta$
+\end_inset
+
+ iff 
+\begin_inset Formula $\forall A.\ \alpha_{A}=\beta_{A}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Duality
 \end_layout
 
 \begin_layout Standard
 categoryの図式のarrowの向きを全て逆にしたものを, 元の図式のdual(双対)とよぶ.
  categoryにおいて定義されるものは, 定義に出現する図式を反転することでdualをとることができる.
- すでにopposite categoryがdualな概念として登場したが, 他にもdualやdualを用いた概念が存在する.
+ すでにopposite categoryがdualな概念として登場したが, 他にもdualやdualに関連する概念が存在する.
 \end_layout
 
 \begin_layout Definition
@@ -1238,6 +1345,14 @@ exponential object
 
 \begin_deeper
 \begin_layout Itemize
+object: 
+\begin_inset Formula $C^{A}\in\Obj(\mathbb{C})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 arrow 
 \begin_inset Formula $\text{ev}:A\times C^{A}\to C$
 \end_inset
@@ -1624,6 +1739,657 @@ weak
 \end_layout
 
 \end_deeper
+\begin_layout Section
+Special Functors
+\end_layout
+
+\begin_layout Subsection
+Limits
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+diagonal functor
+\end_layout
+
+\end_inset
+
+ 
+\series bold
+diagonal functor
+\series default
+ (constant functor) 
+\begin_inset Formula $\Delta:\mathbb{C}\to\mathbb{C}^{\mathbb{J}}$
+\end_inset
+
+とは, 次のようにして定義されるもののことである.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Delta(C)(j)=C$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Delta(f:C\to D)(j)=f$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+arrowは全てidentityにmapされる.
+\end_layout
+
+\begin_deeper
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+limit
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{J}$
+\end_inset
+
+をsmallなcategory (index categoryなどとよぶ), 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+をcategoryとする.
+ 
+\begin_inset Formula $F:\mathbb{J}\to\mathbb{C}$
+\end_inset
+
+の
+\series bold
+limit
+\series default
+とは, 次のようなものである.
+\end_layout
+
+\begin_layout Itemize
+object 
+\begin_inset Formula $L\in\Obj(\mathbb{C})$
+\end_inset
+
+; これを
+\begin_inset Formula $\underleftarrow{\lim}F$
+\end_inset
+
+とかく
+\end_layout
+
+\begin_layout Itemize
+natural transformation 
+\begin_inset Formula $\tau:\Delta(L)\Rightarrow F$
+\end_inset
+
+ (limiting coneとよぶ)
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次のような条件を満たす.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(universality) 任意のobject 
+\begin_inset Formula $C\in\Obj(\mathbb{C})$
+\end_inset
+
+とnatural transformation 
+\begin_inset Formula $\theta:\Delta(C)\Rightarrow F$
+\end_inset
+
+に対し, 
+\begin_inset Formula $h:C\to L$
+\end_inset
+
+であって, 
+\begin_inset Formula $\tau\circ\Delta(h)=\theta$
+\end_inset
+
+となるようなものがただ一つ存在する.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+mathbb{C} & C 
+\backslash
+arrow[dashed]{rr}{h} & & L 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+mathbb{C}^
+\backslash
+mathbb{J} & 
+\backslash
+Delta(C) 
+\backslash
+drar[Rightarrow, swap]{
+\backslash
+theta} 
+\backslash
+arrow{rr}{
+\backslash
+Delta(h)} & & 
+\backslash
+Delta(L) 
+\backslash
+dlar[Rightarrow]{
+\backslash
+tau} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& & F &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+terminal object
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:0\to\mathbb{C}$
+\end_inset
+
+をempty categoryからのuniqueなfunctorとする.
+ このとき
+\begin_inset Formula $\underleftarrow{\lim}F=1\in\Obj(\mathbb{C})$
+\end_inset
+
+である.
+\end_layout
+
+\begin_deeper
+\begin_layout Example
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+product
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula ${\bf 2}=\{\star_{1},\star_{2}\}$
+\end_inset
+
+を2点からなるdiscrete categoryとする.
+ 
+\begin_inset Formula $F:{\bf 2}\to\mathbb{C}$
+\end_inset
+
+とすると, 
+\begin_inset Formula $\underleftarrow{\lim}F=F(\star_{1})\times F(\star_{2})\in\Obj(\mathbb{C})$
+\end_inset
+
+である.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Adjoint Functors
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+adjoint
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+, 
+\begin_inset Formula $G:\mathbb{D}\to\mathbb{C}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F$
+\end_inset
+
+と
+\begin_inset Formula $G$
+\end_inset
+
+が
+\series bold
+adjoint
+\series default
+, または
+\begin_inset Formula $F$
+\end_inset
+
+が
+\begin_inset Formula $G$
+\end_inset
+
+の
+\series bold
+left adjoint
+\series default
+, または
+\begin_inset Formula $G$
+\end_inset
+
+が
+\begin_inset Formula $F$
+\end_inset
+
+の
+\series bold
+right adjoint
+\series default
+であるとは, 次をみたすときをいう.
+ また, これを
+\begin_inset Formula $F\dashv G$
+\end_inset
+
+とかく.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\varphi_{A,B}:\Hom[\mathbb{D}]{FA}B\xrightarrow{\sim}\Hom[\mathbb{C}]A{GB}$
+\end_inset
+
+なるisomorphism (これをadjunctionとよぶ)が存在して, さらにこれが
+\begin_inset Formula $A,B$
+\end_inset
+
+についてnaturalである
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+A & B 
+\backslash
+dar{g} & 
+\backslash
+Hom[
+\backslash
+mathbb{D}]{FA}{B} 
+\backslash
+dar[swap]{
+\backslash
+Hom[
+\backslash
+mathbb{D}]{Ff}{g}} 
+\backslash
+rar{
+\backslash
+varphi_{A,B}} & 
+\backslash
+Hom[
+\backslash
+mathbb{C}]{A}{GB} 
+\backslash
+dar{
+\backslash
+Hom[
+\backslash
+mathbb{C}]{f}{Gg}} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+A' 
+\backslash
+uar{f} & B' & 
+\backslash
+Hom[
+\backslash
+mathbb{D}]{FA'}{B'} 
+\backslash
+rar{
+\backslash
+varphi_{A',B'}} & 
+\backslash
+Hom[
+\backslash
+mathbb{C}]{A'}{GB'}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+unit
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F\dashv G$
+\end_inset
+
+とする.
+ このときnatural transformation 
+\begin_inset Formula $\eta:1\Rightarrow GF$
+\end_inset
+
+が次のようにして定まる.
+ これを
+\series bold
+unit
+\series default
+とよぶ.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\eta_{A}=\varphi_{A,FA}(\id_{FA}):A\to GFA$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+counit
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F\dashv G$
+\end_inset
+
+とする.
+ このときnatural transformation 
+\begin_inset Formula $\varepsilon:FG\Rightarrow1$
+\end_inset
+
+が次のようにして定まる.
+ これを
+\series bold
+counit
+\series default
+とよぶ.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\varepsilon_{A}=\varphi_{GA,A}^{-1}(\id_{GA}):FGA\to A$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Proposition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+triangular identities
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+, 
+\begin_inset Formula $G:\mathbb{D}\to\mathbb{C}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F\dashv G$
+\end_inset
+
+であることと次は同値である.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+nat 
+\begin_inset Formula $\eta:1\Rightarrow GF$
+\end_inset
+
+, 
+\begin_inset Formula $\varepsilon:FG\Rightarrow1$
+\end_inset
+
+が存在する
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $G\varepsilon\circ\eta G=\id_{G}$
+\end_inset
+
+ かつ 
+\begin_inset Formula $\varepsilon F\circ F\eta=\id_{F}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{mathpar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+G 
+\backslash
+drar[equal] 
+\backslash
+rar{
+\backslash
+eta G} & GFG 
+\backslash
+dar{G 
+\backslash
+varepsilon} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& G
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+F 
+\backslash
+drar[equal] 
+\backslash
+rar{F 
+\backslash
+eta} & FGF 
+\backslash
+dar{
+\backslash
+varepsilon F} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& F
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{mathpar}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+End
+\end_layout
+
+\begin_layout Section
+All Concepts are Kan Extensions
+\end_layout
+
 \begin_layout Standard
 \begin_inset ERT
 status open
