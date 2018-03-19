@@ -11,6 +11,7 @@
 \usepackage{tikz-cd}
 \usepackage{../lib/bussproofs}
 \usepackage{url}
+\usepackage{mathpartir}
 
 \tikzset{%
     symbol/.style={%
@@ -652,7 +653,11 @@ functor category
 \end_inset
 
 をcategoryとする.
- functor category 
+ 
+\series bold
+functor category
+\series default
+ 
 \begin_inset Formula $[\mathbb{C},\mathbb{D}]$
 \end_inset
 
@@ -1735,6 +1740,10 @@ weak
 
 \end_deeper
 \begin_layout Section
+Special Functors
+\end_layout
+
+\begin_layout Subsection
 Limits
 \end_layout
 
@@ -1978,6 +1987,409 @@ product
 \end_layout
 
 \end_deeper
+\begin_layout Subsection
+Adjoint Functors
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+adjoint
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+, 
+\begin_inset Formula $G:\mathbb{D}\to\mathbb{C}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F$
+\end_inset
+
+と
+\begin_inset Formula $G$
+\end_inset
+
+が
+\series bold
+adjoint
+\series default
+, または
+\begin_inset Formula $F$
+\end_inset
+
+が
+\begin_inset Formula $G$
+\end_inset
+
+の
+\series bold
+left adjoint
+\series default
+, または
+\begin_inset Formula $G$
+\end_inset
+
+が
+\begin_inset Formula $F$
+\end_inset
+
+の
+\series bold
+right adjoint
+\series default
+であるとは, 次をみたすときをいう.
+ また, これを
+\begin_inset Formula $F\dashv G$
+\end_inset
+
+とかく.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\varphi_{A,B}:\Hom[\mathbb{D}]{FA}B\xrightarrow{\sim}\Hom[\mathbb{C}]A{GB}$
+\end_inset
+
+なるisomorphism (これをadjunctionとよぶ)が存在して, さらにこれが
+\begin_inset Formula $A,B$
+\end_inset
+
+についてnaturalである
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+A & B 
+\backslash
+dar{g} & 
+\backslash
+Hom[
+\backslash
+mathbb{D}]{FA}{B} 
+\backslash
+dar[swap]{
+\backslash
+Hom[
+\backslash
+mathbb{D}]{Ff}{g}} 
+\backslash
+rar{
+\backslash
+varphi_{A,B}} & 
+\backslash
+Hom[
+\backslash
+mathbb{C}]{A}{GB} 
+\backslash
+dar{
+\backslash
+Hom[
+\backslash
+mathbb{C}]{f}{Gg}} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+A' 
+\backslash
+uar{f} & B' & 
+\backslash
+Hom[
+\backslash
+mathbb{D}]{FA'}{B'} 
+\backslash
+rar{
+\backslash
+varphi_{A',B'}} & 
+\backslash
+Hom[
+\backslash
+mathbb{C}]{A'}{GB'}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+unit
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F\dashv G$
+\end_inset
+
+とする.
+ このときnatural transformation 
+\begin_inset Formula $\eta:1\Rightarrow GF$
+\end_inset
+
+が次のようにして定まる.
+ これを
+\series bold
+unit
+\series default
+とよぶ.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\eta_{A}=\varphi_{A,FA}(\id_{FA}):A\to GFA$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+counit
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F\dashv G$
+\end_inset
+
+とする.
+ このときnatural transformation 
+\begin_inset Formula $\varepsilon:FG\Rightarrow1$
+\end_inset
+
+が次のようにして定まる.
+ これを
+\series bold
+counit
+\series default
+とよぶ.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\varepsilon_{A}=\varphi_{GA,A}^{-1}(\id_{GA}):FGA\to A$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Proposition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+triangular identities
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+, 
+\begin_inset Formula $G:\mathbb{D}\to\mathbb{C}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F\dashv G$
+\end_inset
+
+であることと次は同値である.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+nat 
+\begin_inset Formula $\eta:1\Rightarrow GF$
+\end_inset
+
+, 
+\begin_inset Formula $\varepsilon:FG\Rightarrow1$
+\end_inset
+
+が存在する
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $G\varepsilon\circ\eta G=\id_{G}$
+\end_inset
+
+ かつ 
+\begin_inset Formula $\varepsilon F\circ F\eta=\id_{F}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{mathpar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+G 
+\backslash
+drar[equal] 
+\backslash
+rar{
+\backslash
+eta G} & GFG 
+\backslash
+dar{G 
+\backslash
+varepsilon} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& G
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+F 
+\backslash
+drar[equal] 
+\backslash
+rar{F 
+\backslash
+eta} & FGF 
+\backslash
+dar{
+\backslash
+varepsilon F} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& F
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{mathpar}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+End
+\end_layout
+
+\begin_layout Section
+All Concepts are Kan Extensions
+\end_layout
+
 \begin_layout Standard
 \begin_inset ERT
 status open
