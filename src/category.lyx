@@ -1450,6 +1450,36 @@ Exponentialは
  特にcomputer scienceでは重要な役割を果たす.
 \end_layout
 
+\begin_layout Example
+\align left
+\begin_inset Formula $A,B$
+\end_inset
+
+をsetとする.
+ 
+\begin_inset Formula ${\bf Set}$
+\end_inset
+
+でのexponential object 
+\begin_inset Formula $B^{A}$
+\end_inset
+
+とは, 写像の集合 
+\begin_inset Formula $B^{A}=\{f:A\to B\mid f\text{は写像}\}$
+\end_inset
+
+と, 次のようにして定まるevaluationからなる.
+\begin_inset Formula 
+\begin{align*}
+ & \text{ev}:A\times C^{A}\to C\\
+ & \text{ev}(a,f)=f(a)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Definition
 \begin_inset Argument 1
 status open
@@ -1473,6 +1503,13 @@ cartesian-closed category
 \end_inset
 
 がterminal object, product, exponential objectをもつことをいう.
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula ${\bf Set}$
+\end_inset
+
+は1点集合, 直積, 写像の集合によってcartesian-closedである.
 \end_layout
 
 \begin_layout Subsection
