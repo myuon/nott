@@ -1803,7 +1803,7 @@ limit
 \begin_inset Formula $\mathbb{J}$
 \end_inset
 
-をsmallなcategory (index categoryなどとよぶ), 
+をcategory (index categoryなどとよぶ), 
 \begin_inset Formula $\mathbb{C}$
 \end_inset
 
@@ -1935,6 +1935,10 @@ end{tikzcd}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+limitのindex categoryがsmall, あるいはfiniteのときそのlimitをsmall, あるいはfiniteとよぶ.
 \end_layout
 
 \begin_layout Example
@@ -2269,6 +2273,7 @@ nat
 
 \end_deeper
 \begin_layout Standard
+\align center
 \begin_inset ERT
 status open
 
@@ -2384,6 +2389,241 @@ end{mathpar}
 
 \begin_layout Subsection
 End
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+wedge
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}^{\text{op}}\times\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F$
+\end_inset
+
+上の
+\series bold
+wedge
+\series default
+ 
+\begin_inset Formula $e:w\to F$
+\end_inset
+
+とは次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object 
+\begin_inset Formula $w\in\mathbb{C}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+a family of arrows 
+\begin_inset Formula $e_{c}:w\to F(c,c)$
+\end_inset
+
+ for 
+\begin_inset Formula $c\in\mathbb{C}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次の条件を満たす.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(wedge diagram) 任意のarrow 
+\begin_inset Formula $f:c\to c'$
+\end_inset
+
+に対し, 
+\begin_inset Formula $F(f,c')\circ e_{c'}=F(c,f)\circ e_{c}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+& F(c',c') 
+\backslash
+drar{F(f,c')} & 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+w 
+\backslash
+urar{e_{c'}} 
+\backslash
+drar[swap]{e_c} & & F(c,c') 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& F(c,c) 
+\backslash
+urar[swap]{F(c,f)} &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+end
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}^{\text{op}}\times\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F$
+\end_inset
+
+のendとは次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+wedge 
+\begin_inset Formula $e:w\to F$
+\end_inset
+
+; wedgeのobject 
+\begin_inset Formula $w$
+\end_inset
+
+を
+\begin_inset Formula $\int_{c\in\mathbb{C}}F(c,c)$
+\end_inset
+
+とかく
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次の条件を満たす.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(universality) 任意のwedge 
+\begin_inset Formula $e':w'\to F$
+\end_inset
+
+に対し, 
+\begin_inset Formula $h:w'\to w$
+\end_inset
+
+であって, 任意の
+\begin_inset Formula $c\in\mathbb{C}$
+\end_inset
+
+に対して
+\begin_inset Formula $e_{c}\circ h=e'_{c}$
+\end_inset
+
+となるようなものがただ一つ存在する
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+w 
+\backslash
+drar[swap]{e} 
+\backslash
+arrow[dashed]{rr}{h} & & w' 
+\backslash
+dlar{e'} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& F &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
