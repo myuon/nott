@@ -1450,6 +1450,36 @@ Exponentialは
  特にcomputer scienceでは重要な役割を果たす.
 \end_layout
 
+\begin_layout Example
+\align left
+\begin_inset Formula $A,B$
+\end_inset
+
+をsetとする.
+ 
+\begin_inset Formula ${\bf Set}$
+\end_inset
+
+でのexponential object 
+\begin_inset Formula $B^{A}$
+\end_inset
+
+とは, 写像の集合 
+\begin_inset Formula $B^{A}=\{f:A\to B\mid f\text{は写像}\}$
+\end_inset
+
+と, 次のようにして定まるevaluationからなる.
+\begin_inset Formula 
+\begin{align*}
+ & \text{ev}:A\times C^{A}\to C\\
+ & \text{ev}(a,f)=f(a)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Definition
 \begin_inset Argument 1
 status open
@@ -1473,6 +1503,13 @@ cartesian-closed category
 \end_inset
 
 がterminal object, product, exponential objectをもつことをいう.
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula ${\bf Set}$
+\end_inset
+
+は1点集合, 直積, 写像の集合によってcartesian-closedである.
 \end_layout
 
 \begin_layout Subsection
@@ -1803,7 +1840,7 @@ limit
 \begin_inset Formula $\mathbb{J}$
 \end_inset
 
-をsmallなcategory (index categoryなどとよぶ), 
+をcategory (index categoryなどとよぶ), 
 \begin_inset Formula $\mathbb{C}$
 \end_inset
 
@@ -1935,6 +1972,10 @@ end{tikzcd}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+limitのindex categoryがsmall, あるいはfiniteのときそのlimitをsmall, あるいはfiniteとよぶ.
 \end_layout
 
 \begin_layout Example
@@ -2269,6 +2310,7 @@ nat
 
 \end_deeper
 \begin_layout Standard
+\align center
 \begin_inset ERT
 status open
 
@@ -2386,8 +2428,478 @@ end{mathpar}
 End
 \end_layout
 
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+wedge
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}^{\text{op}}\times\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F$
+\end_inset
+
+上の
+\series bold
+wedge
+\series default
+ 
+\begin_inset Formula $e:w\to F$
+\end_inset
+
+とは次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object 
+\begin_inset Formula $w\in\mathbb{C}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+a family of arrows 
+\begin_inset Formula $e_{c}:w\to F(c,c)$
+\end_inset
+
+ for 
+\begin_inset Formula $c\in\mathbb{C}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次の条件を満たす.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(wedge diagram) 任意のarrow 
+\begin_inset Formula $f:c\to c'$
+\end_inset
+
+に対し, 
+\begin_inset Formula $F(f,c')\circ e_{c'}=F(c,f)\circ e_{c}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+& F(c',c') 
+\backslash
+drar{F(f,c')} & 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+w 
+\backslash
+urar{e_{c'}} 
+\backslash
+drar[swap]{e_c} & & F(c,c') 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& F(c,c) 
+\backslash
+urar[swap]{F(c,f)} &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+end
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}^{\text{op}}\times\mathbb{C}\to\mathbb{D}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F$
+\end_inset
+
+のendとは次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+wedge 
+\begin_inset Formula $e:w\to F$
+\end_inset
+
+; wedgeのobject 
+\begin_inset Formula $w$
+\end_inset
+
+を
+\begin_inset Formula $\int_{c\in\mathbb{C}}F(c,c)$
+\end_inset
+
+とかく
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次の条件を満たす.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(universality) 任意のwedge 
+\begin_inset Formula $e':w'\to F$
+\end_inset
+
+に対し, 
+\begin_inset Formula $h:w'\to w$
+\end_inset
+
+であって, 任意の
+\begin_inset Formula $c\in\mathbb{C}$
+\end_inset
+
+に対して
+\begin_inset Formula $e_{c}\circ h=e'_{c}$
+\end_inset
+
+となるようなものがただ一つ存在する
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+w 
+\backslash
+drar[swap]{e} 
+\backslash
+arrow[dashed]{rr}{h} & & w' 
+\backslash
+dlar{e'} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& F &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 All Concepts are Kan Extensions
+\end_layout
+
+\begin_layout Subsection
+Kan拡張
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+左Kan拡張
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}\to\mathbb{D},E:\mathbb{C}\to\mathbb{U}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F$
+\end_inset
+
+に沿った
+\begin_inset Formula $E$
+\end_inset
+
+の左Kan拡張とは, 次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+functor 
+\begin_inset Formula $F^{\dagger}E:\mathbb{D}\to\mathbb{U}$
+\end_inset
+
+; 
+\begin_inset Formula $F^{\dagger}E$
+\end_inset
+
+または 
+\begin_inset Formula $\text{Lan}_{F}E$
+\end_inset
+
+とかく
+\end_layout
+
+\begin_layout Itemize
+nat 
+\begin_inset Formula $\eta:E\Rightarrow F^{\dagger}E\circ F$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次のような条件を満たす.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(universality) 任意のfunctor 
+\begin_inset Formula $S:\mathbb{D}\to\mathbb{U}$
+\end_inset
+
+とnat 
+\begin_inset Formula $\sigma:E\Rightarrow SF$
+\end_inset
+
+に対し, nat 
+\begin_inset Formula $\tau:F^{\dagger}E\Rightarrow S$
+\end_inset
+
+であって, 
+\begin_inset Formula $\tau F\circ\eta=\sigma$
+\end_inset
+
+となるようなものがただ一つ存在する
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{mathpar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}[sep=large]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+mathbb{C} 
+\backslash
+drar[swap]{F} 
+\backslash
+arrow{rr}{E} & 
+\backslash
+dar[Rightarrow, swap]{
+\backslash
+eta} & 
+\backslash
+mathbb{U} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& 
+\backslash
+mathbb{D} 
+\backslash
+urar[swap]{F^
+\backslash
+dagger E} &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+{[
+\backslash
+mathbb{D},
+\backslash
+mathbb{U}]} & F^
+\backslash
+dagger E 
+\backslash
+arrow[dashed, Rightarrow]{rr}{
+\backslash
+tau} & & S 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{[
+\backslash
+mathbb{C},
+\backslash
+mathbb{U}]} & F^
+\backslash
+dagger E 
+\backslash
+circ F 
+\backslash
+arrow[Rightarrow]{rr}{
+\backslash
+tau F} & & S 
+\backslash
+circ F 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& & E 
+\backslash
+ular[Rightarrow]{
+\backslash
+eta} 
+\backslash
+urar[Rightarrow, swap]{
+\backslash
+sigma} &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{mathpar}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
