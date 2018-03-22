@@ -2667,6 +2667,241 @@ end{tikzcd}
 All Concepts are Kan Extensions
 \end_layout
 
+\begin_layout Subsection
+Kan拡張
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+左Kan拡張
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F:\mathbb{C}\to\mathbb{D},E:\mathbb{C}\to\mathbb{U}$
+\end_inset
+
+をfunctorとする.
+ 
+\begin_inset Formula $F$
+\end_inset
+
+に沿った
+\begin_inset Formula $E$
+\end_inset
+
+の左Kan拡張とは, 次のようなものからなる.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+functor 
+\begin_inset Formula $F^{\dagger}E:\mathbb{D}\to\mathbb{U}$
+\end_inset
+
+; 
+\begin_inset Formula $F^{\dagger}E$
+\end_inset
+
+または 
+\begin_inset Formula $\text{Lan}_{F}E$
+\end_inset
+
+とかく
+\end_layout
+
+\begin_layout Itemize
+nat 
+\begin_inset Formula $\eta:E\Rightarrow F^{\dagger}E\circ F$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+であって, 次のような条件を満たす.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(universality) 任意のfunctor 
+\begin_inset Formula $S:\mathbb{D}\to\mathbb{U}$
+\end_inset
+
+とnat 
+\begin_inset Formula $\sigma:E\Rightarrow SF$
+\end_inset
+
+に対し, nat 
+\begin_inset Formula $\tau:F^{\dagger}E\Rightarrow S$
+\end_inset
+
+であって, 
+\begin_inset Formula $\tau F\circ\eta=\sigma$
+\end_inset
+
+となるようなものがただ一つ存在する
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{mathpar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}[sep=large]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+mathbb{C} 
+\backslash
+drar[swap]{F} 
+\backslash
+arrow{rr}{E} & 
+\backslash
+dar[Rightarrow, swap]{
+\backslash
+eta} & 
+\backslash
+mathbb{U} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& 
+\backslash
+mathbb{D} 
+\backslash
+urar[swap]{F^
+\backslash
+dagger E} &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+{[
+\backslash
+mathbb{D},
+\backslash
+mathbb{U}]} & F^
+\backslash
+dagger E 
+\backslash
+arrow[dashed, Rightarrow]{rr}{
+\backslash
+tau} & & S 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{[
+\backslash
+mathbb{C},
+\backslash
+mathbb{U}]} & F^
+\backslash
+dagger E 
+\backslash
+circ F 
+\backslash
+arrow[Rightarrow]{rr}{
+\backslash
+tau F} & & S 
+\backslash
+circ F 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& & E 
+\backslash
+ular[Rightarrow]{
+\backslash
+eta} 
+\backslash
+urar[Rightarrow, swap]{
+\backslash
+sigma} &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{mathpar}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset ERT
 status open
