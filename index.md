@@ -3,7 +3,7 @@
 
 Type Theoryについてのノートです.
 
-## Current Version: 0.1.6.2
+## Current Version: 0.1.6.3
 
 ノートのキリが良くなったところでtagを付けてmasterブランチに対してpushします. \\
 作業中のノートはdevelopブランチに置いてあります.
