@@ -804,6 +804,270 @@ Special Objects & Morphisms
 \end_layout
 
 \begin_layout Subsection
+Monic, Epic
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+monic
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $f:B\to C$
+\end_inset
+
+が
+\series bold
+monic
+\series default
+であるとは, 任意の
+\begin_inset Formula $g,h:A\to B$
+\end_inset
+
+に対し, 
+\begin_inset Formula $f\circ g=f\circ h$
+\end_inset
+
+ならば
+\begin_inset Formula $g=h$
+\end_inset
+
+となることである.
+ これを
+\begin_inset Formula $f:B\rightarrowtail C$
+\end_inset
+
+とかいたりする.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+A 
+\backslash
+rar[shift left]{g} 
+\backslash
+rar[shift right, swap]{h} & B 
+\backslash
+rar[tail]{f} & C
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+epic
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+が
+\series bold
+epic
+\series default
+であるとは, 任意の
+\begin_inset Formula $g,h:B\to C$
+\end_inset
+
+に対し, 
+\begin_inset Formula $g\circ f=h\circ f$
+\end_inset
+
+ならば
+\begin_inset Formula $g=h$
+\end_inset
+
+となることである.
+ これを
+\begin_inset Formula $f:A\twoheadrightarrow B$
+\end_inset
+
+とかいたりする.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+A 
+\backslash
+rar[two heads]{f} & B 
+\backslash
+rar[shift left]{g} 
+\backslash
+rar[shift right, swap]{h} & C
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+monic, epicは
+\begin_inset Formula ${\bf Set}$
+\end_inset
+
+ではそれぞれ単射, 全射に一致する.
+\end_layout
+
+\begin_layout Subsection
+Isomorphism
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+isomorphism
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+が
+\series bold
+isomorphism
+\series default
+であるとは, ある
+\begin_inset Formula $g:B\to A$
+\end_inset
+
+が存在して, 
+\begin_inset Formula $f\circ g=1_{B}$
+\end_inset
+
+かつ
+\begin_inset Formula $g\circ f=1_{A}$
+\end_inset
+
+となることである.
+ このとき
+\begin_inset Formula $A$
+\end_inset
+
+は
+\begin_inset Formula $B$
+\end_inset
+
+に
+\series bold
+isomorphic
+\series default
+といい, 
+\begin_inset Formula $A\simeq B$
+\end_inset
+
+でかく.
+\end_layout
+
+\begin_layout Remark
+isoならばepiかつmonoは正しいが, 逆は必ずしも真ではない(逆が成り立つようなcategoryをbalancedという).
+ 反例として, 
+\begin_inset Formula ${\bf Top}$
+\end_inset
+
+で2点集合
+\begin_inset Formula $\{a,b\}$
+\end_inset
+
+に離散位相を入れた空間
+\begin_inset Formula $X_{d}$
+\end_inset
+
+, 密着位相を入れた空間
+\begin_inset Formula $X_{i}$
+\end_inset
+
+を用意すると, 恒等写像
+\begin_inset Formula $i:X_{d}\to X_{i}$
+\end_inset
+
+はepiかつmonoだが(逆が連続でないので) isoではない.
+\end_layout
+
+\begin_deeper
+\begin_layout Remark
+isomorphismはしばしば
+\begin_inset Quotes eld
+\end_inset
+
+弱い意味での
+\begin_inset Quotes erd
+\end_inset
+
+同値性として扱われる.
+ category theoryでは色々な種類の同値性があり, その中でも
+\begin_inset Formula $\simeq$
+\end_inset
+
+でかかれるisomorphic equivalenceは
+\begin_inset Quotes eld
+\end_inset
+
+weak
+\begin_inset Quotes erd
+\end_inset
+
+ equivalenceと呼ぶことがある.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
 Terminal Object
 \end_layout
 
@@ -988,6 +1252,42 @@ end{tikzcd}
 
 \end_layout
 
+\begin_layout Proposition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+symmetric monoidality
+\end_layout
+
+\end_inset
+
+ 次のような同型が存在する.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $(A\times B)\times C\simeq A\times(B\times C)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $1\times A\simeq A\times1\simeq A$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A\times B\simeq B\times A$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Subsection
 Dual Objects
 \end_layout
@@ -1512,267 +1812,30 @@ cartesian-closed category
 は1点集合, 直積, 写像の集合によってcartesian-closedである.
 \end_layout
 
-\begin_layout Subsection
-Monic, Epic
-\end_layout
-
-\begin_layout Definition
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-monic
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula $f:B\to C$
-\end_inset
-
-が
-\series bold
-monic
-\series default
-であるとは, 任意の
-\begin_inset Formula $g,h:A\to B$
-\end_inset
-
-に対し, 
-\begin_inset Formula $f\circ g=f\circ h$
-\end_inset
-
-ならば
-\begin_inset Formula $g=h$
-\end_inset
-
-となることである.
- これを
-\begin_inset Formula $f:B\rightarrowtail C$
-\end_inset
-
-とかいたりする.
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{tikzcd}
-\end_layout
-
-\begin_layout Plain Layout
-
-A 
-\backslash
-rar[shift left]{g} 
-\backslash
-rar[shift right, swap]{h} & B 
-\backslash
-rar[tail]{f} & C
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{tikzcd}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-epic
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula $f:A\to B$
-\end_inset
-
-が
-\series bold
-epic
-\series default
-であるとは, 任意の
-\begin_inset Formula $g,h:B\to C$
-\end_inset
-
-に対し, 
-\begin_inset Formula $g\circ f=h\circ f$
-\end_inset
-
-ならば
-\begin_inset Formula $g=h$
-\end_inset
-
-となることである.
- これを
-\begin_inset Formula $f:A\twoheadrightarrow B$
-\end_inset
-
-とかいたりする.
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{tikzcd}
-\end_layout
-
-\begin_layout Plain Layout
-
-A 
-\backslash
-rar[two heads]{f} & B 
-\backslash
-rar[shift left]{g} 
-\backslash
-rar[shift right, swap]{h} & C
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{tikzcd}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-monic, epicは
-\begin_inset Formula ${\bf Set}$
-\end_inset
-
-ではそれぞれ単射, 全射に一致する.
-\end_layout
-
-\begin_layout Subsection
-Isomorphism
-\end_layout
-
-\begin_layout Definition
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-isomorphism
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula $f:A\to B$
-\end_inset
-
-が
-\series bold
-isomorphism
-\series default
-であるとは, ある
-\begin_inset Formula $g:B\to A$
-\end_inset
-
-が存在して, 
-\begin_inset Formula $f\circ g=1_{B}$
-\end_inset
-
-かつ
-\begin_inset Formula $g\circ f=1_{A}$
-\end_inset
-
-となることである.
- このとき
-\begin_inset Formula $A$
-\end_inset
-
-は
-\begin_inset Formula $B$
-\end_inset
-
-に
-\series bold
-isomorphic
-\series default
-といい, 
-\begin_inset Formula $A\simeq B$
-\end_inset
-
-でかく.
-\end_layout
-
-\begin_layout Remark
-isoならばepiかつmonoは正しいが, 逆は必ずしも真ではない(逆が成り立つようなcategoryをbalancedという).
- 反例として, 
-\begin_inset Formula ${\bf Top}$
-\end_inset
-
-で2点集合
-\begin_inset Formula $\{a,b\}$
-\end_inset
-
-に離散位相を入れた空間
-\begin_inset Formula $X_{d}$
-\end_inset
-
-, 密着位相を入れた空間
-\begin_inset Formula $X_{i}$
-\end_inset
-
-を用意すると, 恒等写像
-\begin_inset Formula $i:X_{d}\to X_{i}$
-\end_inset
-
-はepiかつmonoだが(逆が連続でないので) isoではない.
+\begin_layout Proposition
+次のような同型が存在する.
 \end_layout
 
 \begin_deeper
-\begin_layout Remark
-isomorphismはしばしば
-\begin_inset Quotes eld
+\begin_layout Itemize
+\begin_inset Formula $X^{1}\simeq X$
 \end_inset
 
-弱い意味での
-\begin_inset Quotes erd
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(X^{Y})^{Z}\simeq X^{Y\times Z}$
 \end_inset
 
-同値性として扱われる.
- category theoryでは色々な種類の同値性があり, その中でも
-\begin_inset Formula $\simeq$
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(X\times Y)^{Z}\simeq X^{Z}\times Y^{Z}$
 \end_inset
 
-でかかれるisomorphic equivalenceは
-\begin_inset Quotes eld
-\end_inset
 
-weak
-\begin_inset Quotes erd
-\end_inset
-
- equivalenceと呼ぶことがある.
 \end_layout
 
 \end_deeper
@@ -2422,6 +2485,18 @@ end{mathpar}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Proposition
+\begin_inset Formula $X\times(-)\dashv(-)^{X}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+これと随伴の一意性により, cartesian-closed categoryとは, terminal objectとproductを備え, 上の随伴が存在する
+ようなcategoryという定義も出来る.
 \end_layout
 
 \begin_layout Subsection
