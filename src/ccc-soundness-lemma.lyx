@@ -1,0 +1,732 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass jsarticle
+\begin_preamble
+\usepackage{syntax}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{../lib/bussproofs}
+\usepackage{url}
+\usepackage{mathpartir}
+
+\tikzset{%
+    symbol/.style={%
+        draw=none,
+        every to/.append style={%
+            edge node={node [sloped, allow upside down, auto=false]{$#1$}}}
+    }
+}
+\end_preamble
+\options platex,a4paper,dvipdfmx
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language japanese
+\language_package default
+\inputencoding utf8-platex
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format pdf3
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\topmargin 25mm
+\bottommargin 25mm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+CCC modelのsoundnessに関する補足
+\end_layout
+
+\begin_layout Author
+myuon
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\typed}[4][]{#2\vdash_{#1}#3:#4}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\STLC}{\lambda^{\to}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+次のような型を持つsimply-typed lambda calculusを考える.
+ 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+をsignature setとする.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+A\Coloneqq1\:|\:A_{1}\times A_{2}\:|\:A_{1}\to A_{2}\:|\:b\qquad(b\in\Sigma)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+このようなラムダ計算のCCC modelを構成する.
+ このとき次のsoundnessを示すことを考える.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Soundness for CCC models
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+をCCCとする.
+ このとき, 
+\begin_inset Formula $\typed{\Gamma}{M=N}A$
+\end_inset
+
+であれば
+\begin_inset Formula $\mathcal{C}\llbracket\typed{\Gamma}MA\rrbracket=\mathcal{C}\llbracket\typed{\Gamma}NA\rrbracket$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\beta$
+\end_inset
+
+変換に関する部分のみ示す.
+\end_layout
+
+\begin_layout Proof
+次のケースを考える.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma,x:s}{M}{t}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AxiomC{$
+\backslash
+typed{
+\backslash
+Gamma}{N}{s}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+RightLabel{$(
+\backslash
+beta)$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BinaryInfC{$
+\backslash
+typed{
+\backslash
+Gamma}{(
+\backslash
+lambda x:s.
+ M)N = M[N/x]}{t}$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{prooftree}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+等式の左辺はCCC modelの定義を思い出すと次のように変形できる.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{align*}
+\left\llbracket \typed{\Gamma}{(\lambda x:s.M)N}t\right\rrbracket  & =\text{apply}\circ\left\langle \text{curry}\left(\left\llbracket \typed{\Gamma,x:s}Mt\right\rrbracket \right),\left\llbracket \typed{\Gamma}Ns\right\rrbracket \right\rangle \\
+ & =\text{apply}\circ\left(\text{curry}\left(\left\llbracket \typed{\Gamma,x:s}Mt\right\rrbracket \right)\times\text{id}\right)\circ\left\langle \text{id},\left\llbracket \typed{\Gamma}Ns\right\rrbracket \right\rangle \\
+ & =\left\llbracket \typed{\Gamma,x:s}Mt\right\rrbracket \circ\left\langle \text{id},\left\llbracket \typed{\Gamma}Ns\right\rrbracket \right\rangle 
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}[sep=large]
+\end_layout
+
+\begin_layout Plain Layout
+
+& 
+\backslash
+Gamma 
+\backslash
+dar{
+\backslash
+langle 
+\backslash
+text{id}, N 
+\backslash
+rangle} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Gamma 
+\backslash
+dar[swap, dashed]{
+\backslash
+hat{M}} & 
+\backslash
+Gamma 
+\backslash
+times s 
+\backslash
+dar[swap]{
+\backslash
+hat{M} 
+\backslash
+times 
+\backslash
+text{id}} 
+\backslash
+drar{M} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+s^t & s^t 
+\backslash
+times s 
+\backslash
+rar[swap]{
+\backslash
+text{apply}} & t
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+よって, 
+\begin_inset Formula $\left\llbracket \typed{\Gamma,x:s}Mt\right\rrbracket \circ\left\langle \text{id},\left\llbracket \typed{\Gamma}Ns\right\rrbracket \right\rangle =\left\llbracket \typed{\Gamma}{M[N/x]}t\right\rrbracket $
+\end_inset
+
+を示せばよいことがわかる.
+ 証明は次の補題による.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $\left\llbracket \typed{\Gamma}{M[N/x]}t\right\rrbracket =\left\llbracket \typed{\Gamma,x:s}Mt\right\rrbracket \circ\left\langle \mathrm{id},\left\llbracket \typed{\Gamma}Ns\right\rrbracket \right\rangle $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $M$
+\end_inset
+
+についてのinduction.
+\end_layout
+
+\begin_deeper
+\begin_layout Case
+\begin_inset Formula $M\equiv\lambda y:u.\:M'$
+\end_inset
+
+, 
+\begin_inset Formula $t\equiv u\to v$
+\end_inset
+
+のとき.
+ 
+\begin_inset Formula $\tau_{k}^{n}$
+\end_inset
+
+を直積
+\begin_inset Formula $\prod A_{i}$
+\end_inset
+
+の
+\begin_inset Formula $(k,k+1)$
+\end_inset
+
+番目をswapする射(積自体はいずれも左結合として考える)とする.
+\begin_inset Formula 
+\begin{align*}
+ & \text{(LHS)}\\
+ & =\left\llbracket \typed{\Gamma}{\lambda y:u.\:M'[N/x]}{u\to v}\right\rrbracket \\
+ & =\text{curry}\left(\left\llbracket \typed{\Gamma,y:u}{M'[N/x]}v\right\rrbracket \right)\\
+ & =\text{curry}\left(\left\llbracket \typed{\Gamma,y:u,x:s}{M'}v\right\rrbracket \circ\left\langle \text{id},\left\llbracket \typed{\Gamma,y:u}Ns\right\rrbracket \right\rangle \right) & \text{(substitution lemma)}\\
+ & =\text{curry}\left(\left\llbracket \typed{\Gamma,y:u,x:s}{M'}v\right\rrbracket \circ\left\langle \text{id},\left\llbracket \typed{\Gamma}Ns\right\rrbracket \circ\text{fst}\right\rangle \right) & (\text{帰納法の仮定})\\
+ & =\text{curry}\left(\left\llbracket \typed{\Gamma,x:s,y:u}{M'}v\right\rrbracket \circ\tau_{n-2}^{n}\circ\left\langle \text{id},\left\llbracket \typed{\Gamma}Ns\right\rrbracket \circ\text{fst}\right\rangle \right) & (\text{exchange lemma})\\
+ & =\text{curry}\left(\left\llbracket \typed{\Gamma,x:s,y:u}{M'}v\right\rrbracket \circ\left\langle \text{id},\left\llbracket \typed{\Gamma}Ns\right\rrbracket \right\rangle \times\text{id}\right) & (\text{補題\ref{lemma:swapping}による})\\
+ & =\text{curry}\left(\left\llbracket \typed{\Gamma,x:s,y:u}{M'}v\right\rrbracket \right)\circ\left\langle \text{id},\left\llbracket \typed{\Gamma}Ns\right\rrbracket \right\rangle  & (\text{補題\ref{lemma:curry}による})\\
+ & =\left\llbracket \typed{\Gamma,x:s}{\lambda y:u.\:M'}{u\to v}\right\rrbracket \circ\left\langle \text{id},\left\llbracket \typed{\Gamma}Ns\right\rrbracket \right\rangle \\
+ & =\text{(RHS)}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Case
+他のケースは省略.
+\end_layout
+
+\end_deeper
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lemma:swapping"
+
+\end_inset
+
+
+\begin_inset Formula $g:A\to C$
+\end_inset
+
+とする.
+ 
+\begin_inset Formula $\tau_{2}^{3}\circ\left\langle \mathrm{id},g\circ\mathrm{fst}\right\rangle =\left\langle \mathrm{id},g\right\rangle \times\mathrm{id}$
+\end_inset
+
+である.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+A 
+\backslash
+times B 
+\backslash
+drar{
+\backslash
+langle 
+\backslash
+mathrm{id}, g 
+\backslash
+circ 
+\backslash
+mathrm{fst} 
+\backslash
+rangle} 
+\backslash
+arrow{rr}{
+\backslash
+langle 
+\backslash
+mathrm{id},g 
+\backslash
+rangle 
+\backslash
+times 
+\backslash
+mathrm{id}} & & A 
+\backslash
+times C 
+\backslash
+times B 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& A 
+\backslash
+times B 
+\backslash
+times C 
+\backslash
+urar{
+\backslash
+tau^3_2} &
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $A$
+\end_inset
+
+及び
+\begin_inset Formula $B$
+\end_inset
+
+は不変であり, 
+\begin_inset Formula $C$
+\end_inset
+
+は両辺ともに
+\begin_inset Formula $g$
+\end_inset
+
+によって引き起こされることからわかる.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lemma:curry"
+
+\end_inset
+
+
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+, 
+\begin_inset Formula $g:B\times C\to D$
+\end_inset
+
+に対し, 
+\begin_inset Formula $\mathrm{curry}(g)\circ f=\mathrm{curry}(g\circ(f\times\mathrm{id}))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+次の図式を考える.
+ 左の三角は可換である.
+ 右の三角はexponentialの定義により可換である.
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}[sep=large]
+\end_layout
+
+\begin_layout Plain Layout
+
+A 
+\backslash
+times C 
+\backslash
+rar{f 
+\backslash
+times 
+\backslash
+text{id}} 
+\backslash
+drar[swap]{(
+\backslash
+hat{g} 
+\backslash
+circ f) 
+\backslash
+times 
+\backslash
+text{id}} &
+\end_layout
+
+\begin_layout Plain Layout
+
+B 
+\backslash
+times C 
+\backslash
+dar{
+\backslash
+hat{g} 
+\backslash
+times 
+\backslash
+text{id}} 
+\backslash
+rar{g} &
+\end_layout
+
+\begin_layout Plain Layout
+
+D 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& D^C 
+\backslash
+times C 
+\backslash
+urar[swap]{
+\backslash
+text{apply}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+全体の可換性により, 
+\begin_inset Formula $\text{apply}\circ((\text{curry}(g)\circ f)\times\text{id})=g\circ(f\times\text{id})$
+\end_inset
+
+が成り立つ.
+ さて, exponentialの一意性により, 任意の
+\begin_inset Formula $g:B\times C\to D$
+\end_inset
+
+に対し, 
+\begin_inset Formula $g':B\to D^{C}$
+\end_inset
+
+であって
+\begin_inset Formula $g=\text{apply}\circ(g'\times\text{id})$
+\end_inset
+
+となるような
+\begin_inset Formula $g'$
+\end_inset
+
+がただ一つ存在する.
+ このことを用いると, 
+\begin_inset Formula $\text{apply}\circ((\text{curry}(g)\circ f)\times\text{id})=\text{apply}\circ(\text{curry}(g\circ(f\times\text{id}))\times\text{id})$
+\end_inset
+
+を示せれば欲しい等式が得られることがわかる.
+ このことと, 
+\begin_inset Formula $\text{apply}\circ(\text{curry}(g)\times\text{id})=g$
+\end_inset
+
+とを合わせれば証明が完了する.
+\end_layout
+
+\end_body
+\end_document
