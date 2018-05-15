@@ -3,7 +3,7 @@
 
 Type Theoryについてのノートです.
 
-## Current Version: 0.1.6.3
+## Current Version: 0.1.6.4
 
 ノートのキリが良くなったところでtagを付けてmasterブランチに対してpushします. \\
 作業中のノートはdevelopブランチに置いてあります.
@@ -15,6 +15,10 @@ Type Theoryについてのノートです.
 - [untyped.pdf](pdf/untyped.pdf): Untyped lambda calculus
 - [simply.pdf](pdf/simply.pdf): Simply-typed lambda calculus
 - [monad.pdf](pdf/monad.pdf): Monadic lambda calculus
+
+## etc
+
+- [ccc-soundness-lemma.pdf](pdf/ccc-soundness-lemma.pdf): CCC modelのsoundnessに関する補足
 
 ## 連絡等
 
