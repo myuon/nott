@@ -6,7 +6,7 @@ services:
     volumes:
       - $HOME/.Xauthority:/root/.Xauthority:rw
       - .:/data
-    network_mode: "host"
     environment:
       - DISPLAY=$DISPLAY
+    network_mode: "host"
 

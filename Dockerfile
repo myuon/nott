@@ -7,6 +7,7 @@ RUN apt update && \
         texlive-fonts-recommended \
         texlive-fonts-extra \
         lyx
+RUN kanji-config-updmap-sys ipaex
 
 VOLUME /data
 WORKDIR /data
