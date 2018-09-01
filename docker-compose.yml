@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  lyx:
+    build: .
+    volumes:
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+      - .:/data
+    network_mode: "host"
+    environment:
+      - DISPLAY=$DISPLAY
+
