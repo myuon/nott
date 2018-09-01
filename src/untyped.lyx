@@ -8,7 +8,7 @@
 \begin_preamble
 \usepackage{syntax}
 \end_preamble
-\options uplatex,a4paper,dvipdfmx
+\options a4paper,dvipdfmx
 \use_default_options true
 \begin_modules
 theorems-ams
@@ -700,6 +700,13 @@ C=[]\ |\ (C\:e)\ |\ (v\:C)\
 \end_layout
 
 \begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "evctx"
+
+\end_inset
+
+
 \begin_inset Formula $M\tocbv M'$
 \end_inset
 
@@ -711,7 +718,14 @@ C=[]\ |\ (C\:e)\ |\ (v\:C)\
 \end_layout
 
 \begin_layout Standard
-evaluation contextの3番目の規則が
+evaluation contextの
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "evctx"
+
+\end_inset
+
+番目の規則が
 \begin_inset Formula $(v\:C)$
 \end_inset
 
