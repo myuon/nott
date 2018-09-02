@@ -19,6 +19,7 @@ Type Theoryについてのノートです.
 ## etc
 
 - [ccc-soundness-lemma.pdf](pdf/ccc-soundness-lemma.pdf): CCC modelのsoundnessに関する補足
+- [eq-cat-approx-alg.pdf](pdf/eq-cat-approx-alg.pdf): ApproxとAlgが圏同値であること
 
 ## 連絡等
 
