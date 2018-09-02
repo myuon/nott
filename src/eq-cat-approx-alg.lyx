@@ -1,0 +1,577 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass bxjsarticle
+\options 11pt,
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+\end_modules
+\maintain_unincluded_children false
+\language japanese
+\language_package 
+\inputencoding utf8-platex
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf3
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+ApproxとAlgが圏同値であること
+\end_layout
+
+\begin_layout Author
+myuon
+\end_layout
+
+\begin_layout Date
+\begin_inset Formula $\today$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+category 
+\begin_inset Formula $\textbf{Approx}$
+\end_inset
+
+を次で定義する.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: poset
+\end_layout
+
+\begin_layout Itemize
+arrow: poset relation 
+\begin_inset Formula $f\subseteq A\times B$
+\end_inset
+
+が
+\series bold
+approximable
+\series default
+とは, 次の条件を満たすものとする.
+ 
+\begin_inset Formula $A$
+\end_inset
+
+から
+\begin_inset Formula $B$
+\end_inset
+
+への射をこのようなapproximable function 
+\begin_inset Formula $f$
+\end_inset
+
+によって定める.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+任意の
+\begin_inset Formula $a\in A$
+\end_inset
+
+に対してある
+\begin_inset Formula $b\in B$
+\end_inset
+
+が存在して, 
+\begin_inset Formula $(a,b)\in f$
+\end_inset
+
+となる.
+ (全域性)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(a,b)\in f$
+\end_inset
+
+かつ
+\begin_inset Formula $(a,b')\in f$
+\end_inset
+
+に対し, ある
+\begin_inset Formula $b''\in B$
+\end_inset
+
+が存在して, 
+\begin_inset Formula $(a,b'')\in f$
+\end_inset
+
+かつ
+\begin_inset Formula $b\sqsubseteq b''$
+\end_inset
+
+かつ
+\begin_inset Formula $b'\sqsubseteq b''$
+\end_inset
+
+となる.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a'\sqsubseteq a$
+\end_inset
+
+かつ
+\begin_inset Formula $(a',b')\in f$
+\end_inset
+
+かつ
+\begin_inset Formula $b\sqsubseteq b'$
+\end_inset
+
+のとき, 
+\begin_inset Formula $(a,b)\in f$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+id: 
+\begin_inset Formula $\{(x,y)\in A\times A\mid y\sqsubseteq x\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+composition: 
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+と
+\begin_inset Formula $g:B\to C$
+\end_inset
+
+に対して
+\begin_inset Formula $g\circ f=\{(a,c)\in A\times C\mid\exists b\in B.\:(a,b)\in f\wedge(b,c)\in g\}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+(idがapproximableであること) 
+\begin_inset Formula $(x,x)\in\text{id}$
+\end_inset
+
+により, 全域性はよい.
+ 
+\begin_inset Formula $(a,b)\in\text{id}$
+\end_inset
+
+かつ
+\begin_inset Formula $(a,b')\in\text{id}$
+\end_inset
+
+のとき, 
+\begin_inset Formula $b\sqsubseteq a$
+\end_inset
+
+かつ
+\begin_inset Formula $b'\sqsubseteq a$
+\end_inset
+
+であり, 
+\begin_inset Formula $(a,a)\in\text{id}$
+\end_inset
+
+となるからよい.
+ また, 
+\begin_inset Formula $a'\sqsubseteq a$
+\end_inset
+
+, 
+\begin_inset Formula $(a',b')\in\text{id}$
+\end_inset
+
+, 
+\begin_inset Formula $b\sqsubseteq b'$
+\end_inset
+
+のとき, 
+\begin_inset Formula $b\sqsubseteq b'\sqsubseteq a'\sqsubseteq a$
+\end_inset
+
+であるから
+\begin_inset Formula $(a,b)\in\text{id}$
+\end_inset
+
+である.
+\end_layout
+
+\begin_layout Proof
+(identity law) 
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+を任意にとる.
+ 
+\begin_inset Formula $f\subseteq f\circ\text{id}$
+\end_inset
+
+は明らか.
+ 
+\begin_inset Formula $(a,b)\in f\circ\text{id}$
+\end_inset
+
+とすると, 
+\begin_inset Formula $a'\in A$
+\end_inset
+
+が存在して
+\begin_inset Formula $(a,a')\in\text{id}$
+\end_inset
+
+かつ
+\begin_inset Formula $(a',b)\in f$
+\end_inset
+
+である.
+ ここで, 
+\begin_inset Formula $a'\sqsubseteq a$
+\end_inset
+
+であるので, approximable functionの定義により
+\begin_inset Formula $(a,b)\in f$
+\end_inset
+
+である.
+ よって
+\begin_inset Formula $f\circ\text{id}\subseteq f$
+\end_inset
+
+となる.
+\end_layout
+
+\begin_layout Definition
+category 
+\begin_inset Formula $\textbf{Alg}$
+\end_inset
+
+を次で定義する.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+object: algebraic cpo
+\end_layout
+
+\begin_layout Itemize
+arrow: continuous function
+\end_layout
+
+\end_deeper
+\begin_layout Fact*
+poset 
+\begin_inset Formula $A$
+\end_inset
+
+に対して, そのidealの集合
+\begin_inset Formula ${\bf Idl}(A)$
+\end_inset
+
+はalgebraic cpoとなり, 
+\begin_inset Formula ${\bf Idl}(A)$
+\end_inset
+
+のcompact elementは
+\begin_inset Formula $A$
+\end_inset
+
+のprincipal idealである.
+\end_layout
+
+\begin_layout Theorem
+algebraic cpoに対してcompact elementを対応させるfunctor 
+\begin_inset Formula $K$
+\end_inset
+
+は
+\begin_inset Formula ${\bf Approx}$
+\end_inset
+
+と
+\begin_inset Formula ${\bf Alg}$
+\end_inset
+
+の間の圏同値を与える.
+\end_layout
+
+\begin_layout Proof
+(essentially surjective) 任意のposet 
+\begin_inset Formula $A$
+\end_inset
+
+に対して, 
+\begin_inset Formula ${\bf Idl}(A)$
+\end_inset
+
+がapproximable functionの同型
+\begin_inset Formula $K({\bf Idl}(A))\simeq A$
+\end_inset
+
+を与えることをみる.
+ ところで, 
+\begin_inset Formula $K({\bf Idl}(A))={\bf PIdl}(A)$
+\end_inset
+
+であったので, 同型の対応は
+\begin_inset Formula $\downarrow a$
+\end_inset
+
+と
+\begin_inset Formula $a\in A$
+\end_inset
+
+を対応付ければよいことは明らか.
+ relation 
+\begin_inset Formula $f\subseteq A\times{\bf Idl}(A)$
+\end_inset
+
+を, 
+\begin_inset Formula $f=\{(a,\downarrow b)\mid b\sqsubseteq a\}$
+\end_inset
+
+によって定めればこれがapproximableであり, さらに前述の同型を与えることもわかる.
+\end_layout
+
+\begin_layout Proof
+(fully faithful) 
+\begin_inset Formula $K$
+\end_inset
+
+をfunctorに拡張したものを
+\begin_inset Formula $\varphi:{\bf Alg}\to{\bf Approx}$
+\end_inset
+
+と書くことにする.
+ arrow partは次のようにする:
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\varphi(f:A\to B)=\{(a,b)\in K(A)\times K(B)\mid b\sqsubseteq f(a)\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+また, 
+\begin_inset Formula $\psi:{\bf Approx}\to{\bf Alg}$
+\end_inset
+
+のobject partを
+\begin_inset Formula $A\mapsto{\bf Idl}(A)$
+\end_inset
+
+で与える.
+ 次にarrow partであるが, approximable function 
+\begin_inset Formula $g:A\to B$
+\end_inset
+
+を
+\begin_inset Formula ${\bf Idl}(A)\to{\bf Idl}(B)$
+\end_inset
+
+なるcontinuous functionに送ることを考える.
+ ところでalgebraic cpoの間のcontinuous functionはcompact elementでの振る舞いのみきめればよい.
+ そしてidealのcompact elementはprincipal idealであり, principal idealは元のposetと自明な対応をもつから
+, 結局のところ
+\begin_inset Formula $g$
+\end_inset
+
+の行き先とは次の関数から完全に決定される: 
+\begin_inset Formula 
+\[
+\psi_{*}(g):=x\mapsto\bigsqcup\{b\in K(B)\mid\exists a\in K(A).\:a\sqsubseteq x\wedge(a,b)\in g\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+念のため書き下せば, 
+\begin_inset Formula $\psi(g)$
+\end_inset
+
+は次のような関数である: 
+\begin_inset Formula $S\in{\bf Idl}(A)$
+\end_inset
+
+をとる.
+ 
+\begin_inset Formula $S$
+\end_inset
+
+はprincipal idealを使って
+\begin_inset Formula $S=\bigsqcup\{\downarrow a\mid\downarrow a\subseteq S\}$
+\end_inset
+
+と書ける.
+ このとき, 
+\begin_inset Formula $\psi(g)(S)=\psi(g)(\bigsqcup\{\downarrow a\mid\downarrow a\subseteq S\})=\bigsqcup\{\downarrow(\psi_{*}(a))\mid\downarrow a\subseteq S\}$
+\end_inset
+
+である.
+\end_layout
+
+\begin_layout Proof
+さて, 
+\begin_inset Formula $\varphi\circ\psi=\text{id}$
+\end_inset
+
+と
+\begin_inset Formula $\psi\circ\varphi=\text{id}$
+\end_inset
+
+をそれぞれ示す.
+\end_layout
+
+\begin_layout Proof
+approximable function 
+\begin_inset Formula $g:A\to B$
+\end_inset
+
+を任意にとる.
+ 
+\begin_inset Formula $(a,b)\in\varphi(\psi(g))$
+\end_inset
+
+は
+\begin_inset Formula $b\sqsubseteq\psi_{*}(g)(a)=\bigsqcup\{b'\in K(B)\mid\exists a'\in K(A).\;a'\sqsubseteq a\wedge(a',b')\in g\}$
+\end_inset
+
+と同値であり, この条件は
+\begin_inset Formula $(a,b)\in g$
+\end_inset
+
+に明らかに一致する.
+ よって
+\begin_inset Formula $\varphi\circ\psi=\text{id}$
+\end_inset
+
+である.
+\end_layout
+
+\begin_layout Proof
+次に, continuous function 
+\begin_inset Formula $f:A\to B$
+\end_inset
+
+と
+\begin_inset Formula $a\in A$
+\end_inset
+
+を任意にとる.
+ 
+\begin_inset Formula $\psi(\varphi(f))(a)=f(a)$
+\end_inset
+
+を示したいが, これもcompact elementで一致することのみ言えばよいから
+\begin_inset Formula $a$
+\end_inset
+
+はcompactであるとしてよい.
+ このとき左辺は
+\begin_inset Formula 
+\begin{align*}
+\psi_{*}(\varphi(f))(a) & =\bigsqcup\{b\in K(B)\mid\exists a'\in K(A).\:a'\sqsubseteq a\wedge(a',b)\in\varphi(f)\}\\
+ & =\bigsqcup\{b\in K(B)\mid\exists a'\in K(A).\:a'\sqsubseteq a\wedge b\sqsubseteq f(a')\}\\
+ & =\bigsqcup\{b\in K(B)\mid b\sqsubseteq f(a)\}\\
+ & =f(a)
+\end{align*}
+
+\end_inset
+
+と変形できる.
+ よって
+\begin_inset Formula $\psi\circ\varphi=\text{id}$
+\end_inset
+
+となることがわかる.
+\end_layout
+
+\end_body
+\end_document
