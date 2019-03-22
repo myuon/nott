@@ -1,0 +1,653 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass bxjsarticle
+\options 11pt,
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+\end_modules
+\maintain_unincluded_children false
+\language japanese
+\language_package 
+\inputencoding utf8-platex
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf3
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Finitary Projectionsの作る同型について
+\end_layout
+
+\begin_layout Author
+@myuon
+\end_layout
+
+\begin_layout Date
+\begin_inset Formula $\today$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+domain 
+\begin_inset Formula $D$
+\end_inset
+
+のfinitary projection 
+\begin_inset Formula $p$
+\end_inset
+
+とは, 次の条件を満たすもののこと.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $p:D\to D$
+\end_inset
+
+は連続写像
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $p\circ p=p\sqsubseteq\mathrm{id}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathrm{im}(p)$
+\end_inset
+
+はdomain
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula $N$
+\end_inset
+
+がposet 
+\begin_inset Formula $P$
+\end_inset
+
+のnormal subsetであるとは, 
+\begin_inset Formula $N\subseteq P$
+\end_inset
+
+であって, 任意の
+\begin_inset Formula $y\in P$
+\end_inset
+
+に対し
+\begin_inset Formula $\downarrow y\cap N$
+\end_inset
+
+がdirectedなことをいう.
+ このとき
+\begin_inset Formula $N\vartriangleleft P$
+\end_inset
+
+とかく.
+\end_layout
+
+\begin_layout Theorem*
+任意のdomain 
+\begin_inset Formula $D$
+\end_inset
+
+に対し, cptのなすposet 
+\begin_inset Formula ${\bf K}(D)$
+\end_inset
+
+のnormal subsetと, 
+\begin_inset Formula $D$
+\end_inset
+
+のfinitary projectionsのなすposet 
+\begin_inset Formula ${\bf Fp}(D)$
+\end_inset
+
+の間に包含関係を保つ同型が存在する.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\{N\mid N\vartriangleleft{\bf K}(D)\}$
+\end_inset
+
+と
+\begin_inset Formula ${\bf Fp}(D)$
+\end_inset
+
+の間の同型を定義する.
+ まずnormal subset 
+\begin_inset Formula $N$
+\end_inset
+
+に対し, 写像
+\begin_inset Formula $q$
+\end_inset
+
+を,
+\begin_inset Formula 
+\begin{align*}
+q & :D\to D\\
+q & (x)=\bigsqcup(\downarrow x\cap N)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+によって定義する.
+\end_layout
+
+\begin_deeper
+\begin_layout Lemma
+この
+\begin_inset Formula $q$
+\end_inset
+
+はfinitary projectionである.
+\end_layout
+
+\begin_layout Proof
+はじめにcontinuousであることを示す.
+ 
+\begin_inset Formula $D$
+\end_inset
+
+の任意のdirected subset 
+\begin_inset Formula $M$
+\end_inset
+
+を1つfixする.
+ 
+\begin_inset Formula $\bigsqcup q(M)=\bigsqcup_{y\in M}q(y)=\bigsqcup_{y\in M}\bigsqcup(\downarrow y\cap N)\sqsubseteq\bigsqcup(\downarrow(\bigsqcup M)\cap N)=q(\bigsqcup M)$
+\end_inset
+
+であることは明らかであろう.
+ 逆をみる.
+ 
+\begin_inset Formula $\bigsqcup q(M)$
+\end_inset
+
+が
+\begin_inset Formula $\downarrow(\bigsqcup M)\cap N$
+\end_inset
+
+のupper boundであることを示せばよい.
+ 
+\begin_inset Formula $\alpha\in\downarrow(\bigsqcup M)\cap N$
+\end_inset
+
+とすると, 
+\begin_inset Formula $\alpha\sqsubseteq\bigsqcup M$
+\end_inset
+
+かつ
+\begin_inset Formula $\alpha\in N$
+\end_inset
+
+である.
+ ところで
+\begin_inset Formula $N$
+\end_inset
+
+は
+\begin_inset Formula ${\bf K}(D)$
+\end_inset
+
+のnormal subsetだったから
+\begin_inset Formula $N$
+\end_inset
+
+の点
+\begin_inset Formula $\alpha$
+\end_inset
+
+はcptである.
+ ゆえにある
+\begin_inset Formula $z\in M$
+\end_inset
+
+が存在して, 
+\begin_inset Formula $\alpha\sqsubseteq z$
+\end_inset
+
+となり, すなわち
+\begin_inset Formula $\alpha\sqsubseteq\bigsqcup(\downarrow z\cap N)=q(z)$
+\end_inset
+
+である.
+ よって, 
+\begin_inset Formula $\alpha\sqsubseteq\bigsqcup q(M)$
+\end_inset
+
+となり, 
+\begin_inset Formula $\bigsqcup q(M)=q(\bigsqcup M)$
+\end_inset
+
+であることがわかった.
+\end_layout
+
+\begin_layout Proof
+次に, 
+\begin_inset Formula $q\circ q=q\sqsubseteq\mathrm{id}$
+\end_inset
+
+を示す.
+ 
+\begin_inset Formula $q$
+\end_inset
+
+の作り方から
+\begin_inset Formula $q\sqsubseteq\mathrm{id}$
+\end_inset
+
+は明らか.
+\begin_inset Formula 
+\begin{align*}
+q(q(x)) & =q(\bigsqcup\downarrow x\cap N)\\
+ & =\bigsqcup q(\downarrow x\cap N) & (\text{\ensuremath{q}はcontinuous})\\
+ & =\bigsqcup_{z\in\downarrow x\cap N}q(z)\\
+ & =\bigsqcup_{z\in\downarrow x\cap N}\bigsqcup(\downarrow z\cap N)\\
+ & =\bigsqcup_{z\in\downarrow x\cap N}z & (\text{下で説明する})\\
+ & =q(x)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+ただし最後から2つ目の式は, 
+\begin_inset Formula $z\in\downarrow x\cap N$
+\end_inset
+
+に対し, 
+\begin_inset Formula $\bigsqcup(\downarrow z\cap N)=z$
+\end_inset
+
+であることを用いた.
+ このことは次のようにしてわかる: 
+\begin_inset Formula $\bigsqcup(\downarrow z\cap N)\sqsubseteq z$
+\end_inset
+
+であることは明らかであり, また
+\begin_inset Formula $z$
+\end_inset
+
+は
+\begin_inset Formula $N$
+\end_inset
+
+の元でもあるから 
+\begin_inset Formula $z\in\downarrow z\cap N$
+\end_inset
+
+でもあることより逆もわかる.
+\end_layout
+
+\begin_layout Proof
+最後に, 
+\begin_inset Formula $\mathrm{im}(q)$
+\end_inset
+
+がdomainであることをいう.
+ ここでは, 
+\begin_inset Formula $N\cap\mathrm{im}(q)$
+\end_inset
+
+が
+\begin_inset Formula $\mathrm{im}(q)$
+\end_inset
+
+のbasisとなること, すなわち, 任意の
+\begin_inset Formula $y\in\mathrm{im}(q)$
+\end_inset
+
+に対して
+\begin_inset Formula $\bigsqcup(\downarrow y\cap N\cap\mathrm{im}(q))=y$
+\end_inset
+
+となることを示す.
+ 
+\begin_inset Formula $x\in D$
+\end_inset
+
+を, 
+\begin_inset Formula $q(x)=y$
+\end_inset
+
+となるものとしてとる.
+\begin_inset Formula 
+\begin{align*}
+\bigsqcup(\downarrow y\cap N\cap\mathrm{im}(q)) & =\bigsqcup(\downarrow q(x)\cap N\cap\mathrm{im}(q))\\
+ & =\bigsqcup(\downarrow x\cap N\cap\mathrm{im}(q)) & \text{(a)}\\
+ & =\bigsqcup(\downarrow q(x)\cap N) & \text{(b)}\\
+ & =\bigsqcup(\downarrow x\cap N) & \text{(c)}\\
+ & =y
+\end{align*}
+
+\end_inset
+
+順に示す.
+ (a) 
+\begin_inset Formula $z\in(\downarrow x\cap N\cap\mathrm{im}(q))$
+\end_inset
+
+に対し, 
+\begin_inset Formula $z\sqsubseteq x$
+\end_inset
+
+かつ
+\begin_inset Formula $z\in\mathrm{im}(q)$
+\end_inset
+
+であるから, 両辺をqで写すと
+\begin_inset Formula $z=q(z)\sqsubseteq q(x)$
+\end_inset
+
+となり, 
+\begin_inset Formula $z\in(\downarrow q(x)\cap N\cap\mathrm{im}(q))$
+\end_inset
+
+である.
+ (b) 
+\begin_inset Formula $q(x)\sqsubseteq x$
+\end_inset
+
+により, 
+\begin_inset Formula $\bigsqcup(\downarrow q(x)\cap N)\sqsubseteq\bigsqcup(\downarrow x\cap N\cap\mathrm{im}(q))$
+\end_inset
+
+であることはよい.
+ 
+\begin_inset Formula $z\in(\downarrow x\cap N\cap\mathrm{im}(q))$
+\end_inset
+
+に対し, 
+\begin_inset Formula $z\sqsubseteq x$
+\end_inset
+
+かつ
+\begin_inset Formula $z\in\mathrm{im}(q)$
+\end_inset
+
+であるから, 先程と同様にして
+\begin_inset Formula $z\sqsubseteq q(x)$
+\end_inset
+
+であり, 
+\begin_inset Formula $z\in(\downarrow q(x)\cap N)$
+\end_inset
+
+.
+ (c) 
+\begin_inset Formula $z\in(\downarrow x\cap N)$
+\end_inset
+
+に対し, 
+\begin_inset Formula $z\sqsubseteq\bigsqcup(\downarrow x\cap N)=q(x)$
+\end_inset
+
+であり, 
+\begin_inset Formula $z\in N$
+\end_inset
+
+でもあるから
+\begin_inset Formula $z\in(\downarrow q(x)\cap N)$
+\end_inset
+
+となる.
+ よって
+\begin_inset Formula $\mathrm{im}(q)$
+\end_inset
+
+はdomain.
+\end_layout
+
+\begin_layout Proof
+以上のことより, 
+\begin_inset Formula $q$
+\end_inset
+
+はfinitary projectionである.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+次に, 
+\begin_inset Formula $D$
+\end_inset
+
+のfinitary projection 
+\begin_inset Formula $p$
+\end_inset
+
+に対し, 
+\begin_inset Formula $L=\mathrm{im}(p)\cap{\bf K}(D)$
+\end_inset
+
+によって定義する.
+\end_layout
+
+\begin_deeper
+\begin_layout Fact*
+\begin_inset Formula $D$
+\end_inset
+
+をdomain, 
+\begin_inset Formula $p$
+\end_inset
+
+を
+\begin_inset Formula $D$
+\end_inset
+
+上のfinitary projectionとすると, 
+\begin_inset Formula ${\bf K}(\mathrm{im}(p))=\mathrm{im}(p)\cap{\bf K}(D)$
+\end_inset
+
+である.
+\end_layout
+
+\begin_layout Lemma
+次の等式が成り立つ.
+\begin_inset Formula 
+\[
+p(x)=\bigsqcup(\downarrow p(x)\cap L)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $p$
+\end_inset
+
+はfinitary projectionであるから
+\begin_inset Formula $\mathrm{im}(p)$
+\end_inset
+
+はdomainであり, このことと上の事実により, 任意の
+\begin_inset Formula $y\in\mathrm{im}(p)$
+\end_inset
+
+に対し
+\begin_inset Formula $y=\bigsqcup(\downarrow y\cap L)$
+\end_inset
+
+が成り立つ.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $L$
+\end_inset
+
+は
+\begin_inset Formula ${\bf K}(D)$
+\end_inset
+
+のnormal subsetである.
+\end_layout
+
+\begin_layout Proof
+subsetであることはよい.
+ 
+\begin_inset Formula $x\in{\bf K}(D)$
+\end_inset
+
+を1つfixする.
+ 
+\begin_inset Formula $\downarrow x\cap L$
+\end_inset
+
+がdirectedであることを示す.
+ 
+\begin_inset Formula $\downarrow x\cap L$
+\end_inset
+
+の任意の元
+\begin_inset Formula $x_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+に対しそのupper boundが存在すればよい.
+ ところで, 
+\begin_inset Formula $i\in\{1,2\}$
+\end_inset
+
+とすると
+\begin_inset Formula $x_{i}\sqsubseteq x$
+\end_inset
+
+であり, これらを
+\begin_inset Formula $p$
+\end_inset
+
+で写すと
+\begin_inset Formula $p(x_{i})=x_{i}\sqsubseteq p(x)$
+\end_inset
+
+が成り立つ(
+\begin_inset Formula $x_{i}\in\mathrm{im}(p)$
+\end_inset
+
+であることと
+\begin_inset Formula $p\circ p=p$
+\end_inset
+
+を用いた).
+ 補題の右辺の
+\begin_inset Formula $\downarrow p(x)\cap L$
+\end_inset
+
+はdirectedであり, 
+\begin_inset Formula $x_{i}\in\downarrow p(x)\cap L$
+\end_inset
+
+であることより, 
+\begin_inset Formula $x_{1},x_{2}$
+\end_inset
+
+のupper boundが存在する.
+ よって
+\begin_inset Formula $\downarrow x\cap L$
+\end_inset
+
+はdirected.
+\end_layout
+
+\end_deeper
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+Carl A.
+ Gunter.
+ (1992).
+ Semantics of Programming Languages, Theorem 10.12.
+\end_layout
+
+\end_body
+\end_document
