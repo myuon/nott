@@ -524,7 +524,17 @@ q(q(x)) & =q(\bigsqcup\downarrow x\cap N)\\
 \end_layout
 
 \begin_layout Lemma
-次の等式が成り立つ.
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:次の等式が成り立つ."
+
+\end_inset
+
+任意のfinitary projection 
+\begin_inset Formula $p$
+\end_inset
+
+に対し, 次の等式が成り立つ.
 \begin_inset Formula 
 \[
 p(x)=\bigsqcup(\downarrow p(x)\cap L)
@@ -636,6 +646,140 @@ subsetであることはよい.
 \end_layout
 
 \end_deeper
+\begin_layout Proof
+最後に, これらが同型を与えることをみる.
+ まず
+\begin_inset Formula ${\bf K}(D)$
+\end_inset
+
+のnormal subset 
+\begin_inset Formula $N$
+\end_inset
+
+に対し, 
+\begin_inset Formula $q$
+\end_inset
+
+を上で定めた写像とし, 
+\begin_inset Formula $N=\mathrm{im}(q)\cap{\bf K}(D)$
+\end_inset
+
+を示す.
+\begin_inset Formula 
+\begin{align*}
+\mathrm{im}(q)\cap{\bf K}(D) & ={\bf K}(\mathrm{im}(q)) & \text{(\ensuremath{q}はf.p.であることと上で認めた事実より)}\\
+ & =\mathrm{im}(q)\cap N & \text{(\ensuremath{\mathrm{im}(q)}がdomainの証明より)}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $N$
+\end_inset
+
+の任意の元
+\begin_inset Formula $x$
+\end_inset
+
+に対し, 
+\begin_inset Formula $x\in(\downarrow x\cap N)$
+\end_inset
+
+により, 
+\begin_inset Formula $x\sqsubseteq\bigsqcup(\downarrow x\cap N)=q(x)$
+\end_inset
+
+.
+ 一方, 
+\begin_inset Formula $q(x)\sqsubseteq x$
+\end_inset
+
+は成り立つから, 
+\begin_inset Formula $x=q(x)$
+\end_inset
+
+となり, 
+\begin_inset Formula $x\in\mathrm{im}(q)$
+\end_inset
+
+である.
+ よって, 
+\begin_inset Formula $N\subseteq\mathrm{im}(q)$
+\end_inset
+
+であるから, 
+\begin_inset Formula $\mathrm{im}(q)\cap N=N$
+\end_inset
+
+となる.
+\end_layout
+
+\begin_layout Proof
+逆に, 
+\begin_inset Formula $p$
+\end_inset
+
+をfinitary projectionとする.
+ normal subset 
+\begin_inset Formula $\mathrm{im}(p)\cap{\bf K}(D)$
+\end_inset
+
+に対し, finitary projection 
+\begin_inset Formula $q$
+\end_inset
+
+を上のように構成する.
+ このとき
+\begin_inset Formula $p=q$
+\end_inset
+
+を示す.
+ 
+\begin_inset Formula $x\in D$
+\end_inset
+
+に対し, 
+\begin_inset Formula $q(x)=\bigsqcup(\downarrow x\cap\mathrm{im}(p)\cap{\bf K}(D))$
+\end_inset
+
+であった.
+ ところで, 
+\begin_inset Formula $\mathrm{im}(q)$
+\end_inset
+
+がdomainを示した証明の(a)と同様にして, 
+\begin_inset Formula $\bigsqcup(\downarrow x\cap\mathrm{im}(p)\cap{\bf K}(D))=\bigsqcup(\downarrow p(x)\cap\mathrm{im}(p)\cap{\bf K}(D))$
+\end_inset
+
+であり, 補題
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:次の等式が成り立つ."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+により, これは
+\begin_inset Formula $p(x)$
+\end_inset
+
+に等しい.
+ よって
+\begin_inset Formula $p=q$
+\end_inset
+
+となる.
+\end_layout
+
+\begin_layout Proof
+以上により, 同型が示された.
+\end_layout
+
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
