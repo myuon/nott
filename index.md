@@ -20,6 +20,7 @@ Type Theoryについてのノートです.
 
 - [ccc-soundness-lemma.pdf](pdf/ccc-soundness-lemma.pdf): CCC modelのsoundnessに関する補足
 - [eq-cat-approx-alg.pdf](pdf/eq-cat-approx-alg.pdf): ApproxとAlgが圏同値であること
+- [iso-on-cpt-fp.pdf](pdf/iso-on-cpt-fp.pdf): Finitary Projectionsの作る同型について
 
 ## 連絡等
 
